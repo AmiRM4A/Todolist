@@ -1,11 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todolist</title>
-    <link rel="stylesheet" href="Assets/css/style.css" />
-  </head>
-  <body></body>
-  <script src="Assets/js/script.js"></script>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>TaskTales</title>
+	<!-- Link to the CSS file -->
+	<link rel="stylesheet" href="Assets/css/style.css" />
+	<!-- Link to Font Awesome for icons -->
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+			integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+	/>
+	<!-- Link to Favicon file -->
+	<link
+			id="favIcon"
+			rel="shortcut icon"
+			href="Assets/img/icon/fav-pink.png"
+			type="image/x-icon"
+	/>
+	<!-- Link to animate.css CDN for animations -->
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+	/>
+</head>
+<body>
+<div class="container">
+	<header>
+		<div>
+			<nav>
+				<!-- Navigation menu button -->
+				<div class="menuBtn">
+					<div class="bar"></div>
+					<div class="bar"></div>
+					<div class="bar"></div>
+				</div>
+				<div>
+					<span id="siteName">TaskTales</span>
+				</div>
+				<div>
+					<!-- Logo -->
+					<a href="#">
+						<img id="logo" src="assets/img/logo/logo-pink.png" alt="Logo" />
+					</a>
+				</div>
+			</nav>
+			<!-- Menu -->
+			<div id="menuContainer">
+				<!-- Links Menu -->
+				<div class="menuContent">
+					<span class="fas fa-times menuClose"></span>
+					<span
+					><a
+							href="https://github.com/AmiRM4A"
+							class="fa-brands fa-github"
+					></a
+					></span>
+					<span class="fa-solid fa-paint-roller"></span>
+				</div>
+				<!-- Colors Menu -->
+				<div class="colorMenu menuContent">
+					<span class="fas fa-times colorMenuClose"></span>
+					<!-- Color options -->
+					<span class="colorItem teal"></span>
+					<span class="colorItem indigo"></span>
+					<span class="colorItem red"></span>
+					<span class="colorItem pink"></span>
+					<span class="colorItem green"></span>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- Tasks Management -->
+	<section id="tasksSection">
+		<div id="tasksHeader">
+			<div>
+				<h1></h1>
+				<span class="blink-caret"></span>
+			</div>
+			<form>
+				<!-- Task input field -->
+				<input
+						id="taskInput"
+						type="text"
+						placeholder="Add a task..."
+						name="todo-input"
+						autocomplete="off"
+				/>
+				<!-- Add Task button -->
+				<button class="addTodoBtn" type="submit">Add Task</button>
+			</form>
+		</div>
+		<div id="tasksContainer">
+			<div class="todo">
+				<!-- Tasks will be shown here -->
+			</div>
+		</div>
+	</section>
+	<!-- Task Edit Modal -->
+	<div class="modal" id="taskEditModal">
+		<div class="modalContent">
+			<span class="closeButton fas fa-times"></span>
+			<h2>Edit Task</h2>
+			<form>
+				<!-- Hidden input for task ID -->
+				<input type="hidden" class="taskId" name="task-id" />
+				<label for="taskTitle">Title:</label>
+				<input type="text" id="taskTitle" name="taskTitle" />
+				<label for="taskDescription">Description:</label>
+				<textarea id="taskDescription" name="taskDescription"></textarea>
+				<label for="taskStatus">Status:</label>
+				<select id="taskStatus" name="taskStatus">
+					<option value="not-done">Not Done</option>
+					<option value="done">Done</option>
+				</select>
+				<!-- Save button -->
+				<input type="button" class="btn saveModal" value="Save" />
+			</form>
+		</div>
+	</div>
+	<!-- Completed tasks modal -->
+	<div class="modal" id="completedTasksModal">
+		<div class="modalContent">
+			<span class="close fas fa-times"></span>
+			<table>
+				<thead>
+				<tr>
+					<th class="taskId">ID</th>
+					<th class="taskTitle">Title</th>
+					<th class="taskDesc">Description</th>
+					<th class="taskCreationDate">Created At</th>
+					<th class="taskCompletionDate">Completed At</th>
+					<th>Action</th>
+				</tr>
+				</thead>
+				<tbody>
+				<!-- Completed tasks will be shown here -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<footer>
+	<div>
+		Created with <i class="fa-solid fa-heart"></i> by
+		<!-- Link to the creator's GitHub profile -->
+		<a href="https://github.com/AmiRM4A">Amir</a>
+	</div>
+</footer>
+<!-- Link to JavaScript file -->
+<script type="module" src="Assets/js/app.js"></script>
+</body>
 </html>

@@ -7,3 +7,630 @@
 	font-family: 'Roberto-Regular';
 	src: url('../fonts/Roboto-Regular.ttf');
 }
+
+html {
+	font-size: 16px;
+	/* Set a base font size */
+}
+
+/* Reset default margin, padding, and box-sizing for all elements */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Remove underlines from links */
+a {
+	text-decoration: none;
+}
+
+/* Define custom CSS variables for colors */
+:root {
+	--theme-color: #bb86fc;
+	--pink: #bb86fc;
+	--teal: #00bfa5;
+	--indigo: #3d5afe;
+	--red: #ff5252;
+	--green: #64dd17;
+}
+
+/* General styles for the body */
+body {
+	background: #121212;
+	font-family: 'Roberto-Regular', sans-serif;
+	font-size: 1rem;
+}
+
+/* Styles for the container */
+.container {
+	min-height: 100vh;
+}
+
+/* Styles for common buttons */
+.btn,
+button {
+	border: none;
+	outline: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+}
+
+/* Header styles */
+nav {
+	display: flex;
+	justify-content: space-between;
+	padding: 1em 1.5em 0;
+	align-items: center;
+}
+
+/* Styles for the form within #tasksSection */
+#tasksSection form {
+	margin: 1.5rem 0 2rem;
+	min-height: 10vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	font-size: 1.7rem;
+	padding: 0.8rem;
+	justify-content: center;
+}
+
+/* Input field for adding tasks */
+#tasksSection input {
+	padding: 10px;
+	font-size: 17px;
+	outline: none;
+	border-top-left-radius: 17px;
+	border-bottom-left-radius: 17px;
+	max-width: 500px;
+	width: 100%;
+	background: rgb(255 255 255 / 5%);
+	border: 1px solid rgb(255 255 255 / 15%);
+}
+
+/* Input field styles when focused */
+#tasksSection input:focus {
+	color: #ffffff;
+}
+
+/* Input field styles on hover */
+#tasksSection input:hover {
+	cursor: text;
+}
+
+/* Button for adding tasks */
+#tasksSection .addTodoBtn {
+	border-radius: unset;
+	background: var(--theme-color);
+	padding: 11px;
+	font-size: 17px;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+	min-width: 100px;
+}
+
+#siteName {
+	display: none;
+}
+
+.sticky {
+	position: sticky;
+	top: 0;
+	z-index: 999;
+	background: rgb(139 139 139 / 4%);
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+}
+
+.sticky nav {
+	padding: 0.25em 1em;
+}
+
+.sticky #siteName {
+	font-family: 'PlayfairDisplay-Italic', sans-serif;
+	display: none;
+	font-size: 2.25rem;
+	color: #ffffff78;
+	font-weight: 900;
+	text-shadow: 1px 1px 6px var(--theme-color);
+}
+
+/* Header styles for tasks section */
+#tasksHeader {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Heading styles within tasks section */
+#tasksSection h1 {
+	font-size: 2.5rem;
+	text-align: center;
+	color: #ffffff;
+	letter-spacing: 0.20rem;
+	margin-top: 50px;
+	max-width: 480px;
+	white-space: nowrap;
+	overflow: hidden;
+	display: inline-block;
+}
+
+/* Styles of blinking vertical line*/
+.blink-caret {
+	animation: blink-caret 0.75s step-end infinite;
+	border-right: 1px solid #ffffff;
+	padding-top: 2em;
+}
+
+@keyframes blink-caret {
+
+	from,
+	to {
+		border-color: transparent;
+	}
+
+	50% {
+		border-color: #ffffff;
+	}
+}
+
+/* Styles for tasks container */
+#tasksContainer {
+	width: 90%;
+	margin: 0 auto;
+}
+
+/* Styles for individual todo items */
+.todo {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	padding: 50px 0;
+}
+
+/* Styles for each task item */
+.task {
+	background: rgb(255 255 255 / 5%);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	flex-basis: calc(33.33333% - 30px);
+	margin: 0 15px 30px;
+	overflow: hidden;
+	border-radius: 28px;
+	transition: all 0.3s ease;
+}
+
+/* Styles for task item on hover */
+.task:hover {
+	box-shadow: 0 0 15px -5px var(--theme-color);
+}
+
+/* Styles for links within task items */
+.task>div {
+	display: block;
+	padding: 0 20px 50px;
+	background-color: #000000;
+	text-decoration: none;
+	color: #ffffff !important;
+	overflow: hidden;
+	position: relative;
+}
+
+.task .task-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-direction: row;
+	padding: 27px 5px 15px;
+}
+
+.task .done-span,
+.task .done-btn {
+	display: none;
+}
+
+.task .done-btn {
+	background-color: var(--theme-color);
+	color: #ffffff;
+	width: 100%;
+	padding: 12px 15px 12px;
+	text-align: center;
+	border-radius: unset;
+}
+
+/* Styles for icons within task items */
+.task .fa-times,
+.task .fa-edit,
+.task .done-span {
+	font-size: 18px;
+	padding: 7px 0 7px 10px;
+}
+
+/* Hover styles for the delete icon */
+.fa-times:hover,
+.fa-edit:hover,
+.done-span:hover,
+#taskEditModal {
+	color: var(--theme-color);
+}
+
+/* Styles for task information */
+.task-detail {
+	min-height: 100px;
+	margin: 0 0 25px;
+	overflow: hidden;
+	color: #ffffff;
+	z-index: 2;
+	position: relative;
+}
+
+/* Styles for task title */
+.task-title {
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+
+/* Styles for task description */
+.task-desc {
+	margin-top: 5px;
+	font-size: 1rem;
+}
+
+.task-desc,
+.task-title {
+	display: inline-block;
+}
+
+/* Styles for the modal for editing tasks */
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+	overflow: hidden;
+}
+
+/* Styles for the modal content within the edit task modal */
+.modalContent {
+	background-color: #121212;
+	width: 70%;
+	margin: 100px auto 0;
+	border-radius: 15px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	position: relative;
+	display: flex;
+	color: #ffffff;
+	flex-direction: column;
+}
+
+/* Done tasks */
+
+.doneTask {
+	opacity: 0.5;
+	box-shadow: none !important;
+}
+
+.doneTask .done-btn {
+	background-color: #ff7597 !important;
+	position: absolute;
+	display: block !important;
+	bottom: 0 !important;
+}
+
+/* Line-through animation */
+
+@keyframes strike {
+	0% {
+		width: 0;
+	}
+
+	100% {
+		width: 100%;
+	}
+}
+
+.strike {
+	position: relative;
+}
+
+.strike::after {
+	content: ' ';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 1.5px;
+	background: #ffffff;
+	animation-name: strike;
+	animation-duration: 0.4s;
+	animation-timing-function: linear;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+/* Styles for the close button of the modal */
+#taskEditModal .closeButton {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	font-size: 24px;
+}
+
+/* Styles for the form within the edit task modal */
+#taskEditModal form {
+	font-size: 18px;
+	margin-top: 20px;
+}
+
+/* Styles for labels within the edit task modal */
+#taskEditModal label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+/* Styles for input fields, textarea, and select within the edit task modal */
+#taskEditModal #taskTitle,
+#taskEditModal #taskDescription,
+#taskEditModal #taskStatus {
+	width: 100% !important;
+	padding: 10px;
+	margin-bottom: 12px;
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+}
+
+/* Styles for the submit button within the edit task modal */
+#taskEditModal .saveModal {
+	background-color: var(--theme-color);
+	color: #000000;
+}
+
+/* Styles for the menu */
+.menuContent {
+	height: 400px;
+	width: 400px;
+	background-color: var(--theme-color);
+	z-index: 1;
+	position: absolute;
+	top: -400px;
+	left: -400px;
+	border-radius: 50%;
+	-webkit-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+/* Styles for menu icons */
+.menuContent .fa-times,
+.menuContent .fa-github,
+.menuContent .fa-paint-roller {
+	position: absolute;
+	font-size: 24px;
+	color: #000000;
+	text-decoration: none;
+}
+
+/* Positioning for the close icon within the menu */
+.menuContent .fa-times {
+	right: 28%;
+	bottom: 7%;
+}
+
+/* Positioning for the history icon within the menu */
+/* use position for new icon */
+/*.menuContent .fa-history {*/
+/*	right: 20%;*/
+/*	bottom: 11%;*/
+/*}*/
+
+/* Positioning for the GitHub icon within the menu */
+.menuContent .fa-github {
+	right: 13%;
+	bottom: 18%;
+}
+
+/* Positioning for the paint roller icon within the menu */
+.menuContent .fa-paint-roller {
+	right: 7%;
+	bottom: 26%;
+}
+
+/* Styles for the menu button */
+.menuBtn {
+	display: block;
+	background: none;
+	padding: 3px;
+	width: 36px;
+}
+
+/* Styles for the bars within the menu button */
+.bar {
+	background-color: var(--theme-color);
+	height: 4px;
+	transition: all 200ms ease-in-out;
+	margin: 6px 0;
+}
+
+/* Apply the "show-menu" class to reveal the menu */
+.show-menu {
+	left: -260px !important;
+	top: -260px !important;
+}
+
+/* Styles for color items */
+.colorItem {
+	border: 1px solid #333333;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	right: 0;
+	bottom: 0;
+	border-radius: 100%;
+}
+
+/* Hover styles for color items */
+.colorItem:hover {
+	opacity: 0.8;
+}
+
+/* Position of colors menu close menu*/
+.colorMenu .fa-times {
+	bottom: 27%;
+}
+
+/* Positioning for color items */
+.teal {
+	background-color: var(--teal);
+	bottom: 28%;
+	right: 5%;
+}
+
+.indigo {
+	background-color: var(--indigo);
+	bottom: 21.5%;
+	right: 9%;
+}
+
+.red {
+	background-color: var(--red);
+	bottom: 15%;
+	right: 14%;
+}
+
+.pink {
+	background-color: var(--pink);
+	bottom: 9.5%;
+	right: 21%;
+}
+
+.green {
+	background-color: var(--green);
+	bottom: 5%;
+	right: 28%;
+}
+
+/* Hover and focus styles for various elements */
+#taskEditModal .saveModal:hover,
+#tasksSection input:focus,
+button:hover,
+.menuBtn:hover,
+.menuContent span:hover,
+a:hover,
+.done-btn:hover,
+.done-span:hover,
+.fa-undo:hover,
+.fa-edit:hover,
+.fa-times:hover {
+	cursor: pointer;
+	opacity: 0.7;
+}
+
+.menuBtn,
+.menuContent span,
+button,
+.fa-edit,
+.fa-times,
+.fa-check,
+#taskStatus,
+.fa-undo,
+nav,
+a,
+.doneTask .done-btn {
+	transition: all 0.3s ease;
+}
+
+/* Footer styles */
+footer {
+	text-align: center;
+	color: #ffffff;
+	width: 100%;
+	padding: 20px;
+	background-color: #000000;
+}
+
+/* Styles for links within the footer */
+footer a {
+	color: var(--theme-color);
+}
+
+footer .fa-heart {
+	color: var(--theme-color);
+}
+
+.showModal {
+	display: block !important;
+}
+
+/* Media Queries */
+
+/* Media query for screens smaller than 768px (typical mobile screens) */
+@media screen and (max-width: 768px) {
+	#tasksSection h1 {
+		font-size: 2.25rem;
+	}
+
+	#tasksSection form {
+		margin-top: 1rem;
+		width: 90%;
+	}
+
+	.sticky #siteName {
+		font-size: 1.75rem;
+	}
+
+	/* Set cards to full width */
+	.task {
+		flex-basis: 100%;
+		margin: 0 15px 30px;
+	}
+
+	.task .done-span {
+		display: inline-block;
+	}
+
+	.doneTask .done-span {
+		display: none !important;
+	}
+}
+
+/* Media query for screens between 768px and 1024px (tablets) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+	/* Set cards to one card per row */
+	.task {
+		flex-basis: calc(50% - 30px);
+		margin: 0 15px 30px;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.task .done-btn {
+		display: block;
+		position: absolute;
+		bottom: -40px;
+	}
+
+	.task:hover .done-btn {
+		bottom: 0;
+	}
+}
+
+/* Media query for screens larger than 1024px (desktop screens) */
+@media screen and (min-width: 1024px) {
+	.task {
+		flex-basis: calc(33.33333% - 30px);
+		margin: 0 15px 30px;
+	}
+}
