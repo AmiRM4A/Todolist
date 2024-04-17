@@ -1,7 +1,7 @@
-import { getCurrentDate, resetInput } from './utilitiesModule.js';
-import { markTaskAsCompleted } from './completedTaskModule.js';
-import { setToStorage, getStorageTaskIndex } from './storageModule.js';
-import { LOCAL_STORAGE_TASKS_KEY } from './constantsModule.js';
+import {getCurrentDate, resetInput} from './utilitiesModule.js';
+import {markTaskAsCompleted} from './completedTaskModule.js';
+import {setToStorage, getStorageTaskIndex} from './storageModule.js';
+import {LOCAL_STORAGE_TASKS_KEY} from './constantsModule.js';
 
 /**
  * Selects a task element by its ID.
@@ -16,7 +16,7 @@ import { LOCAL_STORAGE_TASKS_KEY } from './constantsModule.js';
  * @description Selects a task element in the DOM by its ID.
  */
 function selectTask(taskId, tasksContainer) {
-	return tasksContainer.querySelector(`[data-task-id="${taskId}"]`) || null;
+    return tasksContainer.querySelector(`[data-task-id="${taskId}"]`) || null;
 }
 
 /**
@@ -32,7 +32,13 @@ function selectTask(taskId, tasksContainer) {
  * @description Creates a task object with default values based on the provided ID and name.
  */
 function createTaskObj(taskId, taskName) {
-	return { id: taskId, name: taskName, desc: '(edit task for description)', createdAt: getCurrentDate(), status: false };
+    return {
+        id: taskId,
+        name: taskName,
+        desc: '(edit task for description)',
+        createdAt: getCurrentDate(),
+        status: false
+    };
 }
 
 /**
@@ -50,7 +56,7 @@ function createTaskObj(taskId, taskName) {
  * @description Creates the HTML markup for a task element based on provided data.
  */
 function createTaskElem(taskId, taskName, taskDesc, taskCreationDate) {
-	return `
+    return `
         <div class="task animate__bounceIn" data-task-id=${taskId}>
           <div>
             <div class="task-actions">
@@ -86,10 +92,10 @@ function createTaskElem(taskId, taskName, taskDesc, taskCreationDate) {
  * @description Updates the displayed task element with the provided task data in the DOM.
  */
 function updateTaskInDom(taskElem, newTaskData) {
-	if (taskElem !== null) {
-		taskElem.querySelector('.task-title').textContent = newTaskData.name;
-		taskElem.querySelector('.task-desc').textContent = newTaskData.desc;
-	}
+    if (taskElem !== null) {
+        taskElem.querySelector('.task-title').textContent = newTaskData.name;
+        taskElem.querySelector('.task-desc').textContent = newTaskData.desc;
+    }
 }
 
 /**
@@ -104,11 +110,11 @@ function updateTaskInDom(taskElem, newTaskData) {
  * @description Gets the ID of a task element in the DOM.
  */
 function getTaskId(taskElem) {
-	return Number(taskElem.dataset.taskId);
+    return Number(taskElem.dataset.taskId);
 }
 
 function getTaskData(tasksList, taskId) {
-	return tasksList.find(taskData => taskData.id === taskId);
+    return tasksList.find(taskData => taskData.id === taskId);
 }
 
 /**
@@ -123,9 +129,9 @@ function getTaskData(tasksList, taskId) {
  * @description Retrieves the ID of the last task in the provided array of tasks.
  */
 function getLastTaskId(tasksArr) {
-	let lastId = 0;
-	tasksArr.forEach(task => lastId = (task.id > lastId) ? task.id : lastId);
-	return lastId
+    let lastId = 0;
+    tasksArr.forEach(task => lastId = (task.id > lastId) ? task.id : lastId);
+    return lastId
 }
 
 /**
@@ -140,11 +146,11 @@ function getLastTaskId(tasksArr) {
  * @description Removes a task from the tasks array and updates local storage accordingly.
  */
 function removeTask(taskElem, tasksArr) {
-	const taskElemId = getTaskId(taskElem);
-	const index = getStorageTaskIndex(taskElemId, tasksArr);
-	tasksArr.splice(index, 1);
-	setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
-	taskElem.remove();
+    const taskElemId = getTaskId(taskElem);
+    const index = getStorageTaskIndex(taskElemId, tasksArr);
+    tasksArr.splice(index, 1);
+    setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
+    taskElem.remove();
 }
 
 /**
@@ -161,19 +167,19 @@ function removeTask(taskElem, tasksArr) {
  * @description Adds a task to the tasks array and updates local storage accordingly.
  */
 function addTask(taskData, tasksContainer, tasksArr, fromStorage = false) {
-	if (typeof taskData != 'object') {
-		taskData = createTaskObj(getLastTaskId(tasksArr) + 1, taskData);
-		tasksArr.push(taskData);
-		setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
-	}
-	const htmlTaskCode = createTaskElem(taskData.id, taskData.name, taskData.desc, taskData.createdAt);
-	tasksContainer.insertAdjacentHTML('beforeend', htmlTaskCode);
-	const taskElem = selectTask(taskData.id, tasksContainer);
-	if (fromStorage) {
-		markTaskAsCompleted(taskElem, taskData, tasksArr, true);
-		return;
-	}
-	resetInput(document.getElementById('taskInput'));
+    if (typeof taskData != 'object') {
+        taskData = createTaskObj(getLastTaskId(tasksArr) + 1, taskData);
+        tasksArr.push(taskData);
+        setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
+    }
+    const htmlTaskCode = createTaskElem(taskData.id, taskData.name, taskData.desc, taskData.createdAt);
+    tasksContainer.insertAdjacentHTML('beforeend', htmlTaskCode);
+    const taskElem = selectTask(taskData.id, tasksContainer);
+    if (fromStorage) {
+        markTaskAsCompleted(taskElem, taskData, tasksArr, true);
+        return;
+    }
+    resetInput(document.getElementById('taskInput'));
 }
 
-export { selectTask, updateTaskInDom, removeTask, addTask, getTaskId, getTaskData }
+export {selectTask, updateTaskInDom, removeTask, addTask, getTaskId, getTaskData}

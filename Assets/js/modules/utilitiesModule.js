@@ -9,8 +9,8 @@
  * @description Retrieves the current date in the MM/DD/YYYY format.
  */
 function getCurrentDate() {
-	const d = new Date();
-	return `${d.getMonth()}/${d.getDate()}/${d.getFullYear()}`;
+    const d = new Date();
+    return `${d.getMonth()}/${d.getDate()}/${d.getFullYear()}`;
 }
 
 /**
@@ -26,7 +26,7 @@ function getCurrentDate() {
  * @description Checks if the provided HTML element contains the specified CSS class.
  */
 function hasClass(element, className) {
-	return element.classList.contains(className);
+    return element.classList.contains(className);
 }
 
 /**
@@ -40,7 +40,7 @@ function hasClass(element, className) {
  * @description Clears the value of the input field.
  */
 function resetInput(taskInput) {
-	taskInput.value = '';
+    taskInput.value = '';
 }
 
 /**
@@ -55,7 +55,7 @@ function resetInput(taskInput) {
  * @description Toggles the specified CSS class on the provided HTML element.
  */
 function toggleClass(element, className) {
-	element.classList.toggle(className);
+    element.classList.toggle(className);
 }
 
 /**
@@ -69,7 +69,7 @@ function toggleClass(element, className) {
  * @description Updates the website's favicon to match a selected color theme.
  */
 function changeFavIcon(newIconPath) {
-	document.querySelector('#favIcon').href = newIconPath;
+    document.querySelector('#favIcon').href = newIconPath;
 }
 
 /**
@@ -83,7 +83,7 @@ function changeFavIcon(newIconPath) {
  * @description Updates the website's logo to match a selected color theme.
  */
 function changeLogo(newLogoPath) {
-	document.querySelector('#logo').src = newLogoPath;
+    document.querySelector('#logo').src = newLogoPath;
 }
 
 /**
@@ -96,7 +96,7 @@ function changeLogo(newLogoPath) {
  * This function adds the specified class to one or more HTML elements.
  */
 function addClass(className, ...elements) {
-	elements.forEach(elem => elem.classList.add(className));
+    elements.forEach(elem => elem.classList.add(className));
 }
 
 /**
@@ -109,7 +109,7 @@ function addClass(className, ...elements) {
  * This function removes the specified class from one or more HTML elements.
  */
 function removeClass(className, ...elements) {
-	elements.forEach(elem => elem.classList.remove(className));
+    elements.forEach(elem => elem.classList.remove(className));
 }
 
 /**
@@ -122,12 +122,12 @@ function removeClass(className, ...elements) {
  * This function searches for the closest parent element with a specific class name.
  */
 function getParentElementByClassName(element, parentElementClassName) {
-	let elem = element;
-	while (!hasClass(elem, parentElementClassName)) {
-		elem = elem.parentElement;
-		if (elem.tagName === 'BODY') break;
-	}
-	return elem;
+    let elem = element;
+    while (!hasClass(elem, parentElementClassName)) {
+        elem = elem.parentElement;
+        if (elem.tagName === 'BODY') break;
+    }
+    return elem;
 }
 
 /**
@@ -140,17 +140,27 @@ function getParentElementByClassName(element, parentElementClassName) {
  * This function toggles class names on elements to switch between two states, typically for task completion.
  */
 function swapTaskIconsTo(to = 'completed', taskElem) {
-	const spanIconElem = taskElem.querySelector('.done-span');
-	const btnIconElem = taskElem.querySelector('.done-btn');
-	if (to === 'completed') {
-		addClass('fa-undo', btnIconElem, spanIconElem);
-		removeClass('fa-check', btnIconElem, spanIconElem);
-	} else {
-		addClass('fa-check', btnIconElem, spanIconElem);
-		removeClass('fa-undo', btnIconElem, spanIconElem);
-	}
+    const spanIconElem = taskElem.querySelector('.done-span');
+    const btnIconElem = taskElem.querySelector('.done-btn');
+    if (to === 'completed') {
+        addClass('fa-undo', btnIconElem, spanIconElem);
+        removeClass('fa-check', btnIconElem, spanIconElem);
+    } else {
+        addClass('fa-check', btnIconElem, spanIconElem);
+        removeClass('fa-undo', btnIconElem, spanIconElem);
+    }
 }
 
 
-
-export { getCurrentDate, resetInput, hasClass, toggleClass, changeLogo, changeFavIcon, removeClass, addClass, getParentElementByClassName, swapTaskIconsTo };
+export {
+    getCurrentDate,
+    resetInput,
+    hasClass,
+    toggleClass,
+    changeLogo,
+    changeFavIcon,
+    removeClass,
+    addClass,
+    getParentElementByClassName,
+    swapTaskIconsTo
+};

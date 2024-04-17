@@ -1,12 +1,12 @@
-import { changeFavIcon, changeLogo } from "./utilitiesModule.js";
+import {changeFavIcon, changeLogo} from "./utilitiesModule.js";
 import {$, ICONS_PATH, LOGOS_PATH} from "./constantsModule.js";
 
 const colors = {
-	'rgb(187, 134, 252)': 'pink',
-	'rgb(0, 191, 165)': 'teal',
-	'rgb(61, 90, 254)': 'indigo',
-	'rgb(255, 82, 82)': 'red',
-	'rgb(100, 221, 23)': 'green'
+    'rgb(187, 134, 252)': 'pink',
+    'rgb(0, 191, 165)': 'teal',
+    'rgb(61, 90, 254)': 'indigo',
+    'rgb(255, 82, 82)': 'red',
+    'rgb(100, 221, 23)': 'green'
 };
 
 /**
@@ -21,7 +21,7 @@ const colors = {
  * @description Retrieves the name of a color based on its code or name.
  */
 function getColorName(color) {
-	return colors[color];
+    return colors[color];
 }
 
 /**
@@ -35,10 +35,10 @@ function getColorName(color) {
  * @description Selects a color theme and updates the website's appearance, including favicon, logo, and theme color.
  */
 function selectThemeColor(color) {
-	const colorName = getColorName(color);
-	changeFavIcon(`${ICONS_PATH}fav-${colorName}.png`);
-	changeLogo(`${LOGOS_PATH}logo-${colorName}.png`);
-	$.documentElement.style.setProperty('--theme-color', color);
+    const colorName = getColorName(color);
+    changeFavIcon(`${ICONS_PATH}fav-${colorName}.png`);
+    changeLogo(`${LOGOS_PATH}logo-${colorName}.png`);
+    $.documentElement.style.setProperty('--theme-color', color);
 }
 
-export { selectThemeColor };
+export {selectThemeColor};

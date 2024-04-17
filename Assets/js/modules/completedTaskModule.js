@@ -1,6 +1,6 @@
-import { setToStorage, getStorageTaskIndex } from './storageModule.js';
-import { getCurrentDate, addClass, removeClass, swapTaskIconsTo } from './utilitiesModule.js';
-import { LOCAL_STORAGE_TASKS_KEY } from './constantsModule.js';
+import {setToStorage, getStorageTaskIndex} from './storageModule.js';
+import {getCurrentDate, addClass, removeClass, swapTaskIconsTo} from './utilitiesModule.js';
+import {LOCAL_STORAGE_TASKS_KEY} from './constantsModule.js';
 
 /**
  * Undoes a completed task and moves it back to the active tasks list.
@@ -17,17 +17,17 @@ import { LOCAL_STORAGE_TASKS_KEY } from './constantsModule.js';
  * and removes the completed task element from the DOM.
  */
 function undoCompletedTask(completedTaskElem, tasksArr) {
-	// Change the status of task to uncompleted in storage
-	const index = getStorageTaskIndex(Number(completedTaskElem.dataset.taskId), tasksArr);
-	tasksArr[index]['status'] = false;
-	delete tasksArr[index]['completedAt'];
-	setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
+    // Change the status of task to uncompleted in storage
+    const index = getStorageTaskIndex(Number(completedTaskElem.dataset.taskId), tasksArr);
+    tasksArr[index]['status'] = false;
+    delete tasksArr[index]['completedAt'];
+    setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
 
-	// Change the UI status of task to uncompleted in page
-	removeClass('doneTask', completedTaskElem);
-	removeClass('strike', completedTaskElem.querySelector('.task-title'), completedTaskElem.querySelector('.task-desc'));
-	swapTaskIconsTo('uncompleted', completedTaskElem);
-	completedTaskElem.querySelector('.task-info').innerHTML = `
+    // Change the UI status of task to uncompleted in page
+    removeClass('doneTask', completedTaskElem);
+    removeClass('strike', completedTaskElem.querySelector('.task-title'), completedTaskElem.querySelector('.task-desc'));
+    swapTaskIconsTo('uncompleted', completedTaskElem);
+    completedTaskElem.querySelector('.task-info').innerHTML = `
 	<i class="fas fa-info-circle"></i>
         Created:
     <span style="color: var(--theme-color);"> ${tasksArr[index]['createdAt']} </span>
@@ -46,23 +46,23 @@ function undoCompletedTask(completedTaskElem, tasksArr) {
  * @param {boolean} fromStorage - Indicates whether the task is stored in local storage. Default is false.
  */
 function markTaskAsCompleted(taskElem, taskData, tasksArr, fromStorage = false) {
-	// Change the status of task to completed in storage (if it wasn't from storage)
-	const index = tasksArr.findIndex(task => task.id === taskData.id);
-	if (!fromStorage) {
-		tasksArr[index].status = true;
-		tasksArr[index].completedAt = getCurrentDate();
-		setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
-	}
+    // Change the status of task to completed in storage (if it wasn't from storage)
+    const index = tasksArr.findIndex(task => task.id === taskData.id);
+    if (!fromStorage) {
+        tasksArr[index].status = true;
+        tasksArr[index].completedAt = getCurrentDate();
+        setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
+    }
 
-	// Change the status of task to completed in page
-	addClass('doneTask', taskElem);
-	addClass('strike', taskElem.querySelector('.task-title'), taskElem.querySelector('.task-desc'));
-	swapTaskIconsTo('completed', taskElem);
-	taskElem.querySelector('.task-info').innerHTML = `
+    // Change the status of task to completed in page
+    addClass('doneTask', taskElem);
+    addClass('strike', taskElem.querySelector('.task-title'), taskElem.querySelector('.task-desc'));
+    swapTaskIconsTo('completed', taskElem);
+    taskElem.querySelector('.task-info').innerHTML = `
 	<i class="fa-solid fa-circle-check"></i>
         Completed:
     <span style="color: var(--theme-color);"> ${(fromStorage) ? tasksArr[index].completedAt : taskData.completedAt} </span>
 	`;
 }
 
-export { undoCompletedTask, markTaskAsCompleted };
+export {undoCompletedTask, markTaskAsCompleted};

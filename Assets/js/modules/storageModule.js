@@ -1,5 +1,5 @@
-import { LOCAL_STORAGE_TASKS_KEY } from "./constantsModule.js";
-import { addTask } from "./taskModule.js";
+import {LOCAL_STORAGE_TASKS_KEY} from "./constantsModule.js";
+import {addTask} from "./taskModule.js";
 
 /**
  * Sets data to local storage.
@@ -13,7 +13,7 @@ import { addTask } from "./taskModule.js";
  * @description Sets data to the local storage using the provided key.
  */
 function setToStorage(key, data) {
-	localStorage.setItem(key, JSON.stringify(data));
+    localStorage.setItem(key, JSON.stringify(data));
 }
 
 /**
@@ -29,8 +29,8 @@ function setToStorage(key, data) {
  * @description Retrieves data from local storage based on the provided key.
  */
 function getFromStorage(key, json = true) {
-	const data = localStorage.getItem(key);
-	return json ? JSON.parse(data) : data;
+    const data = localStorage.getItem(key);
+    return json ? JSON.parse(data) : data;
 }
 
 /**
@@ -46,7 +46,7 @@ function getFromStorage(key, json = true) {
  * @description Finds the index of a task in an array based on its ID.
  */
 function getStorageTaskIndex(id, tasksArr) {
-	return tasksArr.findIndex(task => task.id === Number(id));
+    return tasksArr.findIndex(task => task.id === Number(id));
 }
 
 /**
@@ -62,12 +62,12 @@ function getStorageTaskIndex(id, tasksArr) {
  * @description Updates task data in local storage based on the provided task data.
  */
 function updateTaskInStorage(taskIndex, tasksArr, newTaskData) {
-	if (taskIndex !== -1) {
-		tasksArr[taskIndex].name = newTaskData.name;
-		tasksArr[taskIndex].desc = newTaskData.desc;
-		tasksArr[taskIndex].status = newTaskData.status;
-		setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
-	}
+    if (taskIndex !== -1) {
+        tasksArr[taskIndex].name = newTaskData.name;
+        tasksArr[taskIndex].desc = newTaskData.desc;
+        tasksArr[taskIndex].status = newTaskData.status;
+        setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
+    }
 }
 
 /**
@@ -82,7 +82,7 @@ function updateTaskInStorage(taskIndex, tasksArr, newTaskData) {
  * @description Loads tasks from local storage and populates the task list in the DOM.
  */
 function loadStorageTasks(taskArray, tasksContainer) {
-	taskArray.forEach(taskData => addTask(taskData, tasksContainer, taskArray, taskData.status));
+    taskArray.forEach(taskData => addTask(taskData, tasksContainer, taskArray, taskData.status));
 }
 
-export { setToStorage, getFromStorage, getStorageTaskIndex, updateTaskInStorage, loadStorageTasks };
+export {setToStorage, getFromStorage, getStorageTaskIndex, updateTaskInStorage, loadStorageTasks};
