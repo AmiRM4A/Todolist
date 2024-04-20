@@ -10,7 +10,7 @@
 
 html {
     font-size: 16px;
-    /* Set a base font size */
+    /* Set a base fonts size */
 }
 
 /* Reset default margin, padding, and box-sizing for all elements */
@@ -27,6 +27,7 @@ a {
 
 /* Define custom CSS variables for colors */
 :root {
+    --white-font: rgba(255, 255, 255, 0.85);
     --theme-color: #bb86fc;
     --pink: #bb86fc;
     --teal: #00bfa5;
@@ -35,19 +36,18 @@ a {
     --green: #64dd17;
 }
 
-/* General styles for the body */
+/* Global styles */
 body {
     background: #121212;
     font-family: 'Roberto-Regular', sans-serif;
     font-size: 1rem;
 }
 
-/* Styles for the container */
 .container {
+    min-width: 100%;
     min-height: 100vh;
 }
 
-/* Styles for common buttons */
 .btn,
 button {
     border: none;
@@ -56,7 +56,6 @@ button {
     border-radius: 5px;
 }
 
-/* Header styles */
 nav {
     display: flex;
     justify-content: space-between;
@@ -64,50 +63,87 @@ nav {
     align-items: center;
 }
 
-/* Styles for the form within #tasksSection */
-#tasksSection form {
-    margin: 1.5rem 0 2rem;
-    min-height: 10vh;
-    width: 100%;
+figure {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.list-type-ulli {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+a:focus,
+a:active {
+    text-decoration: none;
+    outline: none;
+    transition: all 300ms ease 0s;
+    -moz-transition: all 300ms ease 0s;
+    -webkit-transition: all 300ms ease 0s;
+    -o-transition: all 300ms ease 0s;
+    -ms-transition: all 300ms ease 0s;
+}
+
+input,
+select,
+textarea {
+    outline: none;
+    appearance: unset !important;
+    -moz-appearance: unset !important;
+    -webkit-appearance: unset !important;
+    -o-appearance: unset !important;
+    -ms-appearance: unset !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    -o-appearance: none !important;
+    -ms-appearance: none !important;
+    margin: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+p {
+    margin-bottom: 0;
+    font-size: 15px;
+    color: #777;
+}
+
+h2 {
+    line-height: 1.66;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #222;
+    font-size: 36px;
+}
+
+.main {
     display: flex;
-    align-items: center;
-    font-size: 1.7rem;
-    padding: 0.8rem;
     justify-content: center;
 }
 
-/* Input field for adding tasks */
-#tasksSection input {
-    padding: 10px;
-    font-size: 17px;
-    outline: none;
-    border-top-left-radius: 17px;
-    border-bottom-left-radius: 17px;
-    max-width: 500px;
-    width: 100%;
-    background: rgb(255 255 255 / 5%);
-    border: 1px solid rgb(255 255 255 / 15%);
-}
-
-/* Input field styles when focused */
-#tasksSection input:focus {
-    color: #ffffff;
-}
-
-/* Input field styles on hover */
-#tasksSection input:hover {
-    cursor: text;
-}
-
-/* Button for adding tasks */
-#tasksSection .addTodoBtn {
-    border-radius: unset;
-    background: var(--theme-color);
-    padding: 11px;
-    font-size: 17px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    min-width: 100px;
+.clear {
+    clear: both;
 }
 
 #siteName {
@@ -144,11 +180,48 @@ nav {
     flex-direction: column;
 }
 
-/* Heading styles within tasks section */
+#tasksSection form {
+    margin: 1.5rem 0 2rem;
+    min-height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1.7rem;
+    padding: 0.8rem;
+    justify-content: center;
+}
+
+#tasksSection input {
+    padding: 10px;
+    font-size: 17px;
+    outline: none;
+    border-top-left-radius: 17px;
+    border-bottom-left-radius: 17px;
+    max-width: 500px;
+    width: 100%;
+    background: rgb(255 255 255 / 5%);
+    border: 1px solid rgb(255 255 255 / 15%);
+    color: var(--white-font);
+}
+
+#tasksSection input:hover {
+    cursor: text;
+}
+
+#tasksSection .addTodoBtn {
+    border-radius: unset;
+    background: var(--theme-color);
+    padding: 11px;
+    font-size: 17px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    min-width: 100px;
+}
+
 #tasksSection h1 {
     font-size: 2.5rem;
     text-align: center;
-    color: #ffffff;
+    color: var(--white-font);
     letter-spacing: 0.20rem;
     margin-top: 50px;
     max-width: 480px;
@@ -157,7 +230,6 @@ nav {
     display: inline-block;
 }
 
-/* Styles of blinking vertical line*/
 .blink-caret {
     animation: blink-caret 0.75s step-end infinite;
     border-right: 1px solid #ffffff;
@@ -165,14 +237,13 @@ nav {
 }
 
 @keyframes blink-caret {
-
     from,
     to {
         border-color: transparent;
     }
 
     50% {
-        border-color: #ffffff;
+        border-color: var(--white-font);
     }
 }
 
@@ -195,7 +266,7 @@ nav {
     padding: 50px 0;
 }
 
-/* Styles for each task item */
+/* Styles for task items */
 .task {
     background: rgb(255 255 255 / 5%);
     backdrop-filter: blur(5px);
@@ -207,12 +278,10 @@ nav {
     transition: all 0.3s ease;
 }
 
-/* Styles for task item on hover */
 .task:hover {
     box-shadow: 0 0 15px -5px var(--theme-color);
 }
 
-/* Styles for links within task items */
 .task > div {
     display: block;
     padding: 0 20px 50px;
@@ -238,14 +307,13 @@ nav {
 
 .task .done-btn {
     background-color: var(--theme-color);
-    color: #ffffff;
+    color: var(--white-font);
     width: 100%;
     padding: 12px 15px 12px;
     text-align: center;
     border-radius: unset;
 }
 
-/* Styles for icons within task items */
 .task .fa-times,
 .task .fa-edit,
 .task .done-span {
@@ -253,7 +321,6 @@ nav {
     padding: 7px 0 7px 10px;
 }
 
-/* Hover styles for the delete icon */
 .fa-times:hover,
 .fa-edit:hover,
 .done-span:hover,
@@ -261,23 +328,20 @@ nav {
     color: var(--theme-color);
 }
 
-/* Styles for task information */
 .task-detail {
     min-height: 100px;
     margin: 0 0 25px;
     overflow: hidden;
-    color: #ffffff;
+    color: var(--white-font);
     z-index: 2;
     position: relative;
 }
 
-/* Styles for task title */
 .task-title {
     font-weight: bold;
     font-size: 1.5rem;
 }
 
-/* Styles for task description */
 .task-desc {
     margin-top: 5px;
     font-size: 1rem;
@@ -288,7 +352,7 @@ nav {
     display: inline-block;
 }
 
-/* Styles for the modal for editing tasks */
+/* Styles for the modals */
 .modal {
     display: none;
     position: fixed;
@@ -301,7 +365,6 @@ nav {
     overflow: hidden;
 }
 
-/* Styles for the modal content within the edit task modal */
 .modalContent {
     background-color: #121212;
     width: 70%;
@@ -311,12 +374,11 @@ nav {
     padding: 30px;
     position: relative;
     display: flex;
-    color: #ffffff;
+    color: var(--white-font);
     flex-direction: column;
 }
 
 /* Done tasks */
-
 .doneTask {
     opacity: 0.5;
     box-shadow: none !important;
@@ -330,7 +392,6 @@ nav {
 }
 
 /* Line-through animation */
-
 @keyframes strike {
     0% {
         width: 0;
@@ -360,7 +421,6 @@ nav {
     animation-fill-mode: forwards;
 }
 
-/* Styles for the close button of the modal */
 #taskEditModal .closeButton {
     position: absolute;
     top: 15px;
@@ -368,19 +428,17 @@ nav {
     font-size: 24px;
 }
 
-/* Styles for the form within the edit task modal */
+/* Styles for edit task modal */
 #taskEditModal form {
     font-size: 18px;
     margin-top: 20px;
 }
 
-/* Styles for labels within the edit task modal */
 #taskEditModal label {
     display: block;
     margin-bottom: 5px;
 }
 
-/* Styles for input fields, textarea, and select within the edit task modal */
 #taskEditModal #taskTitle,
 #taskEditModal #taskDescription,
 #taskEditModal #taskStatus {
@@ -391,7 +449,6 @@ nav {
     border-radius: 5px;
 }
 
-/* Styles for the submit button within the edit task modal */
 #taskEditModal .saveModal {
     background-color: var(--theme-color);
     color: #000000;
@@ -412,7 +469,6 @@ nav {
     transition: all .5s ease;
 }
 
-/* Styles for menu icons */
 .menuContent .fa-times,
 .menuContent .fa-github,
 .menuContent .fa-paint-roller {
@@ -422,32 +478,21 @@ nav {
     text-decoration: none;
 }
 
-/* Positioning for the close icon within the menu */
 .menuContent .fa-times {
     right: 28%;
     bottom: 7%;
 }
 
-/* Positioning for the history icon within the menu */
-/* use position for new icon */
-/*.menuContent .fa-history {*/
-/*	right: 20%;*/
-/*	bottom: 11%;*/
-/*}*/
-
-/* Positioning for the GitHub icon within the menu */
 .menuContent .fa-github {
     right: 13%;
     bottom: 18%;
 }
 
-/* Positioning for the paint roller icon within the menu */
 .menuContent .fa-paint-roller {
     right: 7%;
     bottom: 26%;
 }
 
-/* Styles for the menu button */
 .menuBtn {
     display: block;
     background: none;
@@ -455,7 +500,6 @@ nav {
     width: 36px;
 }
 
-/* Styles for the bars within the menu button */
 .bar {
     background-color: var(--theme-color);
     height: 4px;
@@ -463,13 +507,12 @@ nav {
     margin: 6px 0;
 }
 
-/* Apply the "show-menu" class to reveal the menu */
 .show-menu {
     left: -260px !important;
     top: -260px !important;
 }
 
-/* Styles for color items */
+/* Styles for color items (color menu) */
 .colorItem {
     border: 1px solid #333333;
     position: absolute;
@@ -480,12 +523,10 @@ nav {
     border-radius: 100%;
 }
 
-/* Hover styles for color items */
 .colorItem:hover {
     opacity: 0.8;
 }
 
-/* Position of colors menu close menu*/
 .colorMenu .fa-times {
     bottom: 27%;
 }
@@ -554,10 +595,9 @@ a,
 /* Footer styles */
 footer {
     text-align: center;
-    color: #ffffff;
+    color: var(--white-font);
     width: 100%;
     padding: 20px;
-    background-color: #000000;
 }
 
 /* Styles for links within the footer */
@@ -571,6 +611,384 @@ footer .fa-heart {
 
 .showModal {
     display: block !important;
+}
+
+/* Login - Register Forms */
+.display-flex,
+.display-flex-center,
+.signup-content,
+.signin-content {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+}
+
+.signup .container,
+.sign-in .container {
+    min-height: unset;
+}
+
+.display-flex {
+    justify-content: space-between;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -o-justify-content: space-between;
+    -ms-justify-content: space-between;
+    align-items: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -o-align-items: center;
+    -ms-align-items: center;
+}
+
+.display-flex-center {
+    justify-content: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -o-justify-content: center;
+    -ms-justify-content: center;
+    align-items: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -o-align-items: center;
+    -ms-align-items: center;
+}
+
+.position-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.signup, .sign-in {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.8px);
+    -webkit-backdrop-filter: blur(2.8px);
+    text-align: center;
+    width: 80%;
+    margin-bottom: 5px;
+}
+
+.signup input:not([type="submit"]),
+.sign-in input:not([type="submit"]) {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.signup-form,
+.signup-image,
+.signin-form,
+.signin-image {
+    width: 50%;
+    overflow: hidden;
+}
+
+.signup-image {
+    margin: 0 55px;
+}
+
+.form-title {
+    margin-bottom: 33px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.signup-image {
+    margin-top: 45px;
+}
+
+.form-submit {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--white-font);
+    border-bottom: none;
+    padding: 15px 39px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-submit:hover {
+    opacity: 0.8;
+}
+
+.links-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.sign-in-content .links-container {
+    margin-top: 50px;
+}
+
+#signin {
+    margin-top: 16px;
+}
+
+.signup-image-link, .forget-password-link {
+    font-size: 14px;
+    color: var(--white-font);
+    display: block;
+}
+
+.signup .signup-image-link {
+    margin-top: 25px;
+}
+
+.signup-form {
+    margin-left: 75px;
+    margin-right: 75px;
+    padding-left: 20px;
+}
+
+.register-form {
+    width: 100%;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.material-icons-name {
+    font-size: 18px;
+}
+
+.signin-content {
+    padding-top: 30px;
+}
+
+.signin-form {
+    margin-right: 90px;
+    margin-left: 80px;
+}
+
+.signin-image {
+    margin-left: 110px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+label[for="remember-me"] {
+    padding-top: 2px;
+    font-size: 14px !important;
+    color: var(--white-font);
+}
+
+/* Input Styles */
+input {
+    width: 100%;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #999;
+    padding: 6px 30px;
+    box-sizing: border-box;
+}
+
+input::-webkit-input-placeholder {
+    color: #999;
+}
+
+input::-moz-placeholder {
+    color: #999;
+}
+
+input:-ms-input-placeholder {
+    color: #999;
+}
+
+input:-moz-placeholder {
+    color: #999;
+}
+
+input:focus {
+    border-bottom: 1px solid #222;
+}
+
+input:focus::-webkit-input-placeholder {
+    color: #222;
+}
+
+input:focus::-moz-placeholder {
+    color: #222;
+}
+
+input:focus:-ms-input-placeholder {
+    color: #222;
+}
+
+input:focus:-moz-placeholder {
+    color: #222;
+}
+
+.control-group {
+    display: inline-block;
+    vertical-align: top;
+    background: #fff;
+    text-align: left;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 200px;
+    height: 210px;
+    margin: 10px;
+}
+
+.control {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.control input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.control__indicator {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background: #e6e6e6;
+    border-radius: 5px;
+}
+
+.control--radio .control__indicator {
+    border-radius: 50%;
+}
+
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+    background: #ccc;
+}
+
+.control input:checked ~ .control__indicator {
+    background: var(--pink);
+}
+
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+    background: rgba(187, 134, 252, 0.52);
+}
+
+.control input:disabled ~ .control__indicator {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.control__indicator:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.control input:checked ~ .control__indicator:after {
+    display: block;
+}
+
+.control--checkbox .control__indicator:after {
+    left: 8px;
+    top: 4px;
+    width: 3px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.control--checkbox input:disabled ~ .control__indicator:after {
+    border-color: #7b7b7b;
+}
+
+.control--radio .control__indicator:after {
+    left: 7px;
+    top: 7px;
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.control--radio input:disabled ~ .control__indicator:after {
+    background: #7b7b7b;
+}
+
+.select {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.select select {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px 15px;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    background: #e6e6e6;
+    color: #7b7b7b;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select select::-ms-expand {
+    display: none;
+}
+
+.select select:hover,
+.select select:focus {
+    color: #000;
+    background: #ccc;
+}
+
+.select select:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.select__arrow {
+    position: absolute;
+    top: 16px;
+    right: 15px;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    border-style: solid;
+    border-width: 8px 5px 0 5px;
+    border-color: #7b7b7b transparent transparent transparent;
+}
+
+.select select:hover ~ .select__arrow,
+.select select:focus ~ .select__arrow {
+    border-top-color: #000;
+}
+
+.select select:disabled ~ .select__arrow {
+    border-top-color: #ccc;
 }
 
 /* Media Queries */
@@ -632,5 +1050,102 @@ footer .fa-heart {
     .task {
         flex-basis: calc(33.33333% - 30px);
         margin: 0 15px 30px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .container {
+        width: calc(100% - 30px);
+        max-width: 100%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .signup-content,
+    .signin-content {
+        flex-direction: column;
+        -moz-flex-direction: column;
+        -webkit-flex-direction: column;
+        -o-flex-direction: column;
+        -ms-flex-direction: column;
+        justify-content: center;
+        -moz-justify-content: center;
+        -webkit-justify-content: center;
+        -o-justify-content: center;
+        -ms-justify-content: center;
+    }
+
+    .signup-form {
+        margin-left: 0;
+        margin-right: 0;
+        /* box-sizing: border-box; */
+        padding: 0 30px 0 0;
+    }
+
+    .signin-image {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 50px;
+        order: 2;
+        -moz-order: 2;
+        -webkit-order: 2;
+        -o-order: 2;
+        -ms-order: 2;
+    }
+
+    .signup-form,
+    .signup-image,
+    .signin-form,
+    .signin-image {
+        width: auto;
+    }
+
+    .social-login {
+        justify-content: center;
+        -moz-justify-content: center;
+        -webkit-justify-content: center;
+        -o-justify-content: center;
+        -ms-justify-content: center;
+    }
+
+    .form-button {
+        text-align: center;
+    }
+
+    .signin-form {
+        order: 1;
+        -moz-order: 1;
+        -webkit-order: 1;
+        -o-order: 1;
+        -ms-order: 1;
+        margin-right: 0;
+        margin-left: 0;
+        padding: 0 30px;
+    }
+
+    .form-title {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .social-login {
+        flex-direction: column;
+        -moz-flex-direction: column;
+        -webkit-flex-direction: column;
+        -o-flex-direction: column;
+        -ms-flex-direction: column;
+    }
+
+    .social-label {
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 }
