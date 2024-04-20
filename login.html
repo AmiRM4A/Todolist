@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Meta tags for character set and viewport -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!-- Page title -->
+	<title>Login Account</title>
+	<!-- Link to the main CSS file -->
+	<link rel="stylesheet" href="assets/css/style.css"/>
+	<!-- Link to Font Awesome for icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	      crossorigin="anonymous"
+	      referrerpolicy="no-referrer"/>
+	<!-- Link to Favicon file -->
+	<link id="favIcon" rel="shortcut icon" href="assets/images/icon/fav-pink.png" type="image/x-icon"/>
+	<!-- Link to animate.css CDN for animations -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+<header>
+	<div>
+		<!-- Navigation bar -->
+		<nav>
+			<div>
+				<!-- Logo -->
+				<a href="#">
+					<img id="logo" src="assets/images/logo/logo-pink.png" alt="Logo"/>
+				</a>
+			</div>
+		</nav>
+	</div>
+</header>
+
+<div class="main">
+	<!-- Sign-in section -->
+	<section class="sign-in">
+		<div class="container">
+			<div class="signin-content">
+				<div class="signin-image">
+					<!-- Image for sign-in -->
+					<figure>
+						<img src="assets/images/signin-image.svg" alt="Sign up image"/>
+					</figure>
+				</div>
+
+				<div class="signin-form">
+					<!-- Sign-in form -->
+					<h2 class="form-title">Sign in</h2>
+					<form method="POST" class="register-form" id="login-form">
+						<div class="form-group">
+							<!-- Username input -->
+							<label for="your_user_name"></label>
+							<input type="text" name="user_name" id="your_user_name" placeholder="Your Username"
+							       required minlength="5"/>
+						</div>
+						<div class="form-group">
+							<!-- Password input -->
+							<label for="your_pass"></label>
+							<input type="password" name="your_pass" id="your_pass" placeholder="Password"
+							       required minlength="6"/>
+						</div>
+						<div class="form-group">
+							<!-- Remember me checkbox -->
+							<label class="control control--checkbox" for="remember-me">Remember Me
+								<input type="checkbox" checked="checked" name="remember-me" id="remember-me"/>
+								<span class="control__indicator"></span>
+							</label>
+						</div>
+						<div class="form-group form-button">
+							<!-- Sign-in button -->
+							<input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+						</div>
+						<div class="links-container">
+							<!-- Links for sign-up and forget password -->
+							<a href="#" class="signup-image-link">Already a member?</a>
+							<a href="#" class="forget-password-link">Forget Password?</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<footer>
+	<div>
+		<!-- Footer with creator's information -->
+		Created with <i class="fa-solid fa-heart"></i> by
+		<!-- Link to the creator's GitHub profile -->
+		<a href="https://github.com/AmiRM4A">Amir</a>
+	</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Meta tags for character set and viewport -->
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!-- Page title -->
+	<title>Register Account</title>
+	<!-- Link to the main CSS file -->
+	<link rel="stylesheet" href="assets/css/style.css"/>
+	<!-- Link to Font Awesome for icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	      crossorigin="anonymous"
+	      referrerpolicy="no-referrer"/>
+	<!-- Link to Favicon file -->
+	<link id="favIcon" rel="shortcut icon" href="assets/images/icon/fav-pink.png" type="image/x-icon"/>
+	<!-- Link to animate.css CDN for animations -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+<header>
+	<div>
+		<!-- Navigation bar -->
+		<nav>
+			<div>
+				<!-- Logo -->
+				<a href="#">
+					<img id="logo" src="assets/images/logo/logo-pink.png" alt="Logo"/>
+				</a>
+			</div>
+		</nav>
+	</div>
+</header>
+<div class="main">
+	<!-- Sign up section -->
+	<section class="signup">
+		<div class="container">
+			<div class="signup-content">
+				<div class="signup-form">
+					<!-- Sign up form -->
+					<h2 class="form-title">Sign up</h2>
+					<form method="POST" class="register-form" id="register-form">
+						<div class="form-group">
+							<!-- Name input -->
+							<label for="name"></label>
+							<input type="text" name="name" id="name" placeholder="Your Name" required minlength="3"/>
+						</div>
+						<div class="form-group">
+							<!-- Email input -->
+							<label for="email"></label>
+							<input type="email" name="email" id="email" placeholder="Your Email" required/>
+						</div>
+						<div class="form-group">
+							<!-- Username input -->
+							<label for="username"></label>
+							<input type="text" name="user_name" id="username" placeholder="Your Username" required minlength="5"/>
+						</div>
+						<div class="form-group">
+							<!-- Password input -->
+							<label for="pass"></label>
+							<input type="password" name="pass" id="pass" placeholder="Password" required minlength="6"/>
+						</div>
+						<div class="form-group">
+							<!-- Repeat password input -->
+							<label for="re-pass"></label>
+							<input type="password" name="re-pass" id="re-pass" placeholder="Repeat your password" required minlength="6"/>
+						</div>
+						<div class="form-group form-button">
+							<!-- Register button -->
+							<input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+						</div>
+					</form>
+					<!-- Link for existing members -->
+					<a href="#" class="signup-image-link">Already a member?</a>
+				</div>
+				<div class="signup-image">
+					<!-- Image for sign up -->
+					<figure>
+						<img src="assets/images/signup-image.svg" alt="sign up image"/>
+					</figure>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<footer>
+	<div>
+		<!-- Footer with creator's information -->
+		Created with <i class="fa-solid fa-heart"></i> by
+		<!-- Link to the creator's GitHub profile -->
+		<a href="https://github.com/AmiRM4A">Amir</a>
+	</div>
+</footer>
+</body>
+</html>
