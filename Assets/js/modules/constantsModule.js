@@ -1,5 +1,5 @@
-const ICONS_PATH = 'Assets/img/icon/';
-const LOGOS_PATH = 'Assets/img/logo/';
+const ICONS_PATH = 'assets/images/icon/';
+const LOGOS_PATH = 'assets/images/logo/';
 const HEADER_TYPE_DELAY = 100;
 const $ = document;
 const LOCAL_STORAGE_TASKS_KEY = 'tasks';
