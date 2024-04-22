@@ -683,6 +683,7 @@ footer .fa-heart {
     -webkit-backdrop-filter: blur(2.8px);
     text-align: center;
     width: 80%;
+    height: 80vh;
     margin-bottom: 5px;
 }
 
