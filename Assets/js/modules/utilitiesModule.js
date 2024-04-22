@@ -26,7 +26,7 @@ function getCurrentDate() {
  * @description Checks if the provided HTML element contains the specified CSS class.
  */
 function hasClass(element, className) {
-    return element.classList.contains(className);
+    return $(element).hasClass(className);
 }
 
 /**
@@ -40,7 +40,7 @@ function hasClass(element, className) {
  * @description Clears the value of the input field.
  */
 function resetInput(taskInput) {
-    taskInput.value = '';
+    $(taskInput).val('');
 }
 
 /**
@@ -55,7 +55,7 @@ function resetInput(taskInput) {
  * @description Toggles the specified CSS class on the provided HTML element.
  */
 function toggleClass(element, className) {
-    element.classList.toggle(className);
+    $(element).toggleClass(className);
 }
 
 /**
@@ -69,7 +69,7 @@ function toggleClass(element, className) {
  * @description Updates the website's favicon to match a selected color theme.
  */
 function changeFavIcon(newIconPath) {
-    document.querySelector('#favIcon').href = newIconPath;
+    $('#favIcon').attr('href', newIconPath);
 }
 
 /**
@@ -83,7 +83,7 @@ function changeFavIcon(newIconPath) {
  * @description Updates the website's logo to match a selected color theme.
  */
 function changeLogo(newLogoPath) {
-    document.querySelector('#logo').src = newLogoPath;
+    $('#logo').attr('src', newLogoPath);
 }
 
 /**
@@ -96,7 +96,7 @@ function changeLogo(newLogoPath) {
  * This function adds the specified class to one or more HTML elements.
  */
 function addClass(className, ...elements) {
-    elements.forEach(elem => elem.classList.add(className));
+    elements.forEach(elem => $(elem).addClass(className));
 }
 
 /**
@@ -109,7 +109,7 @@ function addClass(className, ...elements) {
  * This function removes the specified class from one or more HTML elements.
  */
 function removeClass(className, ...elements) {
-    elements.forEach(elem => elem.classList.remove(className));
+    elements.forEach(elem => $(elem).removeClass(className));
 }
 
 /**
@@ -122,12 +122,7 @@ function removeClass(className, ...elements) {
  * This function searches for the closest parent element with a specific class name.
  */
 function getParentElementByClassName(element, parentElementClassName) {
-    let elem = element;
-    while (!hasClass(elem, parentElementClassName)) {
-        elem = elem.parentElement;
-        if (elem.tagName === 'BODY') break;
-    }
-    return elem;
+    return $(element).closest(`.${parentElementClassName}`);
 }
 
 /**
@@ -140,14 +135,14 @@ function getParentElementByClassName(element, parentElementClassName) {
  * This function toggles class names on elements to switch between two states, typically for task completion.
  */
 function swapTaskIconsTo(to = 'completed', taskElem) {
-    const spanIconElem = taskElem.querySelector('.done-span');
-    const btnIconElem = taskElem.querySelector('.done-btn');
+    const spanIconElem = $(taskElem).find('.done-span');
+    const btnIconElem = $(taskElem).find('.done-btn');
     if (to === 'completed') {
-        addClass('fa-undo', btnIconElem, spanIconElem);
-        removeClass('fa-check', btnIconElem, spanIconElem);
+        addClass('fa-undo', spanIconElem, btnIconElem);
+        removeClass('fa-check', spanIconElem, btnIconElem);
     } else {
-        addClass('fa-check', btnIconElem, spanIconElem);
-        removeClass('fa-undo', btnIconElem, spanIconElem);
+        addClass('fa-check', spanIconElem, btnIconElem);
+        removeClass('fa-undo', spanIconElem, btnIconElem);
     }
 }
 

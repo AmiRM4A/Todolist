@@ -1,5 +1,5 @@
-import {changeFavIcon, changeLogo} from "./utilitiesModule.js";
-import {$, ICONS_PATH, LOGOS_PATH} from "./constantsModule.js";
+import { changeFavIcon, changeLogo } from "./utilitiesModule.js";
+import { ICONS_PATH, LOGOS_PATH } from "./constantsModule.js";
 
 const colors = {
     'rgb(187, 134, 252)': 'pink',
@@ -38,7 +38,7 @@ function selectThemeColor(color) {
     const colorName = getColorName(color);
     changeFavIcon(`${ICONS_PATH}fav-${colorName}.png`);
     changeLogo(`${LOGOS_PATH}logo-${colorName}.png`);
-    $.documentElement.style.setProperty('--theme-color', color);
+    $(':root').css('--theme-color', color);
 }
 
-export {selectThemeColor};
+export { selectThemeColor };

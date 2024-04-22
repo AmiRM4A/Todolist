@@ -7,7 +7,7 @@
  * @description Toggles the visibility of the color selection menu.
  */
 function toggleColorMenu() {
-    document.querySelector('.colorMenu').classList.toggle('show-menu');
+    $('.colorMenu').toggleClass('show-menu');
 }
 
 /**
@@ -22,8 +22,8 @@ function toggleColorMenu() {
  * @description Toggles the visibility of the menu by adding/removing CSS classes.
  */
 function toggleMenuContent(menuBtn, menuContent) {
-    menuBtn.classList.toggle("menu-open");
-    menuContent.classList.toggle('show-menu');
+    $(menuBtn).toggleClass("menu-open");
+    $(menuContent).toggleClass('show-menu');
 }
 
-export {toggleColorMenu, toggleMenuContent};
+export { toggleColorMenu, toggleMenuContent };

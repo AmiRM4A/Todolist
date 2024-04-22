@@ -82,7 +82,9 @@ function updateTaskInStorage(taskIndex, tasksArr, newTaskData) {
  * @description Loads tasks from local storage and populates the task list in the DOM.
  */
 function loadStorageTasks(taskArray, tasksContainer) {
-    taskArray.forEach(taskData => addTask(taskData, tasksContainer, taskArray, taskData.status));
+    $.each(taskArray, (index, taskData) => {
+        addTask(taskData, tasksContainer, taskArray, taskData.status);
+    });
 }
 
 export {setToStorage, getFromStorage, getStorageTaskIndex, updateTaskInStorage, loadStorageTasks};

@@ -16,7 +16,7 @@ import {LOCAL_STORAGE_TASKS_KEY} from './constantsModule.js';
  * @description Selects a task element in the DOM by its ID.
  */
 function selectTask(taskId, tasksContainer) {
-    return tasksContainer.querySelector(`[data-task-id="${taskId}"]`) || null;
+    return $(tasksContainer).find(`[data-task-id="${taskId}"]`);
 }
 
 /**
@@ -93,8 +93,8 @@ function createTaskElem(taskId, taskName, taskDesc, taskCreationDate) {
  */
 function updateTaskInDom(taskElem, newTaskData) {
     if (taskElem !== null) {
-        taskElem.querySelector('.task-title').textContent = newTaskData.name;
-        taskElem.querySelector('.task-desc').textContent = newTaskData.desc;
+        $(taskElem).find('.task-title').text(newTaskData.name);
+        $(taskElem).find('.task-desc').text(newTaskData.desc);
     }
 }
 
@@ -110,7 +110,7 @@ function updateTaskInDom(taskElem, newTaskData) {
  * @description Gets the ID of a task element in the DOM.
  */
 function getTaskId(taskElem) {
-    return Number(taskElem.dataset.taskId);
+    return Number($(taskElem).data('taskId'));
 }
 
 function getTaskData(tasksList, taskId) {
@@ -130,8 +130,10 @@ function getTaskData(tasksList, taskId) {
  */
 function getLastTaskId(tasksArr) {
     let lastId = 0;
-    tasksArr.forEach(task => lastId = (task.id > lastId) ? task.id : lastId);
-    return lastId
+    $.each(tasksArr, (index, task) => {
+        lastId = (task.id > lastId) ? task.id : lastId;
+    });
+    return lastId;
 }
 
 /**
@@ -150,7 +152,7 @@ function removeTask(taskElem, tasksArr) {
     const index = getStorageTaskIndex(taskElemId, tasksArr);
     tasksArr.splice(index, 1);
     setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
-    taskElem.remove();
+    $(taskElem).remove();
 }
 
 /**
@@ -173,13 +175,13 @@ function addTask(taskData, tasksContainer, tasksArr, fromStorage = false) {
         setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
     }
     const htmlTaskCode = createTaskElem(taskData.id, taskData.name, taskData.desc, taskData.createdAt);
-    tasksContainer.insertAdjacentHTML('beforeend', htmlTaskCode);
+    $(tasksContainer).append(htmlTaskCode);
     const taskElem = selectTask(taskData.id, tasksContainer);
     if (fromStorage) {
         markTaskAsCompleted(taskElem, taskData, tasksArr, true);
         return;
     }
-    resetInput(document.getElementById('taskInput'));
+    resetInput($('#taskInput'));
 }
 
 export {selectTask, updateTaskInDom, removeTask, addTask, getTaskId, getTaskData}
