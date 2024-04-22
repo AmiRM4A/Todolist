@@ -34,6 +34,16 @@ a {
     --indigo: #3d5afe;
     --red: #ff5252;
     --green: #64dd17;
+    --color-invalid: #D8000C;
+    --invalid-bg: #FFBABA;
+    --color-valid: #4F8A10;
+    --valid-bg: #DFF2BF;
+    --color-info: #00529B;
+    --info-bg: #BDE5F8;
+    --color-warning: #9F6000;
+    --warning-bg: #FEEFB3;
+    --color-validation: #D63301;
+    --validation-bg: #FFCCBA;
 }
 
 /* Global styles */
@@ -680,7 +690,11 @@ footer .fa-heart {
 .sign-in input:not([type="submit"]) {
     padding: 10px;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255);
+}
+
+.remember-me {
+    margin-top: 30px;
 }
 
 .signup-form,
@@ -723,17 +737,12 @@ footer .fa-heart {
 }
 
 .links-container {
-    margin-top: 15px;
     display: flex;
     justify-content: space-around;
 }
 
 .sign-in-content .links-container {
     margin-top: 50px;
-}
-
-#signin {
-    margin-top: 16px;
 }
 
 .signup-image-link, .forget-password-link {
@@ -758,7 +767,7 @@ footer .fa-heart {
 
 .form-group {
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .form-group:last-child {
@@ -814,10 +823,6 @@ input:-ms-input-placeholder {
 
 input:-moz-placeholder {
     color: #999;
-}
-
-input:focus {
-    border-bottom: 1px solid #222;
 }
 
 input:focus::-webkit-input-placeholder {
@@ -989,6 +994,127 @@ input:focus:-moz-placeholder {
 
 .select select:disabled ~ .select__arrow {
     border-top-color: #ccc;
+}
+
+.eye-icon {
+    cursor: pointer;
+    position: absolute;
+    color: #333333 !important;
+    right: 3%;
+    top: 30%;
+}
+
+.login-form .eye-icon {
+    right: 3%;
+    top: 30%;
+}
+
+.register-form .password .eye-icon {
+
+}
+
+.register-form .re-password .eye-icon {
+
+}
+
+/* Inputs custom error styles */
+
+@keyframes error-shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-3px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes show-message {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0; /* Initially hidden */
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1; /* Fully visible */
+    }
+}
+
+@keyframes hide-message {
+    0% {
+        transform: translateY(0);
+        opacity: 1; /* Fully visible */
+    }
+    100% {
+        transform: translateY(-10px);
+        opacity: 0; /* Fully hidden */
+    }
+}
+
+
+.form-group__input {
+    border: 2px solid rgb(177, 177, 177);
+    width: 100%;
+    transition: border-color 300ms; /* Added transition for smooth effect */
+}
+
+.form-group__input,
+.form-group__validation-error {
+    position: relative;
+}
+
+.form-group__message {
+    position: absolute;
+    padding: 5px;
+    top: 36px;
+    display: none;
+    border-radius: 3px 3px 12px 12px;
+    font-size: 0.75rem;
+    z-index: -1;
+    margin: 0 auto;
+    width: 99.5%;
+}
+
+.form-group__validation-error {
+    color: var(--color-validation) !important;
+    background-color: var(--validation-bg) !important;
+}
+
+.form-group__info {
+    color: var(--color-info);
+    background-color: var(--info-bg);
+}
+
+.form-group__input:focus:invalid + .form-group__info {
+    animation: show-message 0.6s;
+    display: block;
+}
+
+.form-group__input:focus:valid + .form-group__info {
+    animation: hide-message 0.6s forwards;
+}
+
+/*When it was invalid :::: */
+/*.form-group__input:focus:invalid {*/
+/*    color: var(--color-invalid);*/
+/*    animation: error-shake 250ms;*/
+/*}*/
+
+/*.form-group__input:focus:invalid + .form-group__validation-error {*/
+/*    display: block; !* Show error when input is focused and invalid *!*/
+/*    animation: error-shake 250ms;*/
+/*}*/
+
+.fa-eye{
+    color: #ffffff;
 }
 
 /* Media Queries */
