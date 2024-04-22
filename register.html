@@ -41,30 +41,92 @@
 					<!-- Sign up form -->
 					<h2 class="form-title">Sign up</h2>
 					<form method="POST" class="register-form" id="register-form">
-						<div class="form-group">
+						<div class="form-group name">
 							<!-- Name input -->
 							<label for="name"></label>
-							<input type="text" name="name" id="name" placeholder="Your Name" required minlength="3"/>
+							<input
+									class="form-group__input"
+									type="text"
+									name="name"
+									id="name"
+									placeholder="Your Name"
+									minlength="3"
+									autocomplete="off"
+									spellcheck="false"
+									required
+							/>
+							<span class="form-group__message form-group__info">
+                                  At least three letters
+                            </span>
 						</div>
-						<div class="form-group">
+						<div class="form-group email">
 							<!-- Email input -->
 							<label for="email"></label>
-							<input type="email" name="email" id="email" placeholder="Your Email" required/>
+							<input
+									class="form-group__input"
+									type="email"
+									name="email"
+									id="email"
+									placeholder="Your Email"
+									autocomplete="off"
+									spellcheck="false"
+									required
+							/>
+							<span class="form-group__message form-group__info">
+                                  example@gmail.com
+                            </span>
+
 						</div>
-						<div class="form-group">
+						<div class="form-group username">
 							<!-- Username input -->
 							<label for="username"></label>
-							<input type="text" name="user_name" id="username" placeholder="Your Username" required minlength="5"/>
+							<input
+									class="form-group__input"
+									type="text"
+									name="user_name"
+									id="username"
+									placeholder="Your Username"
+									minlength="5"
+									autocomplete="off"
+									spellcheck="false"
+									required
+							/>
+							<span class="form-group__message form-group__info">
+                                  At least 5 letters
+                            </span>
 						</div>
-						<div class="form-group">
+						<div class="form-group password">
 							<!-- Password input -->
-							<label for="pass"></label>
-							<input type="password" name="pass" id="pass" placeholder="Password" required minlength="6"/>
+							<label for="password"></label>
+							<input
+									class="form-group__input"
+									type="password"
+									name="password"
+									id="password"
+									placeholder="Password"
+									minlength="8"
+									autocomplete="off"
+									required
+							/>
+							<i class="fa-solid fa-eye eye-icon"></i>
+							<span class="form-group__message form-group__info">
+                                  6 Characters - One Digit - One upper and lower character
+                            </span>
 						</div>
-						<div class="form-group">
+						<div class="form-group re-password">
 							<!-- Repeat password input -->
-							<label for="re-pass"></label>
-							<input type="password" name="re-pass" id="re-pass" placeholder="Repeat your password" required minlength="6"/>
+							<label for="re-password"></label>
+							<input
+									class="form-group__input"
+									type="password"
+									name="re_pass"
+									id="re-password"
+									placeholder="Repeat your password"
+									minlength="8"
+									autocomplete="off"
+									required
+							/>
+							<i class="fa-solid fa-eye eye-icon"></i>
 						</div>
 						<div class="form-group form-button">
 							<!-- Register button -->

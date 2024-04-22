@@ -48,23 +48,47 @@
 				<div class="signin-form">
 					<!-- Sign-in form -->
 					<h2 class="form-title">Sign in</h2>
-					<form method="POST" class="register-form" id="login-form">
+					<form method="POST" class="login-form" id="login-form">
 						<div class="form-group">
 							<!-- Username input -->
-							<label for="your_user_name"></label>
-							<input type="text" name="user_name" id="your_user_name" placeholder="Your Username"
-							       required minlength="5"/>
+							<label for="email"></label>
+							<input
+									class="form-group__input"
+									type="text"
+									name="email"
+									id="email"
+									placeholder="Your Email"
+									pattern="^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$"
+									autocomplete="off"
+									spellcheck="false"
+									required
+							/>
+							<span class="form-group__message form-group__info">
+                                  example@gmail.com
+                            </span>
 						</div>
 						<div class="form-group">
 							<!-- Password input -->
-							<label for="your_pass"></label>
-							<input type="password" name="your_pass" id="your_pass" placeholder="Password"
-							       required minlength="6"/>
+							<label for="password"></label>
+							<input
+									class="form-group__input"
+									type="password"
+									name="password"
+									id="password"
+									placeholder="Password"
+									pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
+									required
+							/>
+							<span class="form-group__message form-group__info">
+                                  6 Characters - One Digit - One upper and lower character
+                            </span>
+							<i class="fa-solid fa-eye eye-icon"></i>
+
 						</div>
-						<div class="form-group">
+						<div class="form-group remember-me">
 							<!-- Remember me checkbox -->
 							<label class="control control--checkbox" for="remember-me">Remember Me
-								<input type="checkbox" checked="checked" name="remember-me" id="remember-me"/>
+								<input type="checkbox" name="remember-me" id="remember-me"/>
 								<span class="control__indicator"></span>
 							</label>
 						</div>
