@@ -11,15 +11,15 @@ import {hasClass, toggleClass, getParentElementByClassName, removeClass, addClas
 import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
 import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
-import {$, LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
+import {LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
 
-const taskInput = $.getElementById('taskInput');
-const tasksCon = $.querySelector('.todo');
-const menuContainer = $.getElementById('menuContainer');
-const menuContent = $.querySelector('.menuContent');
-const menuBtn = $.querySelector(".menuBtn");
-const taskEditModal = $.getElementById('taskEditModal');
-const tasksSection = $.getElementById('tasksSection');
+const taskInput = $('#taskInput');
+const tasksCon = $('.todo');
+const menuContainer = $('#menuContainer');
+const menuContent = $('.menuContent');
+const menuBtn = $(".menuBtn");
+const taskEditModal = $('#taskEditModal');
+const tasksSection = $('#tasksSection');
 
 /* Initialize tasks array */
 let tasks;
@@ -56,12 +56,12 @@ function initialize() {
  * @description Fills the input fields in the edit task modal with data from the selected task element.
  */
 function fillEditTaskModalInputs(taskElem) {
-    const modalId = taskEditModal.querySelector('.taskId');
-    const modalTitle = taskEditModal.querySelector('#taskTitle');
-    const modalDesc = taskEditModal.querySelector('#taskDescription');
-    modalId.value = getTaskId(taskElem);
-    modalTitle.value = taskElem.querySelector('.task-title').textContent;
-    modalDesc.value = taskElem.querySelector('.task-desc').textContent;
+    const modalId = taskEditModal.find('.taskId');
+    const modalTitle = taskEditModal.find('#taskTitle');
+    const modalDesc = taskEditModal.find('#taskDescription');
+    modalId.val(getTaskId(taskElem));
+    modalTitle.val($(taskElem).find('.task-title').text());
+    modalDesc.val($(taskElem).find('.task-desc').text());
 }
 
 /**
@@ -74,12 +74,11 @@ function fillEditTaskModalInputs(taskElem) {
  */
 function handleSaveModalBtnClick() {
     // Get new changes of task from tasks edit modal
-    const form = new FormData(taskEditModal.querySelector('form'));
     const data = {
-        id: Number(form.get('task-id')),
-        name: form.get('taskTitle'),
-        desc: form.get('taskDescription'),
-        status: (form.get('taskStatus') === 'done')
+        id: Number(taskEditModal.find('.taskId').val()),
+        name: taskEditModal.find('#taskTitle').val(),
+        desc: taskEditModal.find('#taskDescription').val(),
+        status: (taskEditModal.find('#taskStatus').is(':checked'))
     }
 
     // Mark tasks as completed/uncompleted based on status input value
@@ -95,55 +94,70 @@ function handleSaveModalBtnClick() {
 }
 
 /* --- Event listeners --- */
-window.addEventListener('load', initialize);
+$(window).on('load', initialize);
 
-window.addEventListener('scroll', () => {
-    const header = $.querySelector('header');
-    if (window.scrollY > 59) {
+$(window).on('scroll', () => {
+    const header = $('header');
+    if ($(window).scrollTop() > 59) {
         addClass('sticky', header);
-    } else if (window.scrollY < 51) {
+    } else if ($(window).scrollTop() < 51) {
         removeClass('sticky', header);
     }
 });
 
-tasksSection.addEventListener('click', (event) => {
+tasksSection.on('click', (event) => {
     event.preventDefault();
-    const target = event.target;
+    const target = $(event.target);
     const taskElem = getParentElementByClassName(target, 'task');
-    if (hasClass(target, 'addTodoBtn')) {
-        const taskName = taskInput.value;
+    if (target.hasClass('addTodoBtn')) {
+        const taskName = taskInput.val();
         if (taskName) addTask(taskName, tasksCon, tasks, false);
-    } else if (hasClass(target, 'fa-times')) removeTask(taskElem, tasks);
-    else if (hasClass(target, 'fa-edit')) {
+    } else if (target.hasClass('fa-times')) {
+        event.preventDefault();
+        removeTask(taskElem, tasks);
+    } else if (target.hasClass('fa-edit')) {
+        event.preventDefault();
         fillEditTaskModalInputs(taskElem);
         toggleClass(taskEditModal, 'showModal');
-    } else if (hasClass(target, 'fa-undo')) undoCompletedTask(taskElem, tasks);
-    else if (hasClass(target, 'done-span') || hasClass(target, 'done-btn')) {
+    } else if (target.hasClass('fa-undo')) {
+        event.preventDefault();
+        undoCompletedTask(taskElem, tasks);
+    } else if (target.hasClass('done-span') || target.hasClass('done-btn')) {
+        event.preventDefault();
         // Mark selected task as completed
         markTaskAsCompleted(taskElem, getTaskData(tasks, getTaskId(taskElem)), tasks);
     }
 });
 
-taskEditModal.addEventListener('click', (event) => {
-    const target = event.target;
-    if (hasClass(target, 'closeButton')) toggleClass(taskEditModal, 'showModal');
-    else if (hasClass(target, 'saveModal')) handleSaveModalBtnClick();
+taskEditModal.on('click', (event) => {
+    const target = $(event.target);
+    if (target.hasClass('closeButton')) {
+        event.preventDefault();
+        toggleClass(taskEditModal, 'showModal');
+    } else if (target.hasClass('saveModal')) {
+        event.preventDefault();
+        handleSaveModalBtnClick();
+    }
 });
 
-menuContainer.addEventListener('click', (event) => {
-    const target = event.target;
-    if (hasClass(target, 'menuClose')) toggleMenuContent(menuBtn, menuContent);
-    else if (hasClass(target, 'fa-paint-roller') || hasClass(target, 'colorMenuClose')) toggleColorMenu();
-    else if (hasClass(target, 'colorItem')) {
-        const colorRgbCode = getComputedStyle(target)['background-color'];
+menuContainer.on('click', (event) => {
+    event.preventDefault();
+    const target = $(event.target);
+    if (target.hasClass('menuClose')) toggleMenuContent(menuBtn, menuContent);
+    else if (target.hasClass('fa-paint-roller') || target.hasClass('colorMenuClose')) toggleColorMenu();
+    else if (target.hasClass('colorItem')) {
+        const colorRgbCode = target.css('background-color');
         selectThemeColor(colorRgbCode);
         setToStorage('theme-color', colorRgbCode);
     }
 });
 
-menuBtn.addEventListener('click', () => toggleMenuContent(menuBtn, menuContent));
+menuBtn.on('click', (event) => {
+    event.preventDefault();
+    toggleMenuContent(menuBtn, menuContent);
+});
 
-document.addEventListener('keyup', (event) => {
+$(document).on('keyup', (event) => {
     if (event.key === 'Escape') {
         // After pressing Esc key, check for open modals to close them
         if (hasClass(taskEditModal, 'showModal')) toggleClass(taskEditModal, 'showModal');

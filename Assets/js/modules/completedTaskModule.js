@@ -18,20 +18,20 @@ import {LOCAL_STORAGE_TASKS_KEY} from './constantsModule.js';
  */
 function undoCompletedTask(completedTaskElem, tasksArr) {
     // Change the status of task to uncompleted in storage
-    const index = getStorageTaskIndex(Number(completedTaskElem.dataset.taskId), tasksArr);
+    const index = getStorageTaskIndex(Number($(completedTaskElem).data('taskId')), tasksArr);
     tasksArr[index]['status'] = false;
     delete tasksArr[index]['completedAt'];
     setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
 
     // Change the UI status of task to uncompleted in page
     removeClass('doneTask', completedTaskElem);
-    removeClass('strike', completedTaskElem.querySelector('.task-title'), completedTaskElem.querySelector('.task-desc'));
+    removeClass('strike', $(completedTaskElem).find('.task-title'), $(completedTaskElem).find('.task-desc'));
     swapTaskIconsTo('uncompleted', completedTaskElem);
-    completedTaskElem.querySelector('.task-info').innerHTML = `
-	<i class="fas fa-info-circle"></i>
+    $(completedTaskElem).find('.task-info').html(`
+    <i class="fas fa-info-circle"></i>
         Created:
     <span style="color: var(--theme-color);"> ${tasksArr[index]['createdAt']} </span>
-	`;
+    `);
 }
 
 /**
@@ -56,13 +56,13 @@ function markTaskAsCompleted(taskElem, taskData, tasksArr, fromStorage = false) 
 
     // Change the status of task to completed in page
     addClass('doneTask', taskElem);
-    addClass('strike', taskElem.querySelector('.task-title'), taskElem.querySelector('.task-desc'));
+    addClass('strike', $(taskElem).find('.task-title'), $(taskElem).find('.task-desc'));
     swapTaskIconsTo('completed', taskElem);
-    taskElem.querySelector('.task-info').innerHTML = `
-	<i class="fa-solid fa-circle-check"></i>
+    $(taskElem).find('.task-info').html(`
+    <i class="fa-solid fa-circle-check"></i>
         Completed:
     <span style="color: var(--theme-color);"> ${(fromStorage) ? tasksArr[index].completedAt : taskData.completedAt} </span>
-	`;
+    `);
 }
 
 export {undoCompletedTask, markTaskAsCompleted};
