@@ -7,7 +7,14 @@ import {
 } from './modules/storageModule.js';
 import {updateTaskInDom, removeTask, addTask, getTaskId, selectTask, getTaskData} from './modules/taskModule.js';
 import {undoCompletedTask, markTaskAsCompleted} from './modules/completedTaskModule.js';
-import {hasClass, toggleClass, getParentElementByClassName, removeClass, addClass} from './modules/utilitiesModule.js';
+import {
+    hasClass,
+    toggleClass,
+    getParentElementByClassName,
+    removeClass,
+    addClass,
+    getFormInputs
+} from './modules/utilitiesModule.js';
 import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
 import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
