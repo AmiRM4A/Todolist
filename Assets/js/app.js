@@ -115,7 +115,7 @@ $(window).on('scroll', () => {
 
 tasksSection.on('click', (event) => {
     event.preventDefault();
-    const target = $(event.target);
+    const target = event.target;
     const taskElem = getParentElementByClassName(target, 'task');
     if (target.hasClass('addTodoBtn')) {
         const taskName = taskInput.val();
@@ -138,7 +138,7 @@ tasksSection.on('click', (event) => {
 });
 
 taskEditModal.on('click', (event) => {
-    const target = $(event.target);
+    const target = event.target;
     if (target.hasClass('closeButton')) {
         event.preventDefault();
         toggleClass(taskEditModal, 'showModal');
@@ -150,7 +150,7 @@ taskEditModal.on('click', (event) => {
 
 menuContainer.on('click', (event) => {
     event.preventDefault();
-    const target = $(event.target);
+    const target = event.target;
     if (target.hasClass('menuClose')) toggleMenuContent(menuBtn, menuContent);
     else if (target.hasClass('fa-paint-roller') || target.hasClass('colorMenuClose')) toggleColorMenu();
     else if (target.hasClass('colorItem')) {
