@@ -41,12 +41,12 @@
 	<section class="signup">
 		<div class="container">
 			<div class="signup-content">
+				<!-- Sign up form -->
 				<div class="signup-form">
-					<!-- Sign up form -->
 					<h2 class="form-title">Sign up</h2>
 					<form method="POST" class="register-form" id="register-form">
-						<div class="form-group name">
-							<!-- Name input -->
+						<!-- Name input -->
+						<div class="form-group" id="name-input">
 							<label for="name"></label>
 							<input
 									class="form-group__input"
@@ -59,12 +59,13 @@
 									spellcheck="false"
 									required
 							/>
-							<span class="form-group__message form-group__info">
-                                  At least three letters
+							<span class="form-group__message">
+                                  Invalid name
                             </span>
 						</div>
-						<div class="form-group email">
-							<!-- Email input -->
+
+						<!-- Email input -->
+						<div class="form-group" id="email-input">
 							<label for="email"></label>
 							<input
 									class="form-group__input"
@@ -76,18 +77,18 @@
 									spellcheck="false"
 									required
 							/>
-							<span class="form-group__message form-group__info">
-                                  example@gmail.com
+							<span class="form-group__message">
+                                  Invalid email address
                             </span>
-
 						</div>
-						<div class="form-group username">
-							<!-- Username input -->
+
+						<!-- Username input -->
+						<div class="form-group" id="username-input">
 							<label for="username"></label>
 							<input
 									class="form-group__input"
 									type="text"
-									name="user_name"
+									name="username"
 									id="username"
 									placeholder="Your Username"
 									minlength="5"
@@ -95,12 +96,13 @@
 									spellcheck="false"
 									required
 							/>
-							<span class="form-group__message form-group__info">
-                                  At least 5 letters
+							<span class="form-group__message">
+                                  Invalid username
                             </span>
 						</div>
-						<div class="form-group password">
-							<!-- Password input -->
+
+						<!-- Password input -->
+						<div class="form-group" id="password-input">
 							<label for="password"></label>
 							<input
 									class="form-group__input"
@@ -113,12 +115,13 @@
 									required
 							/>
 							<i class="fa-solid fa-eye eye-icon"></i>
-							<span class="form-group__message form-group__info">
-                                  6 Characters - One Digit - One upper and lower character
+							<span class="form-group__message">
+                                  Invalid password
                             </span>
 						</div>
-						<div class="form-group re-password">
-							<!-- Repeat password input -->
+
+						<!-- Repeat password input -->
+						<div class="form-group" id="re-password-input">
 							<label for="re-password"></label>
 							<input
 									class="form-group__input"
@@ -132,16 +135,17 @@
 							/>
 							<i class="fa-solid fa-eye eye-icon"></i>
 						</div>
-						<div class="form-group form-button">
-							<!-- Register button -->
+
+						<!-- Register button -->
+						<div class="form-group" id="register-submit-input">
 							<input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
 						</div>
 					</form>
 					<!-- Link for existing members -->
 					<a href="#" class="signup-image-link">Already a member?</a>
 				</div>
+				<!-- Image for sign up -->
 				<div class="signup-image">
-					<!-- Image for sign up -->
 					<figure>
 						<img src="assets/images/signup-image.svg" alt="sign up image"/>
 					</figure>
@@ -161,5 +165,6 @@
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
 <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

@@ -171,4 +171,69 @@ $(document).on('keyup', (event) => {
         if (hasClass(taskEditModal, 'showModal')) toggleClass(taskEditModal, 'showModal');
         else if (hasClass(menuContent, 'show-menu')) toggleMenuContent(menuBtn, menuContent);
     }
+// Event listeners for validating inputs
+$('#email').on('input', () => {
+    console.log('email event');
+
+    const emailInput = $('#email-input #email');
+    const emailInputMessage = $('#email-input .form-group__message');
+    const email = emailInput.val();
+
+    if (email && validateEmail(email)) {
+        emailInput.removeClass('show-input-validation-error');
+        emailInputMessage.removeClass('show-message-validation-error');
+    } else {
+        emailInput.addClass('show-input-validation-error');
+        emailInputMessage.addClass('show-message-validation-error');
+    }
+});
+
+$('#password').on('input', () => {
+    console.log('password event');
+
+    const passwordInput = $('#password-input #password');
+    const passwordMessage = $('#password-input .form-group__message');
+    const password = passwordInput.val();
+
+    if (password && validatePassword(password)) {
+        passwordInput.removeClass('show-input-validation-error');
+        passwordMessage.removeClass('show-message-validation-error');
+    } else {
+        passwordInput.addClass('show-input-validation-error');
+        passwordMessage.addClass('show-message-validation-error');
+    }
+});
+
+$('#name').on('input', () => {
+    console.log('name input');
+
+    const nameInput = $('#name-input #name');
+    const nameMessage = $('#name-input .form-group__message');
+    const name = nameInput.val();
+
+    if (name && validateName(name)) {
+        nameInput.removeClass('show-input-validation-error');
+        nameMessage.removeClass('show-message-validation-error');
+    } else {
+        nameInput.addClass('show-input-validation-error');
+        nameMessage.addClass('show-message-validation-error');
+    }
+});
+
+$('#username').on('input', () => {
+    console.log('username input');
+
+    const usernameInput = $('#username-input #username');
+    const usernameMessage = $('#username-input .form-group__message');
+    const username = usernameInput.val();
+
+    if (username && validateUsername(username)) {
+        usernameInput.removeClass('show-input-validation-error');
+        usernameMessage.removeClass('show-message-validation-error');
+    } else {
+        usernameInput.addClass('show-input-validation-error');
+        usernameMessage.addClass('show-message-validation-error');
+    }
+});
+
 });
