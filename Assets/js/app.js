@@ -251,4 +251,44 @@ $('.eye-icon').click(function (event) {
         eyeIcon.addClass('fa-eye');
     }
 });
+
+tippy('#password-info', {
+    content: "Must contain 8 letters at least",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#email-info', {
+    content: "Example@gmail.com",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#username-info', {
+    content: "At least 3 letters",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#name-info', {
+    content: "At least 5 letters",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#re-password-info', {
+    content: "Must match with password",
+    arrow: true,
+    animation: 'scale'
+});
+
+// Call API Services
+$('#login-form').submit(function (event) {
+    event.preventDefault();
+    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
+});
+
+$('#register-form').submit(function (event) {
+    event.preventDefault();
+    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
 });
