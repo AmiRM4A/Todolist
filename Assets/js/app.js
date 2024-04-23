@@ -7,11 +7,19 @@ import {
 } from './modules/storageModule.js';
 import {updateTaskInDom, removeTask, addTask, getTaskId, selectTask, getTaskData} from './modules/taskModule.js';
 import {undoCompletedTask, markTaskAsCompleted} from './modules/completedTaskModule.js';
-import {hasClass, toggleClass, getParentElementByClassName, removeClass, addClass} from './modules/utilitiesModule.js';
+import {
+    hasClass,
+    toggleClass,
+    getParentElementByClassName,
+    removeClass,
+    addClass,
+    getFormInputs
+} from './modules/utilitiesModule.js';
 import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
 import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
 import {LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
+import {validateEmail, validateName, validatePassword, validateUsername} from './modules/formValidationModule.js';
 
 const taskInput = $('#taskInput');
 const tasksCon = $('.todo');
@@ -107,7 +115,7 @@ $(window).on('scroll', () => {
 
 tasksSection.on('click', (event) => {
     event.preventDefault();
-    const target = $(event.target);
+    const target = event.target;
     const taskElem = getParentElementByClassName(target, 'task');
     if (target.hasClass('addTodoBtn')) {
         const taskName = taskInput.val();
@@ -130,7 +138,7 @@ tasksSection.on('click', (event) => {
 });
 
 taskEditModal.on('click', (event) => {
-    const target = $(event.target);
+    const target = event.target;
     if (target.hasClass('closeButton')) {
         event.preventDefault();
         toggleClass(taskEditModal, 'showModal');
@@ -142,7 +150,7 @@ taskEditModal.on('click', (event) => {
 
 menuContainer.on('click', (event) => {
     event.preventDefault();
-    const target = $(event.target);
+    const target = event.target;
     if (target.hasClass('menuClose')) toggleMenuContent(menuBtn, menuContent);
     else if (target.hasClass('fa-paint-roller') || target.hasClass('colorMenuClose')) toggleColorMenu();
     else if (target.hasClass('colorItem')) {
@@ -163,4 +171,124 @@ $(document).on('keyup', (event) => {
         if (hasClass(taskEditModal, 'showModal')) toggleClass(taskEditModal, 'showModal');
         else if (hasClass(menuContent, 'show-menu')) toggleMenuContent(menuBtn, menuContent);
     }
+// Event listeners for validating inputs
+$('#email').on('input', () => {
+    console.log('email event');
+
+    const emailInput = $('#email-input #email');
+    const emailInputMessage = $('#email-input .form-group__message');
+    const email = emailInput.val();
+
+    if (email && validateEmail(email)) {
+        emailInput.removeClass('show-input-validation-error');
+        emailInputMessage.removeClass('show-message-validation-error');
+    } else {
+        emailInput.addClass('show-input-validation-error');
+        emailInputMessage.addClass('show-message-validation-error');
+    }
+});
+
+$('#password').on('input', () => {
+    console.log('password event');
+
+    const passwordInput = $('#password-input #password');
+    const passwordMessage = $('#password-input .form-group__message');
+    const password = passwordInput.val();
+
+    if (password && validatePassword(password)) {
+        passwordInput.removeClass('show-input-validation-error');
+        passwordMessage.removeClass('show-message-validation-error');
+    } else {
+        passwordInput.addClass('show-input-validation-error');
+        passwordMessage.addClass('show-message-validation-error');
+    }
+});
+
+$('#name').on('input', () => {
+    console.log('name input');
+
+    const nameInput = $('#name-input #name');
+    const nameMessage = $('#name-input .form-group__message');
+    const name = nameInput.val();
+
+    if (name && validateName(name)) {
+        nameInput.removeClass('show-input-validation-error');
+        nameMessage.removeClass('show-message-validation-error');
+    } else {
+        nameInput.addClass('show-input-validation-error');
+        nameMessage.addClass('show-message-validation-error');
+    }
+});
+
+$('#username').on('input', () => {
+    console.log('username input');
+
+    const usernameInput = $('#username-input #username');
+    const usernameMessage = $('#username-input .form-group__message');
+    const username = usernameInput.val();
+
+    if (username && validateUsername(username)) {
+        usernameInput.removeClass('show-input-validation-error');
+        usernameMessage.removeClass('show-message-validation-error');
+    } else {
+        usernameInput.addClass('show-input-validation-error');
+        usernameMessage.addClass('show-message-validation-error');
+    }
+});
+
+$('.eye-icon').click(function (event) {
+    event.preventDefault();
+
+    const eyeIcon = $('.eye-icon');
+
+    if (eyeIcon.hasClass('fa-eye')) {
+        $('#password').attr('type', 'text');
+        eyeIcon.removeClass('fa-eye');
+        eyeIcon.addClass('fa-eye-slash');
+    } else if (eyeIcon.hasClass('fa-eye-slash')) {
+        $('#password').attr('type', 'password');
+        eyeIcon.removeClass('fa-eye-slash');
+        eyeIcon.addClass('fa-eye');
+    }
+});
+
+tippy('#password-info', {
+    content: "Must contain 8 letters at least",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#email-info', {
+    content: "Example@gmail.com",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#username-info', {
+    content: "At least 3 letters",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#name-info', {
+    content: "At least 5 letters",
+    arrow: true,
+    animation: 'scale'
+});
+
+tippy('#re-password-info', {
+    content: "Must match with password",
+    arrow: true,
+    animation: 'scale'
+});
+
+// Call API Services
+$('#login-form').submit(function (event) {
+    event.preventDefault();
+    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
+});
+
+$('#register-form').submit(function (event) {
+    event.preventDefault();
+    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
 });

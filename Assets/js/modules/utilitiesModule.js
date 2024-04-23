@@ -146,6 +146,17 @@ function swapTaskIconsTo(to = 'completed', taskElem) {
     }
 }
 
+function getFormInputs(selector) {
+    if (typeof selector !== 'string') {
+        return {};
+    }
+
+    return $('#login-form').serializeArray().reduce(function (obj, item) {
+        obj[item.name] = item.value;
+        return obj;
+    }, {});
+}
+
 
 export {
     getCurrentDate,
@@ -157,5 +168,6 @@ export {
     removeClass,
     addClass,
     getParentElementByClassName,
-    swapTaskIconsTo
+    swapTaskIconsTo,
+    getFormInputs
 };

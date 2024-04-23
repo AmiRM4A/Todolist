@@ -997,17 +997,16 @@ input:focus:-moz-placeholder {
     border-top-color: #ccc;
 }
 
-.eye-icon {
+.eye-icon, .fa-circle-info {
     cursor: pointer;
     position: absolute;
-    color: #333333 !important;
+    color: #444 !important;
     right: 3%;
     top: 30%;
 }
 
-.login-form .eye-icon {
-    right: 3%;
-    top: 30%;
+.eye-icon {
+    margin-right: 1.5rem;
 }
 
 .register-form .password .eye-icon {
@@ -1060,7 +1059,6 @@ input:focus:-moz-placeholder {
     }
 }
 
-
 .form-group__input {
     border: 2px solid rgb(177, 177, 177);
     width: 100%;
@@ -1068,7 +1066,7 @@ input:focus:-moz-placeholder {
 }
 
 .form-group__input,
-.form-group__validation-error {
+.show-message-validation-error {
     position: relative;
 }
 
@@ -1077,44 +1075,26 @@ input:focus:-moz-placeholder {
     padding: 5px;
     top: 36px;
     display: none;
-    border-radius: 3px 3px 12px 12px;
+    border-radius: 0 0 12px 12px;
     font-size: 0.75rem;
     z-index: -1;
-    margin: 0 auto;
-    width: 99.5%;
+    width: 100%;
 }
 
-.form-group__validation-error {
+.show-message-validation-error {
+    display: block;
+    animation: error-shake 250ms;
     color: var(--color-validation) !important;
     background-color: var(--validation-bg) !important;
 }
 
-.form-group__info {
-    color: var(--color-info);
-    background-color: var(--info-bg);
+/* Invalid input showing */
+.show-input-validation-error {
+    color: var(--color-validation);
+    animation: error-shake 250ms;
 }
 
-.form-group__input:focus:invalid + .form-group__info {
-    animation: show-message 0.6s;
-    display: block;
-}
-
-.form-group__input:focus:valid + .form-group__info {
-    animation: hide-message 0.6s forwards;
-}
-
-/*When it was invalid :::: */
-/*.form-group__input:focus:invalid {*/
-/*    color: var(--color-invalid);*/
-/*    animation: error-shake 250ms;*/
-/*}*/
-
-/*.form-group__input:focus:invalid + .form-group__validation-error {*/
-/*    display: block; !* Show error when input is focused and invalid *!*/
-/*    animation: error-shake 250ms;*/
-/*}*/
-
-.fa-eye{
+.fa-eye {
     color: #ffffff;
 }
 
@@ -1242,7 +1222,8 @@ input:focus:-moz-placeholder {
         -ms-justify-content: center;
     }
 
-    .form-button {
+    #register-submit-input,
+    #login-submit-input {
         text-align: center;
     }
 

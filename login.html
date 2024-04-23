@@ -17,6 +17,10 @@
 	<link id="favIcon" rel="shortcut icon" href="assets/images/icon/fav-pink.png" type="image/x-icon"/>
 	<!-- Link to animate.css CDN for animations -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link
+			rel="stylesheet"
+			href="https://unpkg.com/tippy.js@6/animations/scale.css"
+	/>
 </head>
 <body>
 <header>
@@ -38,19 +42,18 @@
 	<section class="sign-in">
 		<div class="container">
 			<div class="signin-content">
+				<!-- Image for sign-in -->
 				<div class="signin-image">
-					<!-- Image for sign-in -->
 					<figure>
 						<img src="assets/images/signin-image.svg" alt="Sign up image"/>
 					</figure>
 				</div>
-
+				<!-- Sign-in form -->
 				<div class="signin-form">
-					<!-- Sign-in form -->
 					<h2 class="form-title">Sign in</h2>
-					<form method="POST" class="login-form" id="login-form">
-						<div class="form-group">
-							<!-- Username input -->
+					<form method="POST" class="login-form" id="login-form" novalidate>
+						<!-- Email input -->
+						<div class="form-group" id="email-input">
 							<label for="email"></label>
 							<input
 									class="form-group__input"
@@ -58,17 +61,18 @@
 									name="email"
 									id="email"
 									placeholder="Your Email"
-									pattern="^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$"
 									autocomplete="off"
 									spellcheck="false"
 									required
 							/>
-							<span class="form-group__message form-group__info">
-                                  example@gmail.com
+							<span class="form-group__message">
+								Invalid Email
                             </span>
+							<i class="fa-solid fa-circle-info" id="email-info"></i>
 						</div>
-						<div class="form-group">
-							<!-- Password input -->
+
+						<!-- Password input -->
+						<div class="form-group" id="password-input">
 							<label for="password"></label>
 							<input
 									class="form-group__input"
@@ -76,28 +80,30 @@
 									name="password"
 									id="password"
 									placeholder="Password"
-									pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
 									required
 							/>
-							<span class="form-group__message form-group__info">
-                                  6 Characters - One Digit - One upper and lower character
+							<span class="form-group__message">
+								Invalid password
                             </span>
+							<i class="fa-solid fa-circle-info" id="password-info"></i>
 							<i class="fa-solid fa-eye eye-icon"></i>
-
 						</div>
-						<div class="form-group remember-me">
-							<!-- Remember me checkbox -->
+
+						<!-- Remember me checkbox -->
+						<div class="form-group" id="remember-me-box">
 							<label class="control control--checkbox" for="remember-me">Remember Me
 								<input type="checkbox" name="remember-me" id="remember-me"/>
 								<span class="control__indicator"></span>
 							</label>
 						</div>
-						<div class="form-group form-button">
-							<!-- Sign-in button -->
+
+						<!-- Sign-in button -->
+						<div class="form-group form-button" id="login-submit-input">
 							<input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
 						</div>
+
+						<!-- Links for sign-up and forget password -->
 						<div class="links-container">
-							<!-- Links for sign-up and forget password -->
 							<a href="#" class="signup-image-link">Already a member?</a>
 							<a href="#" class="forget-password-link">Forget Password?</a>
 						</div>
@@ -115,6 +121,9 @@
 		<a href="https://github.com/AmiRM4A">Amir</a>
 	</div>
 </footer>
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
