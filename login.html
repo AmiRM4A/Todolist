@@ -51,6 +51,7 @@
 				<!-- Sign-in form -->
 				<div class="signin-form">
 					<h2 class="form-title">Sign in</h2>
+					<form method="POST" class="login-form" id="login-form" novalidate>
 						<!-- Email input -->
 						<div class="form-group" id="email-input">
 							<label for="email"></label>
@@ -60,7 +61,6 @@
 									name="email"
 									id="email"
 									placeholder="Your Email"
-									pattern="^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$"
 									autocomplete="off"
 									spellcheck="false"
 									required
@@ -80,7 +80,6 @@
 									name="password"
 									id="password"
 									placeholder="Password"
-									pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
 									required
 							/>
 							<span class="form-group__message">
