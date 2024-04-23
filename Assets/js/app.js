@@ -236,4 +236,19 @@ $('#username').on('input', () => {
     }
 });
 
+$('.eye-icon').click(function (event) {
+    event.preventDefault();
+
+    const eyeIcon = $('.eye-icon');
+
+    if (eyeIcon.hasClass('fa-eye')) {
+        $('#password').attr('type', 'text');
+        eyeIcon.removeClass('fa-eye');
+        eyeIcon.addClass('fa-eye-slash');
+    } else if (eyeIcon.hasClass('fa-eye-slash')) {
+        $('#password').attr('type', 'password');
+        eyeIcon.removeClass('fa-eye-slash');
+        eyeIcon.addClass('fa-eye');
+    }
+});
 });
