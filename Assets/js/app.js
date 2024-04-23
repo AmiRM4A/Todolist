@@ -19,6 +19,7 @@ import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
 import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
 import {LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
+import {validateEmail, validateName, validatePassword, validateUsername} from './modules/formValidationModule.js';
 
 const taskInput = $('#taskInput');
 const tasksCon = $('.todo');
