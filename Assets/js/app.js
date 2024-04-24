@@ -238,7 +238,7 @@ $('#username').on('input', () => {
     }
 });
 
-$('.eye-icon').click(function (event) {
+$('.eye-icon').click((event) => {
     event.preventDefault();
 
     const eyeIcon = $('.eye-icon');
