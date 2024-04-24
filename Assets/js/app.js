@@ -143,6 +143,7 @@ function handleInputValidation(inputId, validationFunction) {
     });
 }
 
+// Initialize Tippy elements
 tooltip('#password-info', "Must contain 8 letters at least");
 tooltip('#email-info', "Example@gmail.com");
 tooltip('#username-info', "At least 3 letters");
@@ -227,38 +228,10 @@ $('.eye-icon').on('click', (event) => {
     const $passwordInput = $('#password');
     const $eyeIcon = $(this);
 
-
-tippy('#password-info', {
-    content: "Must contain 8 letters at least",
-    arrow: true,
-    animation: 'scale'
-});
-
-tippy('#email-info', {
-    content: "Example@gmail.com",
-    arrow: true,
-    animation: 'scale'
     $passwordInput.attr('type', $passwordInput.attr('type') === 'password' ? 'text' : 'password');
     $eyeIcon.toggleClass('fa-eye fa-eye-slash');
 });
 
-tippy('#username-info', {
-    content: "At least 3 letters",
-    arrow: true,
-    animation: 'scale'
-});
-
-tippy('#name-info', {
-    content: "At least 5 letters",
-    arrow: true,
-    animation: 'scale'
-});
-
-tippy('#re-password-info', {
-    content: "Must match with password",
-    arrow: true,
-    animation: 'scale'
-});
 // Event listeners for validating inputs
 handleInputValidation('email', validateEmail);
 handleInputValidation('password', validatePassword);
