@@ -171,6 +171,8 @@ $(document).on('keyup', (event) => {
         if (hasClass(taskEditModal, 'showModal')) toggleClass(taskEditModal, 'showModal');
         else if (hasClass(menuContent, 'show-menu')) toggleMenuContent(menuBtn, menuContent);
     }
+});
+
 // Event listeners for validating inputs
 $('#email').on('input', () => {
     console.log('email event');

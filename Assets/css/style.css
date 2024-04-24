@@ -422,7 +422,7 @@ h2 {
     top: 50%;
     left: 0;
     width: 100%;
-    height: 1.5px;
+    height: 2px;
     background: #ffffff;
     animation-name: strike;
     animation-duration: 0.4s;
@@ -679,8 +679,8 @@ footer .fa-heart {
     background: rgba(255, 255, 255, 0.18);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(2.8px);
-    -webkit-backdrop-filter: blur(2.8px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     text-align: center;
     width: 80%;
     height: 80vh;
@@ -691,7 +691,7 @@ footer .fa-heart {
 .sign-in input:not([type="submit"]) {
     padding: 10px;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255);
+    background-color: #ffffff;
 }
 
 .remember-me {
@@ -711,7 +711,7 @@ footer .fa-heart {
 }
 
 .form-title {
-    margin-bottom: 33px;
+    margin-bottom: 27px;
     color: rgba(255, 255, 255, 0.85);
 }
 
@@ -753,7 +753,7 @@ footer .fa-heart {
 }
 
 .sign-up .sign-up-image-link {
-    margin-top: 25px;
+    margin: 20px 0 40px;
 }
 
 .sign-up-form {
@@ -1000,7 +1000,7 @@ input:focus:-moz-placeholder {
 .eye-icon, .fa-circle-info {
     cursor: pointer;
     position: absolute;
-    color: #444 !important;
+    color: #757575 !important;
     right: 3%;
     top: 30%;
 }
@@ -1009,16 +1009,7 @@ input:focus:-moz-placeholder {
     margin-right: 1.5rem;
 }
 
-.register-form .password .eye-icon {
-
-}
-
-.register-form .re-password .eye-icon {
-
-}
-
 /* Inputs custom error styles */
-
 @keyframes error-shake {
     0% {
         transform: translateX(0);
@@ -1040,29 +1031,28 @@ input:focus:-moz-placeholder {
 @keyframes show-message {
     0% {
         transform: translateY(-10px);
-        opacity: 0; /* Initially hidden */
+        opacity: 0;
     }
     100% {
         transform: translateY(0);
-        opacity: 1; /* Fully visible */
+        opacity: 1;
     }
 }
 
 @keyframes hide-message {
     0% {
         transform: translateY(0);
-        opacity: 1; /* Fully visible */
+        opacity: 1;
     }
     100% {
         transform: translateY(-10px);
-        opacity: 0; /* Fully hidden */
+        opacity: 0;
     }
 }
 
 .form-group__input {
     border: 2px solid rgb(177, 177, 177);
     width: 100%;
-    transition: border-color 300ms; /* Added transition for smooth effect */
 }
 
 .form-group__input,
@@ -1095,12 +1085,12 @@ input:focus:-moz-placeholder {
 }
 
 .fa-eye {
-    color: #ffffff;
+    color: var(--white-font);
 }
 
 /* Media Queries */
 
-/* Media query for screens smaller than 768px (typical mobile screens) */
+/* Media query for screens up to 768px (mobile screens) */
 @media screen and (max-width: 768px) {
     #tasksSection h1 {
         font-size: 2.25rem;
@@ -1115,7 +1105,6 @@ input:focus:-moz-placeholder {
         font-size: 1.75rem;
     }
 
-    /* Set cards to full width */
     .task {
         flex-basis: 100%;
         margin: 0 15px 30px;
@@ -1128,71 +1117,15 @@ input:focus:-moz-placeholder {
     .doneTask .done-span {
         display: none !important;
     }
-}
-
-/* Media query for screens between 768px and 1024px (tablets) */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-
-    /* Set cards to one card per row */
-    .task {
-        flex-basis: calc(50% - 30px);
-        margin: 0 15px 30px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .task .done-btn {
-        display: block;
-        position: absolute;
-        bottom: -40px;
-    }
-
-    .task:hover .done-btn {
-        bottom: 0;
-    }
-}
-
-/* Media query for screens larger than 1024px (desktop screens) */
-@media screen and (min-width: 1024px) {
-    .task {
-        flex-basis: calc(33.33333% - 30px);
-        margin: 0 15px 30px;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .container {
-        width: calc(100% - 30px);
-        max-width: 100%;
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .container {
-        max-width: 1200px;
-    }
-}
-
-@media screen and (max-width: 768px) {
 
     .sign-up-content,
     .sign-in-content {
         flex-direction: column;
-        -moz-flex-direction: column;
-        -webkit-flex-direction: column;
-        -o-flex-direction: column;
-        -ms-flex-direction: column;
-        justify-content: center;
-        -moz-justify-content: center;
-        -webkit-justify-content: center;
-        -o-justify-content: center;
-        -ms-justify-content: center;
     }
 
     .sign-up-form {
         margin-left: 0;
         margin-right: 0;
-        /* box-sizing: border-box; */
         padding: 0 30px 0 0;
     }
 
@@ -1201,10 +1134,6 @@ input:focus:-moz-placeholder {
         margin-right: 0;
         margin-top: 50px;
         order: 2;
-        -moz-order: 2;
-        -webkit-order: 2;
-        -o-order: 2;
-        -ms-order: 2;
     }
 
     .sign-up-form,
@@ -1216,10 +1145,6 @@ input:focus:-moz-placeholder {
 
     .social-login {
         justify-content: center;
-        -moz-justify-content: center;
-        -webkit-justify-content: center;
-        -o-justify-content: center;
-        -ms-justify-content: center;
     }
 
     #register-submit-input,
@@ -1229,10 +1154,6 @@ input:focus:-moz-placeholder {
 
     .sign-in-form {
         order: 1;
-        -moz-order: 1;
-        -webkit-order: 1;
-        -o-order: 1;
-        -ms-order: 1;
         margin-right: 0;
         margin-left: 0;
         padding: 0 30px;
@@ -1243,13 +1164,41 @@ input:focus:-moz-placeholder {
     }
 }
 
+/* Media query for screens between 768px and 1024px (tablets) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .task {
+        flex-basis: calc(50% - 30px);
+        margin: 0 15px 30px;
+    }
+}
+
+/* Media query for screens larger than 1024px (desktop screens) */
+@media screen and (min-width: 1024px) {
+    .task {
+        flex-basis: calc(33.33333% - 30px);
+        margin: 0 15px 30px;
+    }
+}
+
+/* Media query for screens up to 1200px */
+@media screen and (max-width: 1200px) {
+    .container {
+        width: calc(100% - 30px);
+        max-width: 100%;
+    }
+}
+
+/* Media query for screens larger than 1024px (desktop screens) */
+@media screen and (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* Media query for screens up to 400px (small mobile screens) */
 @media screen and (max-width: 400px) {
     .social-login {
         flex-direction: column;
-        -moz-flex-direction: column;
-        -webkit-flex-direction: column;
-        -o-flex-direction: column;
-        -ms-flex-direction: column;
     }
 
     .social-label {
