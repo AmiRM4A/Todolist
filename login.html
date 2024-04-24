@@ -9,16 +9,30 @@
 	<!-- Link to the main CSS file -->
 	<link rel="stylesheet" href="assets/css/style.css"/>
 	<!-- Link to Font Awesome for icons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	      crossorigin="anonymous"
-	      referrerpolicy="no-referrer"/>
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+			integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+	/>
 	<!-- Link to Favicon file -->
-	<link id="favIcon" rel="shortcut icon" href="assets/images/icon/fav-pink.png" type="image/x-icon"/>
+	<link
+			id="favIcon"
+			rel="shortcut icon"
+			href="assets/images/icon/fav-pink.png"
+			type="image/x-icon"
+	/>
 	<!-- Link to animate.css CDN for animations -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+	/>
 	<!-- CSS file for Tippy.js animations, scaling effect -->
-	<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
+	<link
+			rel="stylesheet"
+			href="https://unpkg.com/tippy.js@6/animations/scale.css"
+	/>
 </head>
 <body>
 <header>
@@ -28,7 +42,11 @@
 			<div>
 				<!-- Logo -->
 				<a href="#">
-					<img id="logo" src="assets/images/logo/logo-pink.png" alt="Logo"/>
+					<img
+							id="logo"
+							src="assets/images/logo/logo-pink.png"
+							alt="Logo"
+					/>
 				</a>
 			</div>
 		</nav>
@@ -43,7 +61,10 @@
 				<!-- Image for sign-in -->
 				<div class="sign-in-image">
 					<figure>
-						<img src="assets/images/sign-in-image.svg" alt="Sign up image"/>
+						<img
+								src="assets/images/sign-in-image.svg"
+								alt="Sign up image"
+						/>
 					</figure>
 				</div>
 				<!-- Sign-in form -->
@@ -63,9 +84,7 @@
 									spellcheck="false"
 									required
 							/>
-							<span class="form-group__message">
-								Invalid Email
-                            </span>
+							<span class="form-group__message"> Invalid Email </span>
 							<i class="fa-solid fa-circle-info" id="email-info"></i>
 						</div>
 
@@ -80,24 +99,33 @@
 									placeholder="Your Password"
 									required
 							/>
-							<span class="form-group__message">
-								Invalid password
-                            </span>
+							<span class="form-group__message"> Invalid password </span>
 							<i class="fa-solid fa-circle-info" id="password-info"></i>
 							<i class="fa-solid fa-eye eye-icon"></i>
 						</div>
 
 						<!-- Remember me checkbox -->
 						<div class="form-group" id="remember-me-box">
-							<label class="control control--checkbox" for="remember-me">Remember Me
-								<input type="checkbox" name="remember-me" id="remember-me"/>
+							<label class="control control--checkbox" for="remember-me"
+							>Remember Me
+								<input
+										type="checkbox"
+										name="remember-me"
+										id="remember-me"
+								/>
 								<span class="control__indicator"></span>
 							</label>
 						</div>
 
 						<!-- Sign-in button -->
 						<div class="form-group form-button" id="login-submit-input">
-							<input type="submit" name="sign-in" id="sign-in" class="form-submit" value="Log in"/>
+							<input
+									type="submit"
+									name="sign-in"
+									id="sign-in"
+									class="form-submit"
+									value="Log in"
+							/>
 						</div>
 
 						<!-- Links for sign-up and forget password -->
@@ -124,7 +152,12 @@
 <!-- Tippy.js library for customizable tooltips -->
 <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 <!-- jQuery library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+		crossorigin="anonymous"
+		referrerpolicy="no-referrer"
+></script>
 <!-- Main application script -->
 <script type="module" src="assets/js/app.js"></script>
 </body>

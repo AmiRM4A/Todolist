@@ -1,4 +1,4 @@
-import { HEADER_TYPE_DELAY} from "./constantsModule.js";
+import {HEADER_TYPE_DELAY} from "./constantsModule.js";
 
 const textToType = "Get it done!";
 const h1Elem = $('#tasksHeader h1');
@@ -26,4 +26,4 @@ function typeHeaderText() {
     typeNextCharacter();
 }
 
-export { typeHeaderText };
+export {typeHeaderText};

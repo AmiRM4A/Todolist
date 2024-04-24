@@ -26,4 +26,4 @@ function toggleMenuContent(menuBtn, menuContent) {
     $(menuContent).toggleClass('show-menu');
 }
 
-export { toggleColorMenu, toggleMenuContent };
+export {toggleColorMenu, toggleMenuContent};

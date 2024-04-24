@@ -247,6 +247,7 @@ h2 {
 }
 
 @keyframes blink-caret {
+
     from,
     to {
         border-color: transparent;
@@ -675,7 +676,8 @@ footer .fa-heart {
     -ms-transform: translate(-50%, -50%);
 }
 
-.sign-up, .sign-in {
+.sign-up,
+.sign-in {
     background: rgba(255, 255, 255, 0.18);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -746,7 +748,8 @@ footer .fa-heart {
     margin-top: 50px;
 }
 
-.sign-up-image-link, .forget-password-link {
+.sign-up-image-link,
+.forget-password-link {
     font-size: 14px;
     color: var(--white-font);
     display: block;
@@ -997,7 +1000,8 @@ input:focus:-moz-placeholder {
     border-top-color: #ccc;
 }
 
-.eye-icon, .fa-circle-info {
+.eye-icon,
+.fa-circle-info {
     cursor: pointer;
     position: absolute;
     color: #757575 !important;
@@ -1014,15 +1018,19 @@ input:focus:-moz-placeholder {
     0% {
         transform: translateX(0);
     }
+
     25% {
         transform: translateX(-5px);
     }
+
     50% {
         transform: translateX(5px);
     }
+
     75% {
         transform: translateX(-3px);
     }
+
     100% {
         transform: translateX(0);
     }
@@ -1033,6 +1041,7 @@ input:focus:-moz-placeholder {
         transform: translateY(-10px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -1044,6 +1053,7 @@ input:focus:-moz-placeholder {
         transform: translateY(0);
         opacity: 1;
     }
+
     100% {
         transform: translateY(-10px);
         opacity: 0;

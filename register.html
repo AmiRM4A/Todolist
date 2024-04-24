@@ -9,16 +9,30 @@
 	<!-- Link to the main CSS file -->
 	<link rel="stylesheet" href="assets/css/style.css"/>
 	<!-- Link to Font Awesome for icons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	      crossorigin="anonymous"
-	      referrerpolicy="no-referrer"/>
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+			integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+	/>
 	<!-- Link to Favicon file -->
-	<link id="favIcon" rel="shortcut icon" href="assets/images/icon/fav-pink.png" type="image/x-icon"/>
+	<link
+			id="favIcon"
+			rel="shortcut icon"
+			href="assets/images/icon/fav-pink.png"
+			type="image/x-icon"
+	/>
 	<!-- Link to animate.css CDN for animations -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+	/>
 	<!-- CSS file for Tippy.js animations, scaling effect -->
-	<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
+	<link
+			rel="stylesheet"
+			href="https://unpkg.com/tippy.js@6/animations/scale.css"
+	/>
 </head>
 <body>
 <header>
@@ -28,7 +42,11 @@
 			<div>
 				<!-- Logo -->
 				<a href="#">
-					<img id="logo" src="assets/images/logo/logo-pink.png" alt="Logo"/>
+					<img
+							id="logo"
+							src="assets/images/logo/logo-pink.png"
+							alt="Logo"
+					/>
 				</a>
 			</div>
 		</nav>
@@ -57,9 +75,7 @@
 									spellcheck="false"
 									required
 							/>
-							<span class="form-group__message">
-                                  Invalid name
-                            </span>
+							<span class="form-group__message"> Invalid name </span>
 							<i class="fa-solid fa-circle-info" id="name-info"></i>
 						</div>
 
@@ -77,8 +93,8 @@
 									required
 							/>
 							<span class="form-group__message">
-                                  Invalid email address
-                            </span>
+                    Invalid email address
+                  </span>
 							<i class="fa-solid fa-circle-info" id="email-info"></i>
 						</div>
 
@@ -96,9 +112,7 @@
 									spellcheck="false"
 									required
 							/>
-							<span class="form-group__message">
-                                  Invalid username
-                            </span>
+							<span class="form-group__message"> Invalid username </span>
 							<i class="fa-solid fa-circle-info" id="username-info"></i>
 						</div>
 
@@ -116,9 +130,7 @@
 									required
 							/>
 							<i class="fa-solid fa-eye eye-icon"></i>
-							<span class="form-group__message">
-                                  Invalid password
-                            </span>
+							<span class="form-group__message"> Invalid password </span>
 							<i class="fa-solid fa-circle-info" id="password-info"></i>
 						</div>
 
@@ -136,12 +148,19 @@
 									required
 							/>
 							<i class="fa-solid fa-eye eye-icon"></i>
+							<span class="form-group__message"> Passwords doesn't match! </span>
 							<i class="fa-solid fa-circle-info" id="re-password-info"></i>
 						</div>
 
 						<!-- Register button -->
 						<div class="form-group" id="register-submit-input">
-							<input type="submit" name="sign-up" id="sign-up" class="form-submit" value="Register"/>
+							<input
+									type="submit"
+									name="sign-up"
+									id="sign-up"
+									class="form-submit"
+									value="Register"
+							/>
 						</div>
 					</form>
 					<!-- Link for existing members -->
@@ -150,7 +169,10 @@
 				<!-- Image for sign up -->
 				<div class="sign-up-image">
 					<figure>
-						<img src="assets/images/sign-up-image.svg" alt="sign up image"/>
+						<img
+								src="assets/images/sign-up-image.svg"
+								alt="sign up image"
+						/>
 					</figure>
 				</div>
 			</div>
@@ -170,7 +192,12 @@
 <!-- Tippy.js library for customizable tooltips -->
 <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
 <!-- jQuery library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+		crossorigin="anonymous"
+		referrerpolicy="no-referrer"
+></script>
 <!-- Main application script -->
 <script type="module" src="assets/js/app.js"></script>
 </body>
