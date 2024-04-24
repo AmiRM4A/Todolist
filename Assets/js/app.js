@@ -225,10 +225,10 @@ $(document).on('keyup', (event) => {
 $('.eye-icon').on('click', (event) => {
     event.preventDefault();
 
-    const $passwordInput = $('#password');
+    const target = $(event.target).prev();
     const $eyeIcon = $(this);
 
-    $passwordInput.attr('type', $passwordInput.attr('type') === 'password' ? 'text' : 'password');
+    target.attr('type', target.attr('type') === 'password' ? 'text' : 'password');
     $eyeIcon.toggleClass('fa-eye fa-eye-slash');
 });
 
