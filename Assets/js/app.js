@@ -101,6 +101,48 @@ function handleSaveModalBtnClick() {
     toggleClass(taskEditModal, 'showModal');
 }
 
+
+/* --- Handling Validation Functions --- */
+/**
+ * Shows or hides the validation error message for a given input field.
+ * @param {string} inputId - The ID of the input field.
+ * @param {boolean} isValid - Whether the input value is valid or not.
+ */
+function toggleInputValidationError(inputId, isValid) {
+    const inputField = $(`#${inputId}-input #${inputId}`);
+    const errorMessage = $(`#${inputId}-input .form-group__message`);
+
+    if (isValid) {
+        inputField.removeClass('is-invalid-input');
+        errorMessage.removeClass('show-invalid-input-message');
+    } else {
+        inputField.addClass('is-invalid-input');
+        errorMessage.addClass('show-invalid-input-message');
+    }
+}
+
+/**
+ * Handles input validation for a given input field.
+ *
+ * @param {string} inputId - The ID of the input field to be validated.
+ * @param {Function} validationFunction - The function to be used for validating the input value.
+ *
+ * @returns {void} This function does not return a value.
+ *
+ * @description
+ * This function attaches an event listener to the 'input' event of the specified input field.
+ * When the input value changes, the provided validationFunction is called with the new input value.
+ *
+ */
+function handleInputValidation(inputId, validationFunction) {
+    $(`#${inputId}-input #${inputId}`).on('input', (event) => {
+        const value = event.target.value;
+        const isValid = (value && validationFunction(value));
+
+        toggleInputValidationError(inputId, isValid);
+    });
+}
+
 tooltip('#password-info', "Must contain 8 letters at least");
 tooltip('#email-info', "Example@gmail.com");
 tooltip('#username-info', "At least 3 letters");
@@ -179,54 +221,6 @@ $(document).on('keyup', (event) => {
     }
 });
 
-    console.log('password event');
-
-    const passwordInput = $('#password-input #password');
-    const passwordMessage = $('#password-input .form-group__message');
-    const password = passwordInput.val();
-
-    if (password && validatePassword(password)) {
-        passwordInput.removeClass('show-input-validation-error');
-        passwordMessage.removeClass('show-message-validation-error');
-    } else {
-        passwordInput.addClass('show-input-validation-error');
-        passwordMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('#name').on('input', () => {
-    console.log('name input');
-
-    const nameInput = $('#name-input #name');
-    const nameMessage = $('#name-input .form-group__message');
-    const name = nameInput.val();
-
-    if (name && validateName(name)) {
-        nameInput.removeClass('show-input-validation-error');
-        nameMessage.removeClass('show-message-validation-error');
-    } else {
-        nameInput.addClass('show-input-validation-error');
-        nameMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('#username').on('input', () => {
-    console.log('username input');
-
-    const usernameInput = $('#username-input #username');
-    const usernameMessage = $('#username-input .form-group__message');
-    const username = usernameInput.val();
-
-    if (username && validateUsername(username)) {
-        usernameInput.removeClass('show-input-validation-error');
-        usernameMessage.removeClass('show-message-validation-error');
-    } else {
-        usernameInput.addClass('show-input-validation-error');
-        usernameMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('.eye-icon').click((event) => {
     event.preventDefault();
 
     const eyeIcon = $('.eye-icon');
@@ -271,6 +265,11 @@ tippy('#re-password-info', {
     arrow: true,
     animation: 'scale'
 });
+// Event listeners for validating inputs
+handleInputValidation('email', validateEmail);
+handleInputValidation('password', validatePassword);
+handleInputValidation('name', validateName);
+handleInputValidation('username', validateUsername);
 
 // Call API Services
 $('#login-form').submit(function (event) {
