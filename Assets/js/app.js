@@ -237,6 +237,7 @@ handleInputValidation('email', validateEmail);
 handleInputValidation('password', validatePassword);
 handleInputValidation('name', validateName);
 handleInputValidation('username', validateUsername);
+handleInputValidation('re-password', (re_password) => re_password && re_password === $('#password').val());
 
 // Call API Services
 $('#login-form').submit(function (event) {
