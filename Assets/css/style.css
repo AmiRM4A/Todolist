@@ -1056,7 +1056,7 @@ input:focus:-moz-placeholder {
 }
 
 .form-group__input,
-.show-message-validation-error {
+.show-invalid-input-message {
     position: relative;
 }
 
@@ -1071,7 +1071,7 @@ input:focus:-moz-placeholder {
     width: 100%;
 }
 
-.show-message-validation-error {
+.show-invalid-input-message {
     display: block;
     animation: error-shake 250ms;
     color: var(--color-validation) !important;
@@ -1079,7 +1079,7 @@ input:focus:-moz-placeholder {
 }
 
 /* Invalid input showing */
-.show-input-validation-error {
+.is-invalid-input {
     color: var(--color-validation);
     animation: error-shake 250ms;
 }

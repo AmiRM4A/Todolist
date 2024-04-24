@@ -146,16 +146,42 @@ function swapTaskIconsTo(to = 'completed', taskElem) {
     }
 }
 
+/**
+ * Retrieves form inputs and their values as an object.
+ *
+ * @param {string} selector - The CSS selector identifying the form element.
+ * @returns {Object} - An object containing input names as keys and their corresponding values.
+ */
 function getFormInputs(selector) {
     if (typeof selector !== 'string') {
         return {};
     }
 
-    return $('#login-form').serializeArray().reduce(function (obj, item) {
+    // Retrieve form inputs and values using jQuery serializeArray()
+    return $(selector).serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
         return obj;
     }, {});
 }
+
+/**
+ * Initializes a tooltip on the specified element using Tippy.js.
+ *
+ * @param {string} selector - The CSS selector identifying the target element.
+ * @param {string | Element} content - The content of the tooltip.
+ * @param {boolean} [arrow=true] - Determines whether the tooltip arrow is displayed.
+ * @param {string} [animation='scale'] - The animation effect for the tooltip.
+ *   Possible values: 'scale', 'shift-toward', 'fade', etc.
+ * @returns {void}
+ */
+function tooltip(selector, content, arrow = true, animation = 'scale') {
+    tippy(selector, {
+        content: content,
+        arrow: arrow,
+        animation: animation
+    });
+}
+
 
 
 export {
@@ -169,5 +195,6 @@ export {
     addClass,
     getParentElementByClassName,
     swapTaskIconsTo,
-    getFormInputs
+    getFormInputs,
+    tooltip
 };

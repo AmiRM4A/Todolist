@@ -13,7 +13,7 @@ import {
     getParentElementByClassName,
     removeClass,
     addClass,
-    getFormInputs
+    tooltip
 } from './modules/utilitiesModule.js';
 import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
@@ -101,6 +101,55 @@ function handleSaveModalBtnClick() {
     toggleClass(taskEditModal, 'showModal');
 }
 
+
+/* --- Handling Validation Functions --- */
+/**
+ * Shows or hides the validation error message for a given input field.
+ * @param {string} inputId - The ID of the input field.
+ * @param {boolean} isValid - Whether the input value is valid or not.
+ */
+function toggleInputValidationError(inputId, isValid) {
+    const inputField = $(`#${inputId}-input #${inputId}`);
+    const errorMessage = $(`#${inputId}-input .form-group__message`);
+
+    if (isValid) {
+        inputField.removeClass('is-invalid-input');
+        errorMessage.removeClass('show-invalid-input-message');
+    } else {
+        inputField.addClass('is-invalid-input');
+        errorMessage.addClass('show-invalid-input-message');
+    }
+}
+
+/**
+ * Handles input validation for a given input field.
+ *
+ * @param {string} inputId - The ID of the input field to be validated.
+ * @param {Function} validationFunction - The function to be used for validating the input value.
+ *
+ * @returns {void} This function does not return a value.
+ *
+ * @description
+ * This function attaches an event listener to the 'input' event of the specified input field.
+ * When the input value changes, the provided validationFunction is called with the new input value.
+ *
+ */
+function handleInputValidation(inputId, validationFunction) {
+    $(`#${inputId}-input #${inputId}`).on('input', (event) => {
+        const value = event.target.value;
+        const isValid = (value && validationFunction(value));
+
+        toggleInputValidationError(inputId, isValid);
+    });
+}
+
+// Initialize Tippy elements
+tooltip('#password-info', "Must contain 8 letters at least");
+tooltip('#email-info', "Example@gmail.com");
+tooltip('#username-info', "At least 3 letters");
+tooltip('#name-info', "At least 5 letters");
+tooltip('#re-password-info', "Must match with password");
+
 /* --- Event listeners --- */
 $(window).on('load', initialize);
 
@@ -173,116 +222,21 @@ $(document).on('keyup', (event) => {
     }
 });
 
-// Event listeners for validating inputs
-$('#email').on('input', () => {
-    console.log('email event');
-
-    const emailInput = $('#email-input #email');
-    const emailInputMessage = $('#email-input .form-group__message');
-    const email = emailInput.val();
-
-    if (email && validateEmail(email)) {
-        emailInput.removeClass('show-input-validation-error');
-        emailInputMessage.removeClass('show-message-validation-error');
-    } else {
-        emailInput.addClass('show-input-validation-error');
-        emailInputMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('#password').on('input', () => {
-    console.log('password event');
-
-    const passwordInput = $('#password-input #password');
-    const passwordMessage = $('#password-input .form-group__message');
-    const password = passwordInput.val();
-
-    if (password && validatePassword(password)) {
-        passwordInput.removeClass('show-input-validation-error');
-        passwordMessage.removeClass('show-message-validation-error');
-    } else {
-        passwordInput.addClass('show-input-validation-error');
-        passwordMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('#name').on('input', () => {
-    console.log('name input');
-
-    const nameInput = $('#name-input #name');
-    const nameMessage = $('#name-input .form-group__message');
-    const name = nameInput.val();
-
-    if (name && validateName(name)) {
-        nameInput.removeClass('show-input-validation-error');
-        nameMessage.removeClass('show-message-validation-error');
-    } else {
-        nameInput.addClass('show-input-validation-error');
-        nameMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('#username').on('input', () => {
-    console.log('username input');
-
-    const usernameInput = $('#username-input #username');
-    const usernameMessage = $('#username-input .form-group__message');
-    const username = usernameInput.val();
-
-    if (username && validateUsername(username)) {
-        usernameInput.removeClass('show-input-validation-error');
-        usernameMessage.removeClass('show-message-validation-error');
-    } else {
-        usernameInput.addClass('show-input-validation-error');
-        usernameMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('.eye-icon').click(function (event) {
+$('.eye-icon').on('click', (event) => {
     event.preventDefault();
 
-    const eyeIcon = $('.eye-icon');
+    const $passwordInput = $('#password');
+    const $eyeIcon = $(this);
 
-    if (eyeIcon.hasClass('fa-eye')) {
-        $('#password').attr('type', 'text');
-        eyeIcon.removeClass('fa-eye');
-        eyeIcon.addClass('fa-eye-slash');
-    } else if (eyeIcon.hasClass('fa-eye-slash')) {
-        $('#password').attr('type', 'password');
-        eyeIcon.removeClass('fa-eye-slash');
-        eyeIcon.addClass('fa-eye');
-    }
+    $passwordInput.attr('type', $passwordInput.attr('type') === 'password' ? 'text' : 'password');
+    $eyeIcon.toggleClass('fa-eye fa-eye-slash');
 });
 
-tippy('#password-info', {
-    content: "Must contain 8 letters at least",
-    arrow: true,
-    animation: 'scale'
-});
-
-tippy('#email-info', {
-    content: "Example@gmail.com",
-    arrow: true,
-    animation: 'scale'
-});
-
-tippy('#username-info', {
-    content: "At least 3 letters",
-    arrow: true,
-    animation: 'scale'
-});
-
-tippy('#name-info', {
-    content: "At least 5 letters",
-    arrow: true,
-    animation: 'scale'
-});
-
-tippy('#re-password-info', {
-    content: "Must match with password",
-    arrow: true,
-    animation: 'scale'
-});
+// Event listeners for validating inputs
+handleInputValidation('email', validateEmail);
+handleInputValidation('password', validatePassword);
+handleInputValidation('name', validateName);
+handleInputValidation('username', validateUsername);
 
 // Call API Services
 $('#login-form').submit(function (event) {
