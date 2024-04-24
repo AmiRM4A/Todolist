@@ -101,6 +101,12 @@ function handleSaveModalBtnClick() {
     toggleClass(taskEditModal, 'showModal');
 }
 
+tooltip('#password-info', "Must contain 8 letters at least");
+tooltip('#email-info', "Example@gmail.com");
+tooltip('#username-info', "At least 3 letters");
+tooltip('#name-info', "At least 5 letters");
+tooltip('#re-password-info', "Must match with password");
+
 /* --- Event listeners --- */
 $(window).on('load', initialize);
 
@@ -173,24 +179,6 @@ $(document).on('keyup', (event) => {
     }
 });
 
-// Event listeners for validating inputs
-$('#email').on('input', () => {
-    console.log('email event');
-
-    const emailInput = $('#email-input #email');
-    const emailInputMessage = $('#email-input .form-group__message');
-    const email = emailInput.val();
-
-    if (email && validateEmail(email)) {
-        emailInput.removeClass('show-input-validation-error');
-        emailInputMessage.removeClass('show-message-validation-error');
-    } else {
-        emailInput.addClass('show-input-validation-error');
-        emailInputMessage.addClass('show-message-validation-error');
-    }
-});
-
-$('#password').on('input', () => {
     console.log('password event');
 
     const passwordInput = $('#password-input #password');

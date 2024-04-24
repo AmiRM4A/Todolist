@@ -146,12 +146,19 @@ function swapTaskIconsTo(to = 'completed', taskElem) {
     }
 }
 
+/**
+ * Retrieves form inputs and their values as an object.
+ *
+ * @param {string} selector - The CSS selector identifying the form element.
+ * @returns {Object} - An object containing input names as keys and their corresponding values.
+ */
 function getFormInputs(selector) {
     if (typeof selector !== 'string') {
         return {};
     }
 
-    return $('#login-form').serializeArray().reduce(function (obj, item) {
+    // Retrieve form inputs and values using jQuery serializeArray()
+    return $(selector).serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
         return obj;
     }, {});
