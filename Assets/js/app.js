@@ -13,7 +13,7 @@ import {
     getParentElementByClassName,
     removeClass,
     addClass,
-    getFormInputs
+    tooltip
 } from './modules/utilitiesModule.js';
 import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
