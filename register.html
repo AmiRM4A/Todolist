@@ -17,10 +17,8 @@
 	<link id="favIcon" rel="shortcut icon" href="assets/images/icon/fav-pink.png" type="image/x-icon"/>
 	<!-- Link to animate.css CDN for animations -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-	<link
-			rel="stylesheet"
-			href="https://unpkg.com/tippy.js@6/animations/scale.css"
-	/>
+	<!-- CSS file for Tippy.js animations, scaling effect -->
+	<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"/>
 </head>
 <body>
 <header>
@@ -38,11 +36,11 @@
 </header>
 <div class="main">
 	<!-- Sign up section -->
-	<section class="signup">
+	<section class="sign-up">
 		<div class="container">
-			<div class="signup-content">
+			<div class="sign-up-content">
 				<!-- Sign up form -->
-				<div class="signup-form">
+				<div class="sign-up-form">
 					<h2 class="form-title">Sign up</h2>
 					<form method="POST" class="register-form" id="register-form">
 						<!-- Name input -->
@@ -112,7 +110,7 @@
 									type="password"
 									name="password"
 									id="password"
-									placeholder="Password"
+									placeholder="Your Password"
 									minlength="8"
 									autocomplete="off"
 									required
@@ -143,16 +141,16 @@
 
 						<!-- Register button -->
 						<div class="form-group" id="register-submit-input">
-							<input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+							<input type="submit" name="sign-up" id="sign-up" class="form-submit" value="Register"/>
 						</div>
 					</form>
 					<!-- Link for existing members -->
-					<a href="#" class="signup-image-link">Already a member?</a>
+					<a href="#" class="sign-up-image-link">Already a member?</a>
 				</div>
 				<!-- Image for sign up -->
-				<div class="signup-image">
+				<div class="sign-up-image">
 					<figure>
-						<img src="assets/images/signup-image.svg" alt="sign up image"/>
+						<img src="assets/images/sign-up-image.svg" alt="sign up image"/>
 					</figure>
 				</div>
 			</div>
@@ -167,9 +165,13 @@
 		<a href="https://github.com/AmiRM4A">Amir</a>
 	</div>
 </footer>
+<!-- Popper.js library for tooltips and popovers -->
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<!-- Tippy.js library for customizable tooltips -->
 <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+<!-- jQuery library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Main application script -->
 <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
