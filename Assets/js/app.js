@@ -108,7 +108,7 @@ function handleSaveModalBtnClick() {
  * @param {string} inputId - The ID of the input field.
  * @param {boolean} isValid - Whether the input value is valid or not.
  */
-function toggleInputValidationError(inputId, isValid) {
+function toggleInputValidationError(inputId, isValid = false) {
     const inputField = $(`#${inputId}-input #${inputId}`);
     const errorMessage = $(`#${inputId}-input .form-group__message`);
 
