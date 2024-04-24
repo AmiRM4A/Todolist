@@ -221,20 +221,12 @@ $(document).on('keyup', (event) => {
     }
 });
 
+$('.eye-icon').on('click', (event) => {
     event.preventDefault();
 
-    const eyeIcon = $('.eye-icon');
+    const $passwordInput = $('#password');
+    const $eyeIcon = $(this);
 
-    if (eyeIcon.hasClass('fa-eye')) {
-        $('#password').attr('type', 'text');
-        eyeIcon.removeClass('fa-eye');
-        eyeIcon.addClass('fa-eye-slash');
-    } else if (eyeIcon.hasClass('fa-eye-slash')) {
-        $('#password').attr('type', 'password');
-        eyeIcon.removeClass('fa-eye-slash');
-        eyeIcon.addClass('fa-eye');
-    }
-});
 
 tippy('#password-info', {
     content: "Must contain 8 letters at least",
@@ -246,6 +238,8 @@ tippy('#email-info', {
     content: "Example@gmail.com",
     arrow: true,
     animation: 'scale'
+    $passwordInput.attr('type', $passwordInput.attr('type') === 'password' ? 'text' : 'password');
+    $eyeIcon.toggleClass('fa-eye fa-eye-slash');
 });
 
 tippy('#username-info', {
