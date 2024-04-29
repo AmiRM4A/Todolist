@@ -1195,6 +1195,19 @@ input:focus:-moz-placeholder {
     }
 }
 
+/* Media query for screens more than 768px */
+@media screen and (min-width: 768px) {
+    .task .done-btn {
+        display: block;
+        position: absolute;
+        bottom: -40px;
+    }
+
+    .task:hover .done-btn {
+        bottom: 0;
+    }
+}
+
 /* Media query for screens up to 1200px */
 @media screen and (max-width: 1200px) {
     .container {
