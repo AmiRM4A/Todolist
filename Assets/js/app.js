@@ -99,7 +99,7 @@ function handleSaveModalBtnClick() {
     updateTaskInDom(selectTask(data.id, tasksCon), data);
     updateTaskInStorage(getStorageTaskIndex(data.id, tasks), tasks, data);
 
-    toggleClass(taskEditModal, 'showModal');
+    taskEditModal.toggleClass('showModal');
 }
 
 
@@ -157,9 +157,9 @@ $(window).on('load', initialize);
 $(window).on('scroll', () => {
     const header = $('header');
     if ($(window).scrollTop() > 59) {
-        addClass('sticky', header);
+        header.addClass('sticky');
     } else if ($(window).scrollTop() < 51) {
-        removeClass('sticky', header);
+        header.removeClass('sticky');
     }
 });
 
@@ -171,17 +171,13 @@ tasksSection.on('click', (event) => {
         const taskName = taskInput.val();
         if (taskName) addTask(taskName, tasksCon, tasks, false);
     } else if (target.hasClass('fa-times')) {
-        event.preventDefault();
         removeTask(taskElem, tasks);
     } else if (target.hasClass('fa-edit')) {
-        event.preventDefault();
         fillEditTaskModalInputs(taskElem);
-        toggleClass(taskEditModal, 'showModal');
+        taskEditModal.toggleClass('showModal');
     } else if (target.hasClass('fa-undo')) {
-        event.preventDefault();
         undoCompletedTask(taskElem, tasks);
     } else if (target.hasClass('done-span') || target.hasClass('done-btn')) {
-        event.preventDefault();
         // Mark selected task as completed
         markTaskAsCompleted(taskElem, getTaskData(tasks, getTaskId(taskElem)), tasks);
     }
@@ -190,10 +186,8 @@ tasksSection.on('click', (event) => {
 taskEditModal.on('click', (event) => {
     const target = event.target;
     if (target.hasClass('closeButton')) {
-        event.preventDefault();
-        toggleClass(taskEditModal, 'showModal');
+        taskEditModal.toggleClass('showModal');
     } else if (target.hasClass('saveModal')) {
-        event.preventDefault();
         handleSaveModalBtnClick();
     }
 });
@@ -218,8 +212,11 @@ menuBtn.on('click', (event) => {
 $(document).on('keyup', (event) => {
     if (event.key === 'Escape') {
         // After pressing Esc key, check for open modals to close them
-        if (hasClass(taskEditModal, 'showModal')) toggleClass(taskEditModal, 'showModal');
-        else if (hasClass(menuContent, 'show-menu')) toggleMenuContent(menuBtn, menuContent);
+        if (taskEditModal.hasClass('showModal')) {
+            taskEditModal.toggleClass('showModal');
+        } else if (menuContent.hasClass('show-menu')) {
+            toggleMenuContent(menuBtn, menuContent);
+        }
     }
 });
 
