@@ -227,10 +227,10 @@ $('.eye-icon').on('click', (event) => {
     event.preventDefault();
 
     const target = $(event.target).prev();
-    const $eyeIcon = $(this);
+    const eyeIcon = $(this);
 
     target.attr('type', target.attr('type') === 'password' ? 'text' : 'password');
-    $eyeIcon.toggleClass('fa-eye fa-eye-slash');
+    eyeIcon.toggleClass('fa-eye fa-eye-slash');
 });
 
 // Event listeners for validating inputs

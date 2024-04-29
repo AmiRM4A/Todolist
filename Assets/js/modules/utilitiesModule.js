@@ -199,7 +199,7 @@ function makeApiRequest(method, url, data = null, headers = {}, dataType = 'json
             url: url,
             data: data,
             headers: headers,
-            dataType: dataType,
+            // dataType: dataType,
             success: (response) => {
                 resolve(response);
             },
