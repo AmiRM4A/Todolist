@@ -184,13 +184,13 @@ h2 {
 }
 
 /* Header styles for tasks section */
-#tasksHeader {
+#tasks-header {
     align-items: center;
     display: flex;
     flex-direction: column;
 }
 
-#tasksSection form {
+#tasks-section form {
     margin: 1.5rem 0 2rem;
     min-height: 10vh;
     width: 100%;
@@ -201,7 +201,7 @@ h2 {
     justify-content: center;
 }
 
-#tasksSection input {
+#tasks-section input {
     padding: 10px;
     font-size: 17px;
     outline: none;
@@ -214,11 +214,11 @@ h2 {
     color: var(--white-font);
 }
 
-#tasksSection input:hover {
+#tasks-section input:hover {
     cursor: text;
 }
 
-#tasksSection .addTodoBtn {
+#tasks-section .add-todo-btn {
     border-radius: unset;
     background: var(--theme-color);
     padding: 11px;
@@ -228,7 +228,7 @@ h2 {
     min-width: 100px;
 }
 
-#tasksSection h1 {
+#tasks-section h1 {
     font-size: 2.5rem;
     text-align: center;
     color: var(--white-font);
@@ -247,6 +247,7 @@ h2 {
 }
 
 @keyframes blink-caret {
+
     from,
     to {
         border-color: transparent;
@@ -258,7 +259,7 @@ h2 {
 }
 
 /* Styles for tasks container */
-#tasksContainer {
+#tasks-container {
     width: 90%;
     margin: 0 auto;
 }
@@ -334,8 +335,13 @@ h2 {
 .fa-times:hover,
 .fa-edit:hover,
 .done-span:hover,
-#taskEditModal {
+#task-edit-modal {
     color: var(--theme-color);
+}
+
+#task-edit-modal h2{
+    text-align: center;
+    color: var(--white-font);
 }
 
 .task-detail {
@@ -375,7 +381,7 @@ h2 {
     overflow: hidden;
 }
 
-.modalContent {
+.modal-content {
     background-color: #121212;
     width: 70%;
     margin: 100px auto 0;
@@ -431,7 +437,7 @@ h2 {
     animation-fill-mode: forwards;
 }
 
-#taskEditModal .closeButton {
+#task-edit-modal .close-button {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -439,19 +445,19 @@ h2 {
 }
 
 /* Styles for edit task modal */
-#taskEditModal form {
+#task-edit-modal form {
     font-size: 18px;
     margin-top: 20px;
 }
 
-#taskEditModal label {
+#task-edit-modal label {
     display: block;
     margin-bottom: 5px;
 }
 
-#taskEditModal #taskTitle,
-#taskEditModal #taskDescription,
-#taskEditModal #taskStatus {
+#task-edit-modal #task-title,
+#task-edit-modal #task-description,
+#task-edit-modal #task-status {
     width: 100% !important;
     padding: 10px;
     margin-bottom: 12px;
@@ -459,13 +465,13 @@ h2 {
     border-radius: 5px;
 }
 
-#taskEditModal .saveModal {
+#task-edit-modal .save-modal {
     background-color: var(--theme-color);
     color: #000000;
 }
 
 /* Styles for the menu */
-.menuContent {
+.menu-content {
     height: 400px;
     width: 400px;
     background-color: var(--theme-color);
@@ -479,31 +485,31 @@ h2 {
     transition: all .5s ease;
 }
 
-.menuContent .fa-times,
-.menuContent .fa-github,
-.menuContent .fa-paint-roller {
+.menu-content .fa-times,
+.menu-content .fa-github,
+.menu-content .fa-paint-roller {
     position: absolute;
     font-size: 24px;
     color: #000000;
     text-decoration: none;
 }
 
-.menuContent .fa-times {
+.menu-content .fa-times {
     right: 28%;
     bottom: 7%;
 }
 
-.menuContent .fa-github {
+.menu-content .fa-github {
     right: 13%;
     bottom: 18%;
 }
 
-.menuContent .fa-paint-roller {
+.menu-content .fa-paint-roller {
     right: 7%;
     bottom: 26%;
 }
 
-.menuBtn {
+.menu-btn {
     display: block;
     background: none;
     padding: 3px;
@@ -523,7 +529,7 @@ h2 {
 }
 
 /* Styles for color items (color menu) */
-.colorItem {
+.color-item {
     border: 1px solid #333333;
     position: absolute;
     width: 20px;
@@ -533,7 +539,7 @@ h2 {
     border-radius: 100%;
 }
 
-.colorItem:hover {
+.color-item:hover {
     opacity: 0.8;
 }
 
@@ -573,11 +579,11 @@ h2 {
 }
 
 /* Hover and focus styles for various elements */
-#taskEditModal .saveModal:hover,
-#tasksSection input:focus,
+#task-edit-modal .save-modal:hover,
+#tasks-section input:focus,
 button:hover,
-.menuBtn:hover,
-.menuContent span:hover,
+.menu-btn:hover,
+.menu-content span:hover,
 a:hover,
 .done-btn:hover,
 .done-span:hover,
@@ -588,13 +594,13 @@ a:hover,
     opacity: 0.7;
 }
 
-.menuBtn,
-.menuContent span,
+.menu-btn,
+.menu-content span,
 button,
 .fa-edit,
 .fa-times,
 .fa-check,
-#taskStatus,
+#task-status,
 .fa-undo,
 nav,
 a,
@@ -619,7 +625,7 @@ footer .fa-heart {
     color: var(--theme-color);
 }
 
-.showModal {
+.show-modal {
     display: block !important;
 }
 
@@ -675,7 +681,8 @@ footer .fa-heart {
     -ms-transform: translate(-50%, -50%);
 }
 
-.sign-up, .sign-in {
+.sign-up,
+.sign-in {
     background: rgba(255, 255, 255, 0.18);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -746,7 +753,8 @@ footer .fa-heart {
     margin-top: 50px;
 }
 
-.sign-up-image-link, .forget-password-link {
+.sign-up-image-link,
+.forget-password-link {
     font-size: 14px;
     color: var(--white-font);
     display: block;
@@ -997,7 +1005,8 @@ input:focus:-moz-placeholder {
     border-top-color: #ccc;
 }
 
-.eye-icon, .fa-circle-info {
+.eye-icon,
+.fa-circle-info {
     cursor: pointer;
     position: absolute;
     color: #757575 !important;
@@ -1014,15 +1023,19 @@ input:focus:-moz-placeholder {
     0% {
         transform: translateX(0);
     }
+
     25% {
         transform: translateX(-5px);
     }
+
     50% {
         transform: translateX(5px);
     }
+
     75% {
         transform: translateX(-3px);
     }
+
     100% {
         transform: translateX(0);
     }
@@ -1033,6 +1046,7 @@ input:focus:-moz-placeholder {
         transform: translateY(-10px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -1044,6 +1058,7 @@ input:focus:-moz-placeholder {
         transform: translateY(0);
         opacity: 1;
     }
+
     100% {
         transform: translateY(-10px);
         opacity: 0;
@@ -1092,11 +1107,11 @@ input:focus:-moz-placeholder {
 
 /* Media query for screens up to 768px (mobile screens) */
 @media screen and (max-width: 768px) {
-    #tasksSection h1 {
+    #tasks-section h1 {
         font-size: 2.25rem;
     }
 
-    #tasksSection form {
+    #tasks-section form {
         margin-top: 1rem;
         width: 90%;
     }
@@ -1177,6 +1192,19 @@ input:focus:-moz-placeholder {
     .task {
         flex-basis: calc(33.33333% - 30px);
         margin: 0 15px 30px;
+    }
+}
+
+/* Media query for screens more than 768px */
+@media screen and (min-width: 768px) {
+    .task .done-btn {
+        display: block;
+        position: absolute;
+        bottom: -40px;
+    }
+
+    .task:hover .done-btn {
+        bottom: 0;
     }
 }
 

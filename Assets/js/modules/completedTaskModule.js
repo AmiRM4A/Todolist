@@ -1,5 +1,5 @@
 import {setToStorage, getStorageTaskIndex} from './storageModule.js';
-import {getCurrentDate, addClass, removeClass, swapTaskIconsTo} from './utilitiesModule.js';
+import {getCurrentDate, swapTaskIconsTo} from './utilitiesModule.js';
 import {LOCAL_STORAGE_TASKS_KEY} from './constantsModule.js';
 
 /**
@@ -18,14 +18,15 @@ import {LOCAL_STORAGE_TASKS_KEY} from './constantsModule.js';
  */
 function undoCompletedTask(completedTaskElem, tasksArr) {
     // Change the status of task to uncompleted in storage
-    const index = getStorageTaskIndex(Number($(completedTaskElem).data('taskId')), tasksArr);
+    const index = getStorageTaskIndex(Number($(completedTaskElem).data('task-id')), tasksArr);
     tasksArr[index]['status'] = false;
     delete tasksArr[index]['completedAt'];
     setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
 
     // Change the UI status of task to uncompleted in page
-    removeClass('doneTask', completedTaskElem);
-    removeClass('strike', $(completedTaskElem).find('.task-title'), $(completedTaskElem).find('.task-desc'));
+    $(completedTaskElem).removeClass('doneTask');
+    $(completedTaskElem).find('.task-title').removeClass('strike');
+    $(completedTaskElem).find('.task-desc').removeClass('strike');
     swapTaskIconsTo('uncompleted', completedTaskElem);
     $(completedTaskElem).find('.task-info').html(`
     <i class="fas fa-info-circle"></i>
@@ -48,6 +49,7 @@ function undoCompletedTask(completedTaskElem, tasksArr) {
 function markTaskAsCompleted(taskElem, taskData, tasksArr, fromStorage = false) {
     // Change the status of task to completed in storage (if it wasn't from storage)
     const index = tasksArr.findIndex(task => task.id === taskData.id);
+
     if (!fromStorage) {
         tasksArr[index].status = true;
         tasksArr[index].completedAt = getCurrentDate();
@@ -55,8 +57,9 @@ function markTaskAsCompleted(taskElem, taskData, tasksArr, fromStorage = false) 
     }
 
     // Change the status of task to completed in page
-    addClass('doneTask', taskElem);
-    addClass('strike', $(taskElem).find('.task-title'), $(taskElem).find('.task-desc'));
+    $(taskElem).addClass('doneTask');
+    $(taskElem).find('.task-title').addClass('strike');
+    $(taskElem).find('.task-desc').addClass('strike');
     swapTaskIconsTo('completed', taskElem);
     $(taskElem).find('.task-info').html(`
     <i class="fa-solid fa-circle-check"></i>

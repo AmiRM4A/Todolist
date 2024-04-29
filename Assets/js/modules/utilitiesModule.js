@@ -14,22 +14,6 @@ function getCurrentDate() {
 }
 
 /**
- * Checks if an HTML element contains a specific CSS class.
- *
- * @function
- * @name hasClass
- *
- * @param {HTMLElement} element - The HTML element to check.
- * @param {string} className - The CSS class name to look for.
- * @returns {boolean} - `true` if the class is found; otherwise, `false`.
- *
- * @description Checks if the provided HTML element contains the specified CSS class.
- */
-function hasClass(element, className) {
-    return $(element).hasClass(className);
-}
-
-/**
  * Resets the input field.
  *
  * @function
@@ -41,21 +25,6 @@ function hasClass(element, className) {
  */
 function resetInput(taskInput) {
     $(taskInput).val('');
-}
-
-/**
- * Toggles a CSS class on an HTML element.
- *
- * @function
- * @name toggleClass
- *
- * @param {HTMLElement} element - The HTML element to toggle the class on.
- * @param {string} className - The CSS class name to toggle.
- *
- * @description Toggles the specified CSS class on the provided HTML element.
- */
-function toggleClass(element, className) {
-    $(element).toggleClass(className);
 }
 
 /**
@@ -87,32 +56,6 @@ function changeLogo(newLogoPath) {
 }
 
 /**
- * Adds the specified class to one or more HTML elements.
- *
- * @param {string} className - The class name to be added.
- * @param {...Element} elements - The HTML elements to which the class will be added.
- * @returns {void}
- * @description
- * This function adds the specified class to one or more HTML elements.
- */
-function addClass(className, ...elements) {
-    elements.forEach(elem => $(elem).addClass(className));
-}
-
-/**
- * Removes the specified class from one or more HTML elements.
- *
- * @param {string} className - The class name to be removed.
- * @param {...Element} elements - The HTML elements from which the class will be removed.
- * @returns {void}
- * @description
- * This function removes the specified class from one or more HTML elements.
- */
-function removeClass(className, ...elements) {
-    elements.forEach(elem => $(elem).removeClass(className));
-}
-
-/**
  * Finds and returns the closest parent element with a specific class name.
  *
  * @param {Element} element - The starting HTML element to begin the search from.
@@ -137,12 +80,17 @@ function getParentElementByClassName(element, parentElementClassName) {
 function swapTaskIconsTo(to = 'completed', taskElem) {
     const spanIconElem = $(taskElem).find('.done-span');
     const btnIconElem = $(taskElem).find('.done-btn');
+
     if (to === 'completed') {
-        addClass('fa-undo', spanIconElem, btnIconElem);
-        removeClass('fa-check', spanIconElem, btnIconElem);
+        spanIconElem.addClass('fa-undo');
+        btnIconElem.addClass('fa-undo');
+        spanIconElem.removeClass('fa-check');
+        btnIconElem.removeClass('fa-check');
     } else {
-        addClass('fa-check', spanIconElem, btnIconElem);
-        removeClass('fa-undo', spanIconElem, btnIconElem);
+        spanIconElem.addClass('fa-check');
+        btnIconElem.addClass('fa-check');
+        spanIconElem.removeClass('fa-undo');
+        btnIconElem.removeClass('fa-undo');
     }
 }
 
@@ -182,19 +130,41 @@ function tooltip(selector, content, arrow = true, animation = 'scale') {
     });
 }
 
-
+/**
+ * Makes an API request.
+ *
+ * @param {string} method - The HTTP method for the request (e.g., 'GET', 'POST', 'PUT', 'DELETE').
+ * @param {string} url - The URL of the API endpoint.
+ * @param {Object} [data] - The data to be sent with the request (for 'POST' or 'PUT' methods).
+ * @param {Object} [headers] - Additional headers to include in the request.
+ * @param dataType - The type of data to be sent with the request
+ * @returns {Promise} - A Promise that resolves to the response data or rejects with an error.
+ */
+function makeApiRequest(method, url, data = null, headers = {}) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            method: method,
+            url: url,
+            data: data,
+            headers: headers,
+            success: (response) => {
+                resolve(response);
+            },
+            error: (xhr, status, error) => {
+                reject(new Error(`Error making API request: ${error}`));
+            }
+        });
+    });
+}
 
 export {
     getCurrentDate,
     resetInput,
-    hasClass,
-    toggleClass,
     changeLogo,
     changeFavIcon,
-    removeClass,
-    addClass,
     getParentElementByClassName,
     swapTaskIconsTo,
     getFormInputs,
-    tooltip
+    tooltip,
+    makeApiRequest
 };

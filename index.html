@@ -3,29 +3,18 @@
 <head>
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>TaskTales</title>
-	<!-- Link to the CSS file -->
+	<!-- Page title -->
+	<title>Task Tales</title>
+	<!-- Link to the main CSS file -->
 	<link rel="stylesheet" href="assets/css/style.css"/>
 	<!-- Link to Font Awesome for icons -->
-	<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-			integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-	/>
+	<link rel="stylesheet" href="assets/css/font-awesome-6.4.0.all.min.css"/>
 	<!-- Link to Favicon file -->
-	<link
-			id="favIcon"
-			rel="shortcut icon"
-			href="assets/images/icon/fav-pink.png"
-			type="image/x-icon"
-	/>
-	<!-- Link to animate.css CDN for animations -->
-	<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-	/>
+	<link id="favIcon" rel="shortcut icon" href="assets/images/icon/fav-pink.png" type="image/x-icon"/>
+	<!-- Link to animate.css for animations -->
+	<link rel="stylesheet" href="assets/css/animate-4.1.1.min.css"/>
+	<!-- Link to CSS file for Tippy.js animations, scaling effect -->
+	<link rel="stylesheet" href="assets/css/tippy-scale.css"/>
 </head>
 <body>
 <div class="container">
@@ -33,7 +22,7 @@
 		<div>
 			<nav>
 				<!-- Navigation menu button -->
-				<div class="menuBtn">
+				<div class="menu-btn">
 					<div class="bar"></div>
 					<div class="bar"></div>
 					<div class="bar"></div>
@@ -44,15 +33,19 @@
 				<div>
 					<!-- Logo -->
 					<a href="#">
-						<img id="logo" src="assets/images/logo/logo-pink.png" alt="Logo"/>
+						<img
+								id="logo"
+								src="assets/images/logo/logo-pink.png"
+								alt="Logo"
+						/>
 					</a>
 				</div>
 			</nav>
 			<!-- Menu -->
-			<div id="menuContainer">
+			<div id="menu-container">
 				<!-- Links Menu -->
-				<div class="menuContent">
-					<span class="fas fa-times menuClose"></span>
+				<div class="menu-content" id="menu">
+					<span class="fas fa-times menu-close"></span>
 					<span
 					><a
 							href="https://github.com/AmiRM4A"
@@ -62,79 +55,79 @@
 					<span class="fa-solid fa-paint-roller"></span>
 				</div>
 				<!-- Colors Menu -->
-				<div class="colorMenu menuContent">
-					<span class="fas fa-times colorMenuClose"></span>
+				<div class="colorMenu menu-content" id="colors-menu">
+					<span class="fas fa-times color-menu-close"></span>
 					<!-- Color options -->
-					<span class="colorItem teal"></span>
-					<span class="colorItem indigo"></span>
-					<span class="colorItem red"></span>
-					<span class="colorItem pink"></span>
-					<span class="colorItem green"></span>
+					<span class="color-item teal"></span>
+					<span class="color-item indigo"></span>
+					<span class="color-item red"></span>
+					<span class="color-item pink"></span>
+					<span class="color-item green"></span>
 				</div>
 			</div>
 		</div>
 	</header>
 	<!-- Tasks Management -->
-	<section id="tasksSection">
-		<div id="tasksHeader">
+	<section id="tasks-section">
+		<div id="tasks-header">
 			<div>
 				<h1></h1>
 				<span class="blink-caret"></span>
 			</div>
 			<form>
 				<!-- Task input field -->
-				<label for="taskInput"></label>
+				<label for="task-input"></label>
 				<input
-						id="taskInput"
+						id="task-input"
 						type="text"
 						placeholder="Add a task..."
 						name="todo-input"
 						autocomplete="off"
 				/>
 				<!-- Add Task button -->
-				<button class="addTodoBtn" type="submit">Add Task</button>
+				<button class="add-todo-btn" type="submit">Add Task</button>
 			</form>
 		</div>
-		<div id="tasksContainer">
+		<div id="tasks-container">
 			<div class="todo">
 				<!-- Tasks will be shown here -->
 			</div>
 		</div>
 	</section>
 	<!-- Task Edit Modal -->
-	<div class="modal" id="taskEditModal">
-		<div class="modalContent">
-			<span class="closeButton fas fa-times"></span>
+	<div class="modal" id="task-edit-modal">
+		<div class="modal-content">
+			<span class="close-button fas fa-times"></span>
 			<h2>Edit Task</h2>
 			<form>
 				<!-- Hidden input for task ID -->
-				<input type="hidden" class="taskId" name="task-id"/>
-				<label for="taskTitle">Title:</label>
-				<input type="text" id="taskTitle" name="taskTitle"/>
-				<label for="taskDescription">Description:</label>
-				<textarea id="taskDescription" name="taskDescription"></textarea>
-				<label for="taskStatus">Status:</label>
-				<select id="taskStatus" name="taskStatus">
+				<input type="hidden" class="task-id" name="task-id"/>
+				<label for="task-title">Title:</label>
+				<input type="text" id="task-title" name="task-title"/>
+				<label for="task-description">Description:</label>
+				<textarea id="task-description" name="task-description"></textarea>
+				<label for="task-status">Status:</label>
+				<select id="task-status" name="task-status">
 					<option value="not-done">Not Done</option>
 					<option value="done">Done</option>
 				</select>
 				<!-- Save button -->
-				<input type="button" class="btn saveModal" value="Save"/>
+				<input type="button" class="btn save-modal" value="Save"/>
 			</form>
 		</div>
 	</div>
 	<!-- Completed tasks modal -->
-	<div class="modal" id="completedTasksModal">
-		<div class="modalContent">
+	<div class="modal" id="completed-tasks-modal">
+		<div class="modal-content">
 			<span class="close fas fa-times"></span>
 			<table>
 				<thead>
 				<tr>
-					<th class="taskId">ID</th>
-					<th class="taskTitle">Title</th>
-					<th class="taskDesc">Description</th>
-					<th class="taskCreationDate">Created At</th>
-					<th class="taskCompletionDate">Completed At</th>
+					<th class="task-id">ID</th>
+					<th class="task-title">Title</th>
+					<th class="task-desc">Description</th>
+					<th class="task-creation-date">Created At</th>
+					<th class="task-completion-date">Completed At</th>
 					<th>Action</th>
 				</tr>
 				</thead>
@@ -152,8 +145,17 @@
 		<a href="https://github.com/AmiRM4A">Amir</a>
 	</div>
 </footer>
-<!-- Link to JavaScript file -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Font Awesome -->
+<!--<script src="assets/js/font-awesome-6.4.0-all.min.js"></script>-->
+<!-- Popper.js library for tooltips and popovers -->
+<script src="assets/js/popper-2.11.8.min.js"></script>
+<!-- Tippy.js library for customizable tooltips -->
+<script src="assets/js/tippy-bundle-6.3.7.umd.js"></script>
+<!-- jQuery library -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<!-- Main application script -->
+<script type="module" src="assets/js/app.js"></script>
+<!-- Main application script -->
 <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

@@ -16,14 +16,12 @@ function toggleColorMenu() {
  * @function
  * @name toggleMenuContent
  *
- * @param {Element} menuBtn - The menu button element.
  * @param {Element} menuContent - The menu content element.
  *
  * @description Toggles the visibility of the menu by adding/removing CSS classes.
  */
-function toggleMenuContent(menuBtn, menuContent) {
-    $(menuBtn).toggleClass("menu-open");
+function toggleMenuContent(menuContent) {
     $(menuContent).toggleClass('show-menu');
 }
 
-export { toggleColorMenu, toggleMenuContent };
+export {toggleColorMenu, toggleMenuContent};

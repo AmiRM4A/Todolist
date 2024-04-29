@@ -1,3 +1,4 @@
+import config from '/config.js';
 import {
     setToStorage,
     getFromStorage,
@@ -8,12 +9,9 @@ import {
 import {updateTaskInDom, removeTask, addTask, getTaskId, selectTask, getTaskData} from './modules/taskModule.js';
 import {undoCompletedTask, markTaskAsCompleted} from './modules/completedTaskModule.js';
 import {
-    hasClass,
-    toggleClass,
     getParentElementByClassName,
-    removeClass,
-    addClass,
-    tooltip
+    tooltip,
+    makeApiRequest
 } from './modules/utilitiesModule.js';
 import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
@@ -21,13 +19,13 @@ import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
 import {LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
 import {validateEmail, validateName, validatePassword, validateUsername} from './modules/formValidationModule.js';
 
-const taskInput = $('#taskInput');
+const taskInput = $('#task-input');
 const tasksCon = $('.todo');
-const menuContainer = $('#menuContainer');
-const menuContent = $('.menuContent');
-const menuBtn = $(".menuBtn");
-const taskEditModal = $('#taskEditModal');
-const tasksSection = $('#tasksSection');
+const menuContainer = $('#menu-container');
+const menu = $('#menu');
+const menuBtn = $(".menu-btn");
+const taskEditModal = $('#task-edit-modal');
+const tasksSection = $('#tasks-section');
 
 /* Initialize tasks array */
 let tasks;
@@ -43,13 +41,19 @@ let tasks;
 function initialize() {
     typeHeaderText();
     const colorRgbCode = getFromStorage('theme-color', true);
-    if (colorRgbCode !== null) selectThemeColor(colorRgbCode);
+
+    if (colorRgbCode !== null) {
+        selectThemeColor(colorRgbCode);
+    }
+
     const storageTasksArr = getFromStorage(LOCAL_STORAGE_TASKS_KEY, true);
+
     if (storageTasksArr !== null && typeof storageTasksArr === 'object') {
         loadStorageTasks(storageTasksArr, tasksCon);
         tasks = storageTasksArr;
         return;
     }
+
     tasks = [];
 }
 
@@ -64,9 +68,9 @@ function initialize() {
  * @description Fills the input fields in the edit task modal with data from the selected task element.
  */
 function fillEditTaskModalInputs(taskElem) {
-    const modalId = taskEditModal.find('.taskId');
-    const modalTitle = taskEditModal.find('#taskTitle');
-    const modalDesc = taskEditModal.find('#taskDescription');
+    const modalId = taskEditModal.find('.task-id');
+    const modalTitle = taskEditModal.find('#task-title');
+    const modalDesc = taskEditModal.find('#task-description');
     modalId.val(getTaskId(taskElem));
     modalTitle.val($(taskElem).find('.task-title').text());
     modalDesc.val($(taskElem).find('.task-desc').text());
@@ -83,24 +87,27 @@ function fillEditTaskModalInputs(taskElem) {
 function handleSaveModalBtnClick() {
     // Get new changes of task from tasks edit modal
     const data = {
-        id: Number(taskEditModal.find('.taskId').val()),
-        name: taskEditModal.find('#taskTitle').val(),
-        desc: taskEditModal.find('#taskDescription').val(),
-        status: (taskEditModal.find('#taskStatus').is(':checked'))
+        id: Number(taskEditModal.find('.task-id').val()),
+        name: taskEditModal.find('#task-title').val(),
+        desc: taskEditModal.find('#task-description').val(),
+        status: (taskEditModal.find('#task-status').is(':checked'))
     }
 
     // Mark tasks as completed/uncompleted based on status input value
     const taskElem = selectTask(data.id, tasksCon);
-    if (data.status) markTaskAsCompleted(taskElem, getTaskData(tasks, data.id), tasks);
-    else undoCompletedTask(taskElem, tasks);
+
+    if (data.status) {
+        markTaskAsCompleted(taskElem, getTaskData(tasks, data.id), tasks);
+    } else {
+        undoCompletedTask(taskElem, tasks);
+    }
 
     // Apply new changes to storage and page
     updateTaskInDom(selectTask(data.id, tasksCon), data);
     updateTaskInStorage(getStorageTaskIndex(data.id, tasks), tasks, data);
 
-    toggleClass(taskEditModal, 'showModal');
+    taskEditModal.toggleClass('show-modal');
 }
-
 
 /* --- Handling Validation Functions --- */
 /**
@@ -108,7 +115,7 @@ function handleSaveModalBtnClick() {
  * @param {string} inputId - The ID of the input field.
  * @param {boolean} isValid - Whether the input value is valid or not.
  */
-function toggleInputValidationError(inputId, isValid) {
+function toggleInputValidationError(inputId, isValid = false) {
     const inputField = $(`#${inputId}-input #${inputId}`);
     const errorMessage = $(`#${inputId}-input .form-group__message`);
 
@@ -138,7 +145,6 @@ function handleInputValidation(inputId, validationFunction) {
     $(`#${inputId}-input #${inputId}`).on('input', (event) => {
         const value = event.target.value;
         const isValid = (value && validationFunction(value));
-
         toggleInputValidationError(inputId, isValid);
     });
 }
@@ -155,54 +161,56 @@ $(window).on('load', initialize);
 
 $(window).on('scroll', () => {
     const header = $('header');
+
     if ($(window).scrollTop() > 59) {
-        addClass('sticky', header);
+        header.addClass('sticky');
     } else if ($(window).scrollTop() < 51) {
-        removeClass('sticky', header);
+        header.removeClass('sticky');
     }
 });
 
-tasksSection.on('click', (event) => {
+tasksSection.on('click', function(event) {
     event.preventDefault();
-    const target = event.target;
-    const taskElem = getParentElementByClassName(target, 'task');
-    if (target.hasClass('addTodoBtn')) {
+    const target = $(event.target);
+    const taskElem = getParentElementByClassName(target[0], 'task');
+
+    if (target.hasClass('add-todo-btn')) {
         const taskName = taskInput.val();
-        if (taskName) addTask(taskName, tasksCon, tasks, false);
+        if (taskName) {
+            addTask(taskName, tasksCon, tasks, false);
+        }
     } else if (target.hasClass('fa-times')) {
-        event.preventDefault();
         removeTask(taskElem, tasks);
     } else if (target.hasClass('fa-edit')) {
-        event.preventDefault();
         fillEditTaskModalInputs(taskElem);
-        toggleClass(taskEditModal, 'showModal');
+        taskEditModal.toggleClass('show-modal');
     } else if (target.hasClass('fa-undo')) {
-        event.preventDefault();
         undoCompletedTask(taskElem, tasks);
     } else if (target.hasClass('done-span') || target.hasClass('done-btn')) {
-        event.preventDefault();
         // Mark selected task as completed
         markTaskAsCompleted(taskElem, getTaskData(tasks, getTaskId(taskElem)), tasks);
     }
 });
 
-taskEditModal.on('click', (event) => {
-    const target = event.target;
-    if (target.hasClass('closeButton')) {
-        event.preventDefault();
-        toggleClass(taskEditModal, 'showModal');
-    } else if (target.hasClass('saveModal')) {
-        event.preventDefault();
+taskEditModal.on('click', function(event) {
+    const target = $(event.target);
+
+    if (target.hasClass('close-button')) {
+        taskEditModal.toggleClass('show-modal');
+    } else if (target.hasClass('save-modal')) {
         handleSaveModalBtnClick();
     }
 });
 
-menuContainer.on('click', (event) => {
+menuContainer.on('click', function(event) {
     event.preventDefault();
-    const target = event.target;
-    if (target.hasClass('menuClose')) toggleMenuContent(menuBtn, menuContent);
-    else if (target.hasClass('fa-paint-roller') || target.hasClass('colorMenuClose')) toggleColorMenu();
-    else if (target.hasClass('colorItem')) {
+    const target = $(event.target);
+
+    if (target.hasClass('menu-close')) {
+        toggleMenuContent(menu);
+    } else if (target.hasClass('fa-paint-roller') || target.hasClass('color-menu-close')) {
+        toggleColorMenu();
+    } else if (target.hasClass('color-item')) {
         const colorRgbCode = target.css('background-color');
         selectThemeColor(colorRgbCode);
         setToStorage('theme-color', colorRgbCode);
@@ -211,25 +219,28 @@ menuContainer.on('click', (event) => {
 
 menuBtn.on('click', (event) => {
     event.preventDefault();
-    toggleMenuContent(menuBtn, menuContent);
+    toggleMenuContent(menu);
 });
 
 $(document).on('keyup', (event) => {
     if (event.key === 'Escape') {
         // After pressing Esc key, check for open modals to close them
-        if (hasClass(taskEditModal, 'showModal')) toggleClass(taskEditModal, 'showModal');
-        else if (hasClass(menuContent, 'show-menu')) toggleMenuContent(menuBtn, menuContent);
+        if (taskEditModal.hasClass('show-modal')) {
+            taskEditModal.toggleClass('show-modal');
+        } else if (menu.hasClass('show-menu')) {
+            toggleMenuContent(menu);
+        }
     }
 });
 
 $('.eye-icon').on('click', (event) => {
     event.preventDefault();
 
-    const $passwordInput = $('#password');
-    const $eyeIcon = $(this);
+    const target = $(event.target).prev();
+    const eyeIcon = $(this);
 
-    $passwordInput.attr('type', $passwordInput.attr('type') === 'password' ? 'text' : 'password');
-    $eyeIcon.toggleClass('fa-eye fa-eye-slash');
+    target.attr('type', target.attr('type') === 'password' ? 'text' : 'password');
+    eyeIcon.toggleClass('fa-eye fa-eye-slash');
 });
 
 // Event listeners for validating inputs
@@ -237,14 +248,78 @@ handleInputValidation('email', validateEmail);
 handleInputValidation('password', validatePassword);
 handleInputValidation('name', validateName);
 handleInputValidation('username', validateUsername);
+handleInputValidation('re-password', (re_password) => re_password && re_password === $('#password').val());
 
 // Call API Services
-$('#login-form').submit(function (event) {
+$('#login-form').submit((event) => {
     event.preventDefault();
-    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
+
+    const email = $('#email').val();
+    const password = $('#password').val();
+    const remember_me = $('#remember-me').prop('checked');
+
+    if (!email || !validateEmail(email)) {
+        toggleInputValidationError('email');
+        return;
+    }
+
+    if (!password || !validatePassword(password)) {
+        toggleInputValidationError('password');
+        return;
+    }
+
+    const apiUrl = config['apiUrl'];
+
+    makeApiRequest('GET', apiUrl + '/get-tasks')
+        .then(response => {
+            console.log('Response:', response);
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
 });
 
-$('#register-form').submit(function (event) {
+$('#register-form').submit((event) => {
     event.preventDefault();
-    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
+
+    const name = $('#name').val();
+    const username = $('#username').val();
+    const email = $('#email').val();
+    const password = $('#password').val();
+    const re_password = $('#re-password').val();
+
+    if (!name || !validateName(name)) {
+        toggleInputValidationError('name');
+        return;
+    }
+
+    if (!username || !validateUsername(username)) {
+        toggleInputValidationError('username');
+        return;
+    }
+
+    if (!email || !validateEmail(email)) {
+        toggleInputValidationError('email');
+        return;
+    }
+
+    if (!password || !validatePassword(password)) {
+        toggleInputValidationError('password');
+        return;
+    }
+
+    if (!re_password || re_password !== password) {
+        toggleInputValidationError('re-password');
+        return;
+    }
+
+    const apiUrl = config['apiUrl'];
+
+    makeApiRequest('GET', apiUrl + '/get-tasks')
+        .then(response => {
+            console.log('Response:', response);
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
 });

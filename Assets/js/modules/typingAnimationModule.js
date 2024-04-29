@@ -1,7 +1,7 @@
-import { HEADER_TYPE_DELAY} from "./constantsModule.js";
+import {HEADER_TYPE_DELAY} from "./constantsModule.js";
 
 const textToType = "Get it done!";
-const h1Elem = $('#tasksHeader h1');
+const h1Elem = $('#tasks-header h1');
 const caret = $('.blink-caret');
 
 /**
@@ -26,4 +26,4 @@ function typeHeaderText() {
     typeNextCharacter();
 }
 
-export { typeHeaderText };
+export {typeHeaderText};
