@@ -9,12 +9,9 @@ import {
 import {updateTaskInDom, removeTask, addTask, getTaskId, selectTask, getTaskData} from './modules/taskModule.js';
 import {undoCompletedTask, markTaskAsCompleted} from './modules/completedTaskModule.js';
 import {
-    hasClass,
-    toggleClass,
     getParentElementByClassName,
-    removeClass,
-    addClass,
-    tooltip
+    tooltip,
+    makeApiRequest
 } from './modules/utilitiesModule.js';
 import {typeHeaderText} from './modules/typingAnimationModule.js';
 import {selectThemeColor} from './modules/themeModule.js';
@@ -22,13 +19,13 @@ import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
 import {LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
 import {validateEmail, validateName, validatePassword, validateUsername} from './modules/formValidationModule.js';
 
-const taskInput = $('#taskInput');
+const taskInput = $('#task-input');
 const tasksCon = $('.todo');
-const menuContainer = $('#menuContainer');
-const menuContent = $('.menuContent');
-const menuBtn = $(".menuBtn");
-const taskEditModal = $('#taskEditModal');
-const tasksSection = $('#tasksSection');
+const menuContainer = $('#menu-container');
+const menu = $('#menu');
+const menuBtn = $(".menu-btn");
+const taskEditModal = $('#task-edit-modal');
+const tasksSection = $('#tasks-section');
 
 /* Initialize tasks array */
 let tasks;
@@ -44,13 +41,19 @@ let tasks;
 function initialize() {
     typeHeaderText();
     const colorRgbCode = getFromStorage('theme-color', true);
-    if (colorRgbCode !== null) selectThemeColor(colorRgbCode);
+
+    if (colorRgbCode !== null) {
+        selectThemeColor(colorRgbCode);
+    }
+
     const storageTasksArr = getFromStorage(LOCAL_STORAGE_TASKS_KEY, true);
+
     if (storageTasksArr !== null && typeof storageTasksArr === 'object') {
         loadStorageTasks(storageTasksArr, tasksCon);
         tasks = storageTasksArr;
         return;
     }
+
     tasks = [];
 }
 
@@ -65,9 +68,9 @@ function initialize() {
  * @description Fills the input fields in the edit task modal with data from the selected task element.
  */
 function fillEditTaskModalInputs(taskElem) {
-    const modalId = taskEditModal.find('.taskId');
-    const modalTitle = taskEditModal.find('#taskTitle');
-    const modalDesc = taskEditModal.find('#taskDescription');
+    const modalId = taskEditModal.find('.task-id');
+    const modalTitle = taskEditModal.find('#task-title');
+    const modalDesc = taskEditModal.find('#task-description');
     modalId.val(getTaskId(taskElem));
     modalTitle.val($(taskElem).find('.task-title').text());
     modalDesc.val($(taskElem).find('.task-desc').text());
@@ -84,24 +87,27 @@ function fillEditTaskModalInputs(taskElem) {
 function handleSaveModalBtnClick() {
     // Get new changes of task from tasks edit modal
     const data = {
-        id: Number(taskEditModal.find('.taskId').val()),
-        name: taskEditModal.find('#taskTitle').val(),
-        desc: taskEditModal.find('#taskDescription').val(),
-        status: (taskEditModal.find('#taskStatus').is(':checked'))
+        id: Number(taskEditModal.find('.task-id').val()),
+        name: taskEditModal.find('#task-title').val(),
+        desc: taskEditModal.find('#task-description').val(),
+        status: (taskEditModal.find('#task-status').is(':checked'))
     }
 
     // Mark tasks as completed/uncompleted based on status input value
     const taskElem = selectTask(data.id, tasksCon);
-    if (data.status) markTaskAsCompleted(taskElem, getTaskData(tasks, data.id), tasks);
-    else undoCompletedTask(taskElem, tasks);
+
+    if (data.status) {
+        markTaskAsCompleted(taskElem, getTaskData(tasks, data.id), tasks);
+    } else {
+        undoCompletedTask(taskElem, tasks);
+    }
 
     // Apply new changes to storage and page
     updateTaskInDom(selectTask(data.id, tasksCon), data);
     updateTaskInStorage(getStorageTaskIndex(data.id, tasks), tasks, data);
 
-    taskEditModal.toggleClass('showModal');
+    taskEditModal.toggleClass('show-modal');
 }
-
 
 /* --- Handling Validation Functions --- */
 /**
@@ -139,7 +145,6 @@ function handleInputValidation(inputId, validationFunction) {
     $(`#${inputId}-input #${inputId}`).on('input', (event) => {
         const value = event.target.value;
         const isValid = (value && validationFunction(value));
-
         toggleInputValidationError(inputId, isValid);
     });
 }
@@ -156,6 +161,7 @@ $(window).on('load', initialize);
 
 $(window).on('scroll', () => {
     const header = $('header');
+
     if ($(window).scrollTop() > 59) {
         header.addClass('sticky');
     } else if ($(window).scrollTop() < 51) {
@@ -163,18 +169,21 @@ $(window).on('scroll', () => {
     }
 });
 
-tasksSection.on('click', (event) => {
+tasksSection.on('click', function(event) {
     event.preventDefault();
-    const target = event.target;
-    const taskElem = getParentElementByClassName(target, 'task');
-    if (target.hasClass('addTodoBtn')) {
+    const target = $(event.target);
+    const taskElem = getParentElementByClassName(target[0], 'task');
+
+    if (target.hasClass('add-todo-btn')) {
         const taskName = taskInput.val();
-        if (taskName) addTask(taskName, tasksCon, tasks, false);
+        if (taskName) {
+            addTask(taskName, tasksCon, tasks, false);
+        }
     } else if (target.hasClass('fa-times')) {
         removeTask(taskElem, tasks);
     } else if (target.hasClass('fa-edit')) {
         fillEditTaskModalInputs(taskElem);
-        taskEditModal.toggleClass('showModal');
+        taskEditModal.toggleClass('show-modal');
     } else if (target.hasClass('fa-undo')) {
         undoCompletedTask(taskElem, tasks);
     } else if (target.hasClass('done-span') || target.hasClass('done-btn')) {
@@ -183,21 +192,25 @@ tasksSection.on('click', (event) => {
     }
 });
 
-taskEditModal.on('click', (event) => {
-    const target = event.target;
-    if (target.hasClass('closeButton')) {
-        taskEditModal.toggleClass('showModal');
-    } else if (target.hasClass('saveModal')) {
+taskEditModal.on('click', function(event) {
+    const target = $(event.target);
+
+    if (target.hasClass('close-button')) {
+        taskEditModal.toggleClass('show-modal');
+    } else if (target.hasClass('save-modal')) {
         handleSaveModalBtnClick();
     }
 });
 
-menuContainer.on('click', (event) => {
+menuContainer.on('click', function(event) {
     event.preventDefault();
-    const target = event.target;
-    if (target.hasClass('menuClose')) toggleMenuContent(menuBtn, menuContent);
-    else if (target.hasClass('fa-paint-roller') || target.hasClass('colorMenuClose')) toggleColorMenu();
-    else if (target.hasClass('colorItem')) {
+    const target = $(event.target);
+
+    if (target.hasClass('menu-close')) {
+        toggleMenuContent(menu);
+    } else if (target.hasClass('fa-paint-roller') || target.hasClass('color-menu-close')) {
+        toggleColorMenu();
+    } else if (target.hasClass('color-item')) {
         const colorRgbCode = target.css('background-color');
         selectThemeColor(colorRgbCode);
         setToStorage('theme-color', colorRgbCode);
@@ -206,16 +219,16 @@ menuContainer.on('click', (event) => {
 
 menuBtn.on('click', (event) => {
     event.preventDefault();
-    toggleMenuContent(menuBtn, menuContent);
+    toggleMenuContent(menu);
 });
 
 $(document).on('keyup', (event) => {
     if (event.key === 'Escape') {
         // After pressing Esc key, check for open modals to close them
-        if (taskEditModal.hasClass('showModal')) {
-            taskEditModal.toggleClass('showModal');
-        } else if (menuContent.hasClass('show-menu')) {
-            toggleMenuContent(menuBtn, menuContent);
+        if (taskEditModal.hasClass('show-modal')) {
+            taskEditModal.toggleClass('show-modal');
+        } else if (menu.hasClass('show-menu')) {
+            toggleMenuContent(menu);
         }
     }
 });

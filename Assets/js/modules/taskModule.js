@@ -110,7 +110,7 @@ function updateTaskInDom(taskElem, newTaskData) {
  * @description Gets the ID of a task element in the DOM.
  */
 function getTaskId(taskElem) {
-    return Number($(taskElem).data('taskId'));
+    return Number($(taskElem).data('task-id'));
 }
 
 function getTaskData(tasksList, taskId) {
@@ -174,14 +174,17 @@ function addTask(taskData, tasksContainer, tasksArr, fromStorage = false) {
         tasksArr.push(taskData);
         setToStorage(LOCAL_STORAGE_TASKS_KEY, tasksArr);
     }
+
     const htmlTaskCode = createTaskElem(taskData.id, taskData.name, taskData.desc, taskData.createdAt);
     $(tasksContainer).append(htmlTaskCode);
     const taskElem = selectTask(taskData.id, tasksContainer);
+
     if (fromStorage) {
         markTaskAsCompleted(taskElem, taskData, tasksArr, true);
         return;
     }
-    resetInput($('#taskInput'));
+
+    resetInput($('#task-input'));
 }
 
 export {selectTask, updateTaskInDom, removeTask, addTask, getTaskId, getTaskData}
