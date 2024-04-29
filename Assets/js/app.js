@@ -241,12 +241,75 @@ handleInputValidation('username', validateUsername);
 handleInputValidation('re-password', (re_password) => re_password && re_password === $('#password').val());
 
 // Call API Services
-$('#login-form').submit(function (event) {
+$('#login-form').submit((event) => {
     event.preventDefault();
-    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
+
+    const email = $('#email').val();
+    const password = $('#password').val();
+    const remember_me = $('#remember-me').prop('checked');
+
+    if (!email || !validateEmail(email)) {
+        toggleInputValidationError('email');
+        return;
+    }
+
+    if (!password || !validatePassword(password)) {
+        toggleInputValidationError('password');
+        return;
+    }
+
+    const apiUrl = config['apiUrl'];
+
+    makeApiRequest('GET', apiUrl + '/get-tasks')
+        .then(response => {
+            console.log('Response:', response);
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
 });
 
-$('#register-form').submit(function (event) {
+$('#register-form').submit((event) => {
     event.preventDefault();
-    //todo: check if inputs are empty show the custom error created under them (display it on), if they are valid, use api to connect to backend
+
+    const name = $('#name').val();
+    const username = $('#username').val();
+    const email = $('#email').val();
+    const password = $('#password').val();
+    const re_password = $('#re-password').val();
+
+    if (!name || !validateName(name)) {
+        toggleInputValidationError('name');
+        return;
+    }
+
+    if (!username || !validateUsername(username)) {
+        toggleInputValidationError('username');
+        return;
+    }
+
+    if (!email || !validateEmail(email)) {
+        toggleInputValidationError('email');
+        return;
+    }
+
+    if (!password || !validatePassword(password)) {
+        toggleInputValidationError('password');
+        return;
+    }
+
+    if (!re_password || re_password !== password) {
+        toggleInputValidationError('re-password');
+        return;
+    }
+
+    const apiUrl = config['apiUrl'];
+
+    makeApiRequest('GET', apiUrl + '/get-tasks')
+        .then(response => {
+            console.log('Response:', response);
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
 });
