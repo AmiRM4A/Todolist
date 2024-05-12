@@ -137,7 +137,6 @@ function tooltip(selector, content, arrow = true, animation = 'scale') {
  * @param {string} url - The URL of the API endpoint.
  * @param {Object} [data] - The data to be sent with the request (for 'POST' or 'PUT' methods).
  * @param {Object} [headers] - Additional headers to include in the request.
- * @param dataType - The type of data to be sent with the request
  * @returns {Promise} - A Promise that resolves to the response data or rejects with an error.
  */
 function makeApiRequest(method, url, data = null, headers = {}) {
@@ -150,12 +149,13 @@ function makeApiRequest(method, url, data = null, headers = {}) {
             success: (response) => {
                 resolve(response);
             },
-            error: (xhr, status, error) => {
-                reject(new Error(`Error making API request: ${error}`));
+            error: (xhr) => {
+                reject(xhr);
             }
         });
     });
 }
+
 
 export {
     getCurrentDate,
