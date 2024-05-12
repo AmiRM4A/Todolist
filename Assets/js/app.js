@@ -109,46 +109,6 @@ function handleSaveModalBtnClick() {
     taskEditModal.toggleClass('show-modal');
 }
 
-/* --- Handling Validation Functions --- */
-/**
- * Shows or hides the validation error message for a given input field.
- * @param {string} inputId - The ID of the input field.
- * @param {boolean} isValid - Whether the input value is valid or not.
- */
-function toggleInputValidationError(inputId, isValid = false) {
-    const inputField = $(`#${inputId}-input #${inputId}`);
-    const errorMessage = $(`#${inputId}-input .form-group__message`);
-
-    if (isValid) {
-        inputField.removeClass('is-invalid-input');
-        errorMessage.removeClass('show-invalid-input-message');
-    } else {
-        inputField.addClass('is-invalid-input');
-        errorMessage.addClass('show-invalid-input-message');
-    }
-}
-
-/**
- * Handles input validation for a given input field.
- *
- * @param {string} inputId - The ID of the input field to be validated.
- * @param {Function} validationFunction - The function to be used for validating the input value.
- *
- * @returns {void} This function does not return a value.
- *
- * @description
- * This function attaches an event listener to the 'input' event of the specified input field.
- * When the input value changes, the provided validationFunction is called with the new input value.
- *
- */
-function handleInputValidation(inputId, validationFunction) {
-    $(`#${inputId}-input #${inputId}`).on('input', (event) => {
-        const value = event.target.value;
-        const isValid = (value && validationFunction(value));
-        toggleInputValidationError(inputId, isValid);
-    });
-}
-
 // Initialize Tippy elements
 tooltip('#password-info', "Must contain 8 letters at least");
 tooltip('#email-info', "Example@gmail.com");
@@ -169,7 +129,7 @@ $(window).on('scroll', () => {
     }
 });
 
-tasksSection.on('click', function(event) {
+tasksSection.on('click', function (event) {
     event.preventDefault();
     const target = $(event.target);
     const taskElem = getParentElementByClassName(target[0], 'task');
@@ -192,7 +152,7 @@ tasksSection.on('click', function(event) {
     }
 });
 
-taskEditModal.on('click', function(event) {
+taskEditModal.on('click', function (event) {
     const target = $(event.target);
 
     if (target.hasClass('close-button')) {
@@ -202,7 +162,7 @@ taskEditModal.on('click', function(event) {
     }
 });
 
-menuContainer.on('click', function(event) {
+menuContainer.on('click', function (event) {
     event.preventDefault();
     const target = $(event.target);
 
@@ -231,95 +191,4 @@ $(document).on('keyup', (event) => {
             toggleMenuContent(menu);
         }
     }
-});
-
-$('.eye-icon').on('click', (event) => {
-    event.preventDefault();
-
-    const target = $(event.target).prev();
-    const eyeIcon = $(this);
-
-    target.attr('type', target.attr('type') === 'password' ? 'text' : 'password');
-    eyeIcon.toggleClass('fa-eye fa-eye-slash');
-});
-
-// Event listeners for validating inputs
-handleInputValidation('email', validateEmail);
-handleInputValidation('password', validatePassword);
-handleInputValidation('name', validateName);
-handleInputValidation('username', validateUsername);
-handleInputValidation('re-password', (re_password) => re_password && re_password === $('#password').val());
-
-// Call API Services
-$('#login-form').submit((event) => {
-    event.preventDefault();
-
-    const email = $('#email').val();
-    const password = $('#password').val();
-    const remember_me = $('#remember-me').prop('checked');
-
-    if (!email || !validateEmail(email)) {
-        toggleInputValidationError('email');
-        return;
-    }
-
-    if (!password || !validatePassword(password)) {
-        toggleInputValidationError('password');
-        return;
-    }
-
-    const apiUrl = config['apiUrl'];
-
-    makeApiRequest('GET', apiUrl + '/get-tasks')
-        .then(response => {
-            console.log('Response:', response);
-        })
-        .catch(error => {
-            console.error('Error:', error.message);
-        });
-});
-
-$('#register-form').submit((event) => {
-    event.preventDefault();
-
-    const name = $('#name').val();
-    const username = $('#username').val();
-    const email = $('#email').val();
-    const password = $('#password').val();
-    const re_password = $('#re-password').val();
-
-    if (!name || !validateName(name)) {
-        toggleInputValidationError('name');
-        return;
-    }
-
-    if (!username || !validateUsername(username)) {
-        toggleInputValidationError('username');
-        return;
-    }
-
-    if (!email || !validateEmail(email)) {
-        toggleInputValidationError('email');
-        return;
-    }
-
-    if (!password || !validatePassword(password)) {
-        toggleInputValidationError('password');
-        return;
-    }
-
-    if (!re_password || re_password !== password) {
-        toggleInputValidationError('re-password');
-        return;
-    }
-
-    const apiUrl = config['apiUrl'];
-
-    makeApiRequest('GET', apiUrl + '/get-tasks')
-        .then(response => {
-            console.log('Response:', response);
-        })
-        .catch(error => {
-            console.error('Error:', error.message);
-        });
 });
