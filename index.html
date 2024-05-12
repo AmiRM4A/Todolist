@@ -154,8 +154,36 @@
 <!-- jQuery library -->
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <!-- Main application script -->
-<script type="module" src="assets/js/app.js"></script>
-<!-- Main application script -->
+<script type="module">
+	// Check if token's data is already set in the session storage
+	if (sessionStorage.getItem('Authorization') === null) {
+		// Redirect to login page
+		sessionStorage.removeItem('user');
+		window.location.href = "login.html";
+	}
+
+	// Importing necessary functions
+	import config from "./config.js";
+	import {makeApiRequest} from './assets/js/modules/utilitiesModule.js';
+
+	$(document).ready(() => {
+		const apiUrl = config.apiUrl + '/me';
+		// Call API service to get user's data (by token)
+		makeApiRequest('POST', apiUrl, null, {Authorization: sessionStorage.getItem('Authorization')})
+				.then(response => {
+					// Saving token's data into session storage if data isn't already saved
+					if (sessionStorage.getItem('user') === null) {
+						sessionStorage.setItem('user', JSON.stringify(response.data[0]));
+					}
+				})
+				.catch(error => {
+					// Redirecting to login page if token is invalid
+					sessionStorage.removeItem('Authorization');
+					sessionStorage.removeItem('user');
+					window.location.href = "login.html";
+				});
+	});
+</script>
 <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
