@@ -8,9 +8,9 @@
     src: url('../fonts/Roboto-Regular.ttf');
 }
 
+/* Set a base fonts size */
 html {
     font-size: 16px;
-    /* Set a base fonts size */
 }
 
 /* Reset default margin, padding, and box-sizing for all elements */
