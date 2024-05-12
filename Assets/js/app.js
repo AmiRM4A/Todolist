@@ -129,7 +129,7 @@ $(window).on('scroll', () => {
     }
 });
 
-tasksSection.on('click', function(event) {
+tasksSection.on('click', function (event) {
     event.preventDefault();
     const target = $(event.target);
     const taskElem = getParentElementByClassName(target[0], 'task');
@@ -152,7 +152,7 @@ tasksSection.on('click', function(event) {
     }
 });
 
-taskEditModal.on('click', function(event) {
+taskEditModal.on('click', function (event) {
     const target = $(event.target);
 
     if (target.hasClass('close-button')) {
@@ -162,7 +162,7 @@ taskEditModal.on('click', function(event) {
     }
 });
 
-menuContainer.on('click', function(event) {
+menuContainer.on('click', function (event) {
     event.preventDefault();
     const target = $(event.target);
 
