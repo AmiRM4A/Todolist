@@ -8,9 +8,9 @@
     src: url('../fonts/Roboto-Regular.ttf');
 }
 
+/* Set a base fonts size */
 html {
     font-size: 16px;
-    /* Set a base fonts size */
 }
 
 /* Reset default margin, padding, and box-sizing for all elements */
@@ -74,7 +74,6 @@ nav {
 }
 
 figure {
-    margin-bottom: 50px;
     text-align: center;
 }
 
@@ -144,7 +143,7 @@ h2 {
     padding: 0;
     font-weight: bold;
     color: #222;
-    font-size: 36px;
+    font-size: 2rem;
 }
 
 .main {
@@ -339,7 +338,7 @@ h2 {
     color: var(--theme-color);
 }
 
-#task-edit-modal h2{
+#task-edit-modal h2 {
     text-align: center;
     color: var(--white-font);
 }
@@ -637,6 +636,7 @@ footer .fa-heart {
     display: flex;
     display: -webkit-flex;
     align-items: center;
+    justify-content: center;
 }
 
 .sign-up .container,
@@ -684,13 +684,15 @@ footer .fa-heart {
 .sign-up,
 .sign-in {
     background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     text-align: center;
     width: 80%;
-    height: 80vh;
+    height: 83vh;
     margin-bottom: 5px;
 }
 
@@ -713,17 +715,9 @@ footer .fa-heart {
     overflow: hidden;
 }
 
-.sign-up-image {
-    margin: 0 55px;
-}
-
 .form-title {
-    margin-bottom: 27px;
+    margin-bottom: 3%;
     color: rgba(255, 255, 255, 0.85);
-}
-
-.sign-up-image {
-    margin-top: 45px;
 }
 
 .form-submit {
@@ -750,24 +744,18 @@ footer .fa-heart {
 }
 
 .sign-in-content .links-container {
-    margin-top: 50px;
+    margin-top: 2em;
 }
 
 .sign-up-image-link,
 .forget-password-link {
-    font-size: 14px;
+    font-size: 0.87rem;
     color: var(--white-font);
     display: block;
 }
 
 .sign-up .sign-up-image-link {
-    margin: 20px 0 40px;
-}
-
-.sign-up-form {
-    margin-left: 75px;
-    margin-right: 75px;
-    padding-left: 20px;
+    margin-top: 5%;
 }
 
 .register-form {
@@ -787,19 +775,28 @@ footer .fa-heart {
     font-size: 18px;
 }
 
-.sign-in-content {
-    padding-top: 30px;
+.sign-in-form, .sign-up-form {
+    width: 40%;
 }
 
 .sign-in-form {
-    margin-right: 90px;
-    margin-left: 80px;
+    margin-right: 6%;
+    margin-left: 4%;
 }
 
-.sign-in-image {
-    margin-left: 110px;
-    margin-right: 20px;
-    margin-top: 10px;
+.sign-up-form {
+    margin-right: 4%;
+    margin-left: 6%;
+}
+
+.sign-in-image, .sign-up-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-in-image img, .sign-up-image img {
+    width: 26vw;
 }
 
 label[for="remember-me"] {
@@ -1133,24 +1130,6 @@ input:focus:-moz-placeholder {
         display: none !important;
     }
 
-    .sign-up-content,
-    .sign-in-content {
-        flex-direction: column;
-    }
-
-    .sign-up-form {
-        margin-left: 0;
-        margin-right: 0;
-        padding: 0 30px 0 0;
-    }
-
-    .sign-in-image {
-        margin-left: 0;
-        margin-right: 0;
-        margin-top: 50px;
-        order: 2;
-    }
-
     .sign-up-form,
     .sign-up-image,
     .sign-in-form,
@@ -1165,13 +1144,6 @@ input:focus:-moz-placeholder {
     #register-submit-input,
     #login-submit-input {
         text-align: center;
-    }
-
-    .sign-in-form {
-        order: 1;
-        margin-right: 0;
-        margin-left: 0;
-        padding: 0 30px;
     }
 
     .form-title {
@@ -1192,6 +1164,20 @@ input:focus:-moz-placeholder {
     .task {
         flex-basis: calc(33.33333% - 30px);
         margin: 0 15px 30px;
+    }
+
+    .container {
+        max-width: 1200px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .sign-in-image, .sign-up-image {
+        display: none !important;
+    }
+
+    .sign-in-form, .sign-up-form {
+        width: 60%;
     }
 }
 
@@ -1216,13 +1202,6 @@ input:focus:-moz-placeholder {
     }
 }
 
-/* Media query for screens larger than 1024px (desktop screens) */
-@media screen and (min-width: 1024px) {
-    .container {
-        max-width: 1200px;
-    }
-}
-
 /* Media query for screens up to 400px (small mobile screens) */
 @media screen and (max-width: 400px) {
     .social-login {
@@ -1232,5 +1211,23 @@ input:focus:-moz-placeholder {
     .social-label {
         margin-right: 0;
         margin-bottom: 10px;
+    }
+
+    #logo {
+        display: none;
+    }
+
+    .sign-in-form, .sign-up-form {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 624px) {
+    .links-container {
+        display: block;
+    }
+
+    .links-container a {
+        margin-bottom: 0.85em;
     }
 }
