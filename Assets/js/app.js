@@ -1,34 +1,50 @@
 import config from '/config.js';
+import {getSessionStorage, removeSessionStorage} from './modules/sessionStorageModule.js';
+import {getCurrentDateTime, redirectTo} from './modules/utilitiesModule.js';
 import {
-    setToStorage,
-    getFromStorage,
-    updateTaskInStorage,
-    loadStorageTasks,
-    getStorageTaskIndex
-} from './modules/storageModule.js';
-import {updateTaskInDom, removeTask, addTask, getTaskId, selectTask, getTaskData} from './modules/taskModule.js';
-import {undoCompletedTask, markTaskAsCompleted} from './modules/completedTaskModule.js';
-import {
-    getParentElementByClassName,
-    tooltip,
-    makeApiRequest
-} from './modules/utilitiesModule.js';
-import {typeHeaderText} from './modules/typingAnimationModule.js';
-import {selectThemeColor} from './modules/themeModule.js';
-import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
-import {LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
-import {validateEmail, validateName, validatePassword, validateUsername} from './modules/formValidationModule.js';
+    addTask,
+    addTaskToList,
+    getTaskInfo,
+    getUserTasks, markTaskListAsCompleted, markTaskAsCompleted,
+    removeTask,
+    removeTaskFromList, markTaskAsUnCompleted, markTaskListAsUnCompleted
+} from './modules/taskModule.js';
 
 const taskInput = $('#task-input');
-const tasksCon = $('.todo');
-const menuContainer = $('#menu-container');
+const tasksContainer = $('#todo');
 const menu = $('#menu');
-const menuBtn = $(".menu-btn");
+const menuButton = $(".menu-btn");
 const taskEditModal = $('#task-edit-modal');
-const tasksSection = $('#tasks-section');
 
 /* Initialize tasks array */
-let tasks;
+let tasks = [];
+let userData = [];
+
+/**
+ * Type the header text with a typing animation.
+ *
+ * @function
+ * @name typeText
+ * @returns {void} This function does not return a value.
+ *
+ * @description Types the header text with a typewriter-style animation effect.
+ */
+function typeHeaderText() {
+    const textToType = 'Get it done!';
+    const h1Elem = $('#tasks-header h1');
+    const caret = $('.blink-caret');
+    let i = 0;
+    const typeNextCharacter = () => {
+        if (i < textToType.length) {
+            h1Elem.text(h1Elem.text() + textToType.charAt(i));
+            i++;
+            setTimeout(typeNextCharacter, 100);
+        } else {
+            caret.hide();
+        }
+    }
+    typeNextCharacter();
+}
 
 /**
  * Initializes data from local storage and sets up event listeners.
@@ -40,88 +56,39 @@ let tasks;
  */
 function initialize() {
     typeHeaderText();
-    const colorRgbCode = getFromStorage('theme-color', true);
 
-    if (colorRgbCode !== null) {
-        selectThemeColor(colorRgbCode);
+    userData = getSessionStorage('user');
+    if (!userData || userData.length === 0 || !userData.id) {
+        removeSessionStorage('user');
+        removeSessionStorage('Authorization');
+        redirectTo(config.baseUrl + '/login.html');
     }
 
-    const storageTasksArr = getFromStorage(LOCAL_STORAGE_TASKS_KEY, true);
-
-    if (storageTasksArr !== null && typeof storageTasksArr === 'object') {
-        loadStorageTasks(storageTasksArr, tasksCon);
-        tasks = storageTasksArr;
-        return;
-    }
-
-    tasks = [];
+    getUserTasks(userData.id)
+        .then(response => {
+            const tasksArr = JSON.parse(response);
+            if (tasksArr !== null && typeof tasksArr === 'object') {
+                // For each on tasks array and adding them to the tasks list (addTaskToList);
+                $.each(tasksArr, (index, taskData) => {
+                    addTaskToList(taskData.id, taskData.title, taskData.description, taskData.created_at, 'todos');
+                    // Mark task as completed in the list if it is completed
+                    if (taskData.status && taskData.status === 'completed' && taskData.completed_at !== '0000-00-00 00:00:00') {
+                        markTaskListAsCompleted(taskData.id, taskData.completed_at, 'todos');
+                    }
+                });
+                tasks = tasksArr;
+            }
+        })
+        .catch(error => {
+            // Alert: Something went wrong - the error came from back-end
+        });
 }
-
-/**
- * Fills the input fields in the edit task modal with data from a task element.
- *
- * @function
- * @name fillEditTaskModalInputs
- *
- * @param {Element} taskElem - The task element to retrieve data from.
- *
- * @description Fills the input fields in the edit task modal with data from the selected task element.
- */
-function fillEditTaskModalInputs(taskElem) {
-    const modalId = taskEditModal.find('.task-id');
-    const modalTitle = taskEditModal.find('#task-title');
-    const modalDesc = taskEditModal.find('#task-description');
-    modalId.val(getTaskId(taskElem));
-    modalTitle.val($(taskElem).find('.task-title').text());
-    modalDesc.val($(taskElem).find('.task-desc').text());
-}
-
-/**
- * Handles saving data from the edit task modal.
- *
- * @function
- * @name handleSaveModalBtnClick
- *
- * @description Handles the click event on the save button in the edit task modal and updates the task data.
- */
-function handleSaveModalBtnClick() {
-    // Get new changes of task from tasks edit modal
-    const data = {
-        id: Number(taskEditModal.find('.task-id').val()),
-        name: taskEditModal.find('#task-title').val(),
-        desc: taskEditModal.find('#task-description').val(),
-        status: (taskEditModal.find('#task-status').is(':checked'))
-    }
-
-    // Mark tasks as completed/uncompleted based on status input value
-    const taskElem = selectTask(data.id, tasksCon);
-
-    if (data.status) {
-        markTaskAsCompleted(taskElem, getTaskData(tasks, data.id), tasks);
-    } else {
-        undoCompletedTask(taskElem, tasks);
-    }
-
-    // Apply new changes to storage and page
-    updateTaskInDom(selectTask(data.id, tasksCon), data);
-    updateTaskInStorage(getStorageTaskIndex(data.id, tasks), tasks, data);
-
-    taskEditModal.toggleClass('show-modal');
-}
-
-// Initialize Tippy elements
-tooltip('#password-info', "Must contain 8 letters at least");
-tooltip('#email-info', "Example@gmail.com");
-tooltip('#username-info', "At least 3 letters");
-tooltip('#name-info', "At least 5 letters");
-tooltip('#re-password-info', "Must match with password");
 
 /* --- Event listeners --- */
 $(window).on('load', initialize);
 
 $(window).on('scroll', () => {
     const header = $('header');
-
     if ($(window).scrollTop() > 59) {
         header.addClass('sticky');
     } else if ($(window).scrollTop() < 51) {
@@ -129,66 +96,54 @@ $(window).on('scroll', () => {
     }
 });
 
-tasksSection.on('click', function (event) {
-    event.preventDefault();
-    const target = $(event.target);
-    const taskElem = getParentElementByClassName(target[0], 'task');
+$('#tasks-section').click(function (e) {
+    e.preventDefault();
 
+    const target = $(e.target);
+    const task = target.closest('.task') || null;
+    const taskData = getTaskInfo(task) || null;
+    const taskId = Number(taskData.taskId) ?? null;
+
+    // Add New Task
     if (target.hasClass('add-todo-btn')) {
-        const taskName = taskInput.val();
-        if (taskName) {
-            addTask(taskName, tasksCon, tasks, false);
+        const taskTitle = $('#task-input').val().trim();
+        const taskDescription = 'Edit task for adding description...';
+
+        addTask(taskTitle, taskDescription, userData.id)
+            .then(response => {
+                const id = Number(response);
+                if (id && (typeof id === 'number' && id > 0)) {
+                    addTaskToList(id, taskTitle, taskDescription, getCurrentDateTime(), 'todos');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    // Mark Existing Task as Completed
+    if (task && taskData && target.hasClass('done')) {
+        const currentDateTime = getCurrentDateTime();
+        if ((currentDateTime && typeof currentDateTime === 'string') && (typeof taskId === 'number' && taskId > 0)) {
+            markTaskAsCompleted(Number(taskId), currentDateTime).then(response => markTaskListAsCompleted(taskId, currentDateTime, 'todos'));
         }
-    } else if (target.hasClass('fa-times')) {
-        removeTask(taskElem, tasks);
-    } else if (target.hasClass('fa-edit')) {
-        fillEditTaskModalInputs(taskElem);
-        taskEditModal.toggleClass('show-modal');
-    } else if (target.hasClass('fa-undo')) {
-        undoCompletedTask(taskElem, tasks);
-    } else if (target.hasClass('done-span') || target.hasClass('done-btn')) {
-        // Mark selected task as completed
-        markTaskAsCompleted(taskElem, getTaskData(tasks, getTaskId(taskElem)), tasks);
     }
-});
 
-taskEditModal.on('click', function (event) {
-    const target = $(event.target);
-
-    if (target.hasClass('close-button')) {
-        taskEditModal.toggleClass('show-modal');
-    } else if (target.hasClass('save-modal')) {
-        handleSaveModalBtnClick();
-    }
-});
-
-menuContainer.on('click', function (event) {
-    event.preventDefault();
-    const target = $(event.target);
-
-    if (target.hasClass('menu-close')) {
-        toggleMenuContent(menu);
-    } else if (target.hasClass('fa-paint-roller') || target.hasClass('color-menu-close')) {
-        toggleColorMenu();
-    } else if (target.hasClass('color-item')) {
-        const colorRgbCode = target.css('background-color');
-        selectThemeColor(colorRgbCode);
-        setToStorage('theme-color', colorRgbCode);
-    }
-});
-
-menuBtn.on('click', (event) => {
-    event.preventDefault();
-    toggleMenuContent(menu);
-});
-
-$(document).on('keyup', (event) => {
-    if (event.key === 'Escape') {
-        // After pressing Esc key, check for open modals to close them
-        if (taskEditModal.hasClass('show-modal')) {
-            taskEditModal.toggleClass('show-modal');
-        } else if (menu.hasClass('show-menu')) {
-            toggleMenuContent(menu);
+    // Mark Existing Task as Uncompleted
+    if (task && taskData && target.hasClass('fa-undo')) {
+        if (taskId && taskId > 0 && taskData.creationDate && typeof taskData.creationDate === 'string') {
+            markTaskAsUnCompleted(taskId).then(response => markTaskListAsUnCompleted(taskId, taskData.creationDate, 'todos'));
         }
+    }
+
+    // Delete Existing Task
+    if (task && taskData && target.hasClass('delete')) {
+        if (taskId && taskId > 0) {
+            removeTask(taskId, userData.id).then(r => removeTaskFromList(taskId, 'todos'));
+        }
+    }
+
+    if (task && taskData && target.hasClass('edit')) {
+        console.log('Task must be edited');
     }
 });

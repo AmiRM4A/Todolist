@@ -185,18 +185,12 @@
 	// Check if Authorization data already exists
 	if (sessionStorage.getItem('Authorization') !== null) {
 		// Redirect to main page
-		window.location.href = "index.html";
+		redirectTo(config.baseUrl + '/index.html');
 	}
 
 	// Importing necessary functions
 	import config from "./config.js";
-	import {makeApiRequest} from './assets/js/modules/utilitiesModule.js';
-	import {
-		validatePassword,
-		validateEmail,
-		validateUsername,
-		validateName
-	} from './assets/js/modules/formValidationModule.js';
+	import {makeApiRequest, getCleanedInput, regexMatch, redirectTo, tooltip} from './assets/js/modules/utilitiesModule.js';
 	import {handleInputValidation, toggleInputValidationError} from './assets/js/modules/inputValidationModule.js';
 
 	$(document).ready(() => {
@@ -211,39 +205,51 @@
 			eyeIcon.toggleClass('fa-eye fa-eye-slash');
 		});
 
+		const nameRegex = /^[a-zA-Z\s]{3,}$/;
+		const emailRegex = /^[\w.]+@([\w-]+\.)+[\w-]{2,4}$/;
+		const userNameRegex = /^[a-zA-Z0-9_]{3,}$/;
+		const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+		// Initialize Tippy elements
+		tooltip('#name-info', "Min. 3 characters");
+		tooltip('#email-info', "Valid email format, e.g., example@domain.com");
+		tooltip('#username-info', "Min. 3 chars, alphanumeric & underscore, e.g., user123");
+		tooltip('#password-info', "Min. 8 chars, at least 1 uppercase, lowercase & number");
+		tooltip('#re-password-info', "Must match the password");
+
 		// Event listeners for validating inputs
-		handleInputValidation('email', validateEmail);
-		handleInputValidation('password', validatePassword);
-		handleInputValidation('name', validateName);
-		handleInputValidation('username', validateUsername);
+		handleInputValidation('name', (name) => name && regexMatch(name, nameRegex));
+		handleInputValidation('email', (email) => email && regexMatch(email, emailRegex));
+		handleInputValidation('username', (username) => username && regexMatch(username, userNameRegex));
+		handleInputValidation('password', (password) => password && regexMatch(password, passwordRegex));
 		handleInputValidation('re-password', (re_password) => re_password && re_password === $('#password').val());
 
 		// Event listener for register form (triggers on form submission)
 		$('#register-form').submit((event) => {
 			event.preventDefault();
 
-			const name = $('#name').val();
-			const username = $('#username').val();
-			const email = $('#email').val();
-			const password = $('#password').val();
-			const re_password = $('#re-password').val();
+			const name = getCleanedInput('register-form', 'name');
+			const email = getCleanedInput('register-form', 'email');
+			const username = getCleanedInput('register-form', 'username');
+			const password = getCleanedInput('register-form', 'password');
+			const re_password = getCleanedInput('register-form', 're-password');
 
-			if (!name || !validateName(name)) {
+			if (!name ||  !regexMatch(name, nameRegex)) {
 				toggleInputValidationError('name');
 				return;
 			}
 
-			if (!username || !validateUsername(username)) {
-				toggleInputValidationError('username');
-				return;
-			}
-
-			if (!email || !validateEmail(email)) {
+			if (!email || !regexMatch(email, emailRegex)) {
 				toggleInputValidationError('email');
 				return;
 			}
 
-			if (!password || !validatePassword(password)) {
+			if (!username || !regexMatch(username, userNameRegex)) {
+				toggleInputValidationError('username');
+				return;
+			}
+
+			if (!password || !regexMatch(password, passwordRegex)) {
 				toggleInputValidationError('password');
 				return;
 			}
@@ -255,13 +261,12 @@
 
 			const dataObject = {
 				name: name,
-				user_name: username,
 				email: email,
+				user_name: username,
 				password: password,
 			};
 
 			const apiUrl = config['apiUrl'] + '/create-user';
-
 			// Call API service to register user
 			makeApiRequest('POST', apiUrl, dataObject)
 					.then(response => {
@@ -283,14 +288,13 @@
 							}
 						})
 						// Redirect to login page
-						window.location.href = "login.html";
+						redirectTo(config.baseUrl + '/login.html');
 
 					})
 					.catch(error => {
-						const responseJson = error['responseJSON'];
 						Swal.fire({
 							title: "Registration Failed",
-							text: responseJson['message'] ?? 'Something went wrong on registration of your account',
+							text: error['responseJSON'] ?? 'Something went wrong on registration of your account',
 							icon: "error",
 							showCloseButton: true,
 						});

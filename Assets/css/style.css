@@ -394,12 +394,12 @@ h2 {
 }
 
 /* Done tasks */
-.doneTask {
+.done-task {
     opacity: 0.5;
     box-shadow: none !important;
 }
 
-.doneTask .done-btn {
+.done-task .done-btn {
     background-color: #ff7597 !important;
     position: absolute;
     display: block !important;
@@ -603,7 +603,7 @@ button,
 .fa-undo,
 nav,
 a,
-.doneTask .done-btn {
+.done-task .done-btn {
     transition: all 0.3s ease;
 }
 
@@ -1126,7 +1126,7 @@ input:focus:-moz-placeholder {
         display: inline-block;
     }
 
-    .doneTask .done-span {
+    .done-task .done-span {
         display: none !important;
     }
 
