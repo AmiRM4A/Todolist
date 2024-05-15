@@ -1,8 +1,13 @@
 /**
  * Sets data to session storage.
+ *
+ * @function
+ * @name setSessionStorage
+ *
  * @param {string} key The key under which to store the data.
  * @param {any} value The value to store.
  * @throws {Error} If the key is not a string.
+ *
  * @returns {void} This function does not return a value.
  */
 export function setSessionStorage(key, value) {
@@ -15,9 +20,14 @@ export function setSessionStorage(key, value) {
 
 /**
  * Gets data from session storage.
+ *
+ * @function
+ * @name getSessionStorage
+ *
  * @param {string} key - The key of the data to retrieve.
  * @param {boolean} [json_parse=true] - Whether to parse the retrieved data as JSON.
  * @returns {any} The retrieved data. If json_parse is true (default), the parsed JSON data is returned; otherwise, the raw string data is returned.
+ *
  * @throws {Error} If the key is not a string or if the retrieved data is not valid JSON when json_parse is true.
  */
 export function getSessionStorage(key, json_parse = true) {
@@ -37,9 +47,14 @@ export function getSessionStorage(key, json_parse = true) {
 
 /**
  * Removes data from session storage.
+ *
+ * @function
+ * @name removeSessionStorage
+ *
  * @param {string} key The key of the data to remove.
- * @throws {Error} If the key is not a string.
  * @returns {void} This function does not return a value.
+ *
+ * @throws {Error} If the key is not a string.
  */
 export function removeSessionStorage(key) {
     if (typeof key !== 'string') {

@@ -7,27 +7,23 @@ import {
     getTaskInfo,
     getUserTasks, markTaskListAsCompleted, markTaskAsCompleted,
     removeTask,
-    removeTaskFromList, markTaskAsUnCompleted, markTaskListAsUnCompleted
+    removeTaskFromList, markTaskAsUncompleted, markTaskListAsUncompleted
 } from './modules/taskModule.js';
 
-const taskInput = $('#task-input');
-const tasksContainer = $('#todo');
 const menu = $('#menu');
 const menuButton = $(".menu-btn");
 const taskEditModal = $('#task-edit-modal');
 
-/* Initialize tasks array */
-let tasks = [];
+/* Initialize userData array */
 let userData = [];
 
 /**
  * Type the header text with a typing animation.
  *
  * @function
- * @name typeText
- * @returns {void} This function does not return a value.
+ * @name typeHeaderText
  *
- * @description Types the header text with a typewriter-style animation effect.
+ * @returns {void} This function does not return a value.
  */
 function typeHeaderText() {
     const textToType = 'Get it done!';
@@ -52,7 +48,7 @@ function typeHeaderText() {
  * @function
  * @name initialize
  *
- * @description Initializes data from local storage and sets up event listeners for the application.
+ * @returns {void} This function does not return a value.
  */
 function initialize() {
     typeHeaderText();
@@ -76,7 +72,6 @@ function initialize() {
                         markTaskListAsCompleted(taskData.id, taskData.completed_at, 'todos');
                     }
                 });
-                tasks = tasksArr;
             }
         })
         .catch(error => {
@@ -101,7 +96,7 @@ $('#tasks-section').click(function (e) {
 
     const target = $(e.target);
     const task = target.closest('.task') || null;
-    const taskData = getTaskInfo(task) || null;
+    const taskData = getTaskInfo(task ?? null);
     const taskId = Number(taskData.taskId) ?? null;
 
     // Add New Task
@@ -122,7 +117,7 @@ $('#tasks-section').click(function (e) {
     }
 
     // Mark Existing Task as Completed
-    if (task && taskData && target.hasClass('done')) {
+    if (task && taskData && target.hasClass('fa-check')) {
         const currentDateTime = getCurrentDateTime();
         if ((currentDateTime && typeof currentDateTime === 'string') && (typeof taskId === 'number' && taskId > 0)) {
             markTaskAsCompleted(Number(taskId), currentDateTime).then(response => markTaskListAsCompleted(taskId, currentDateTime, 'todos'));
@@ -132,14 +127,14 @@ $('#tasks-section').click(function (e) {
     // Mark Existing Task as Uncompleted
     if (task && taskData && target.hasClass('fa-undo')) {
         if (taskId && taskId > 0 && taskData.creationDate && typeof taskData.creationDate === 'string') {
-            markTaskAsUnCompleted(taskId).then(response => markTaskListAsUnCompleted(taskId, taskData.creationDate, 'todos'));
+            markTaskAsUncompleted(taskId).then(response => markTaskListAsUncompleted(taskId, taskData.creationDate, 'todos'));
         }
     }
 
     // Delete Existing Task
     if (task && taskData && target.hasClass('delete')) {
         if (taskId && taskId > 0) {
-            removeTask(taskId, userData.id).then(r => removeTaskFromList(taskId, 'todos'));
+            removeTask(taskId, userData.id).then(response => removeTaskFromList(taskId, 'todos'));
         }
     }
 

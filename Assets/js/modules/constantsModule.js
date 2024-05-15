@@ -1,1 +1,0 @@
-export const HEADER_TYPE_DELAY = 100;

@@ -5,28 +5,34 @@
  * @name getCurrentDate
  *
  * @returns {string} - The current date.
- *
- * @description Retrieves the current date in the MM/DD/YYYY format.
  */
 export function getCurrentDate() {
     const d = new Date();
     return `${d.getMonth()}/${d.getDate()}/${d.getFullYear()}`;
 }
 
+/**
+ * Retrieves the current date and time in the format "YYYY-MM-DD HH:mm:ss".
+ *
+ * @function
+ * @name getCurrentDateTime
+ *
+ * @returns {string} The current date and time as a string.
+ */
 export function getCurrentDateTime() {
     const d = new Date();
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const hours = String(d.getHours()).padStart(2, '0');
-    const minutes = String(d.getMinutes()).padStart(2, '0');
-    const seconds = String(d.getSeconds()).padStart(2, '0');
+    const year = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const time = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return `${year} ${time}`;
 }
+
 
 /**
  * Retrieves form inputs and their values as an object.
+ *
+ * @function
+ * @name getFormInputs
  *
  * @param {string} selector - The CSS selector identifying the form element.
  * @returns {Object} - An object containing input names as keys and their corresponding values.
@@ -46,6 +52,9 @@ export function getFormInputs(selector) {
 /**
  * Initializes a tooltip on the specified element using Tippy.js.
  *
+ * @function
+ * @name tooltip
+ *
  * @param {string} selector - The CSS selector identifying the target element.
  * @param {string | Element} content - The content of the tooltip.
  * @param {boolean} [arrow=true] - Determines whether the tooltip arrow is displayed.
@@ -53,7 +62,7 @@ export function getFormInputs(selector) {
  *   Possible values: 'scale', 'shift-toward', 'fade', etc.
  * @returns {void} This function does not return a value.
  */
-export function tooltip(selector, content, arrow= true, animation = 'scale') {
+export function tooltip(selector, content, arrow = true, animation = 'scale') {
     tippy(selector, {
         content: content,
         arrow: arrow,
@@ -63,6 +72,9 @@ export function tooltip(selector, content, arrow= true, animation = 'scale') {
 
 /**
  * Makes an API request.
+ *
+ * @function
+ * @name makeApiRequest
  *
  * @param {string} method - The HTTP method for the request (e.g., 'GET', 'POST', 'PUT', 'DELETE').
  * @param {string} url - The URL of the API endpoint.
@@ -89,9 +101,14 @@ export function makeApiRequest(method, url, data = null, headers = {}) {
 
 /**
  * Checks if a string matches a specified regular expression.
+ *
+ * @function
+ * @name regexMatch
+ *
  * @param {string} str The string to check.
  * @param {RegExp} regex The regular expression to match against.
  * @returns {boolean} True if the string matches the regular expression, otherwise false.
+ *
  * @throws {Error} If the second parameter is not a regular expression object.
  */
 export function regexMatch(str, regex) {
@@ -104,8 +121,13 @@ export function regexMatch(str, regex) {
 
 /**
  * Sanitizes a string by replacing HTML entities and removing HTML tags and scripts.
+ *
+ * @function
+ * @name sanitizeInput
+ *
  * @param {string} str The string to sanitize.
  * @returns {string} The sanitized string.
+ *
  * @throws {Error} If the input is not a string.
  */
 export function sanitizeInput(str) {
@@ -126,9 +148,14 @@ export function sanitizeInput(str) {
 
 /**
  * Retrieves and sanitizes the value of an input field within a specified form.
+ *
+ * @function
+ * @name getCleanedInput
+ *
  * @param {string} formId The ID of the form element containing the input field.
  * @param {string} inputId The ID of the input field to retrieve.
  * @returns {string} The sanitized value of the input field.
+ *
  * @throws {Error} If the form or input field is not found.
  */
 export function getCleanedInput(formId, inputId) {
@@ -150,6 +177,10 @@ export function getCleanedInput(formId, inputId) {
 
 /**
  * Redirects the current web page to the specified URL.
+ *
+ * @function
+ * @name redirectTo
+ *
  * @param {string} url The URL to which the page will be redirected.
  * @returns {void} This function does not return a value.
  */
@@ -159,6 +190,10 @@ export function redirectTo(url) {
 
 /**
  * Returns the current page's URL, including the protocol, domain name, and domain extension.
+ *
+ * @function
+ * @name getCurrentPageUrl
+ *
  * @returns {string} The current page's URL.
  */
 export function getCurrentPageUrl() {

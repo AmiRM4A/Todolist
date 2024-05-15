@@ -33,18 +33,20 @@ function createTaskElem(taskId, taskTitle, taskDesc, taskCreationDate) {
               <div class="task-desc">${taskDesc}</div>
             </div>
 			<div class="task-info">
-			    <i class="fas fa-info-circle"></i>
-            	Created:
-            	<span class="task-status" style="color: var(--theme-color);"> ${taskCreationDate} </span>
+			    <i class="fas fa-info-circle"></i> Created: <span class="task-status" style="color: var(--theme-color);"> ${taskCreationDate} </span>
 			</div>
           </div>
-          <button class="fa fa-check done-btn done" aria-hidden="true"></button>
+          <button class="fa fa-check done-btn" aria-hidden="true"></button>
         </div>
 	`;
 }
 
 /**
  * Adds a new task to the list of tasks.
+ *
+ * @function
+ * @name addTaskToList
+ *
  * @param {string} taskId - The ID of the new task.
  * @param {string} taskTitle - The title of the new task.
  * @param {string} taskDesc - The description of the new task.
@@ -80,6 +82,10 @@ export function addTaskToList(taskId, taskTitle, taskDesc, taskCreationDate, tas
 
 /**
  * Removes a specific task from the list of tasks.
+ *
+ * @function
+ * @name removeTaskFromList
+ *
  * @param {string} taskId - The ID of the task to be removed.
  * @param {string} tasksContainer - The ID of the container element of the tasks.
  * @returns {void} This function does not return a value.
@@ -103,6 +109,10 @@ export function removeTaskFromList(taskId, tasksContainer) {
 
 /**
  * Gets a specific task element from the list of tasks.
+ *
+ * @function
+ * @name getTaskFromList
+ *
  * @param {string} taskId - The ID of the task to retrieve.
  * @param {string} tasksContainer - The ID of the container element of the tasks.
  * @returns {HTMLElement} The task element, or null if not found.
@@ -123,6 +133,9 @@ export function getTaskFromList(taskId, tasksContainer) {
 
 /**
  * Updates a task in the list of tasks.
+ *
+ * @function
+ * @name updateTaskFromList
  *
  * @param {string} taskId - The ID of the task.
  * @param {object} taskData - The updated data of the task.
@@ -155,6 +168,10 @@ export function updateTaskFromList(taskId, taskData, tasksContainer) {
 
 /**
  * Retrieves task information from a task element.
+ *
+ * @function
+ * @name getTaskInfo
+ *
  * @param {jQuery} taskElement - The jQuery object representing the task element.
  * @returns {object} An object containing task information.
  *                   If taskElement is not provided or is not a jQuery object, an empty object is returned.
@@ -167,22 +184,27 @@ export function updateTaskFromList(taskId, taskData, tasksContainer) {
  */
 export function getTaskInfo(taskElement) {
     if (!taskElement || typeof taskElement !== 'object') {
-        return {};
+        return [];
     }
 
     return {
         taskId: taskElement.data('task-id') ?? null,
-        title: taskElement.find('.task-title').text().trim() ?? null,
-        description: taskElement.find('.task-desc').text().trim() ?? null,
-        creationDate: taskElement.data('task-creation-date') ?? null
+        title: taskElement.find('.task-title')?.text()?.trim() ?? null,
+        description: taskElement.find('.task-desc')?.text()?.trim() ?? null,
+        creationDate: taskElement.data('task-creation-date')?.trim() ?? null
     };
 }
 
 /**
  * Gets information about a specific task from the list of tasks.
+ *
+ * @function
+ * @name getTaskInfoFromList
+ *
  * @param {string} taskId - The ID of the task to retrieve information for.
  * @param {string} tasksContainer - The ID of the container element of the tasks.
  * @returns {object} The task information including title, description, and creation date.
+ *
  * @throws {Error} If taskId or tasksContainer is not a string, or if the task is not found.
  */
 export function getTaskInfoFromList(taskId, tasksContainer) {
@@ -204,10 +226,15 @@ export function getTaskInfoFromList(taskId, tasksContainer) {
 
 /**
  * Marks a task in the task list as completed and updates its visual appearance.
+ *
+ * @function
+ * @name markTaskListAsCompleted
+ *
  * @param {number} taskId - The ID of the task to mark as completed.
  * @param {string} completedAtTime - The time at which the task was completed.
  * @param {string} tasksContainer - The ID of the container element of the tasks.
  * @returns {void} This function does not return a value.
+ *
  * @throws {Error} If taskId is not provided or not a number.
  *                 If completedAtTime is not provided or not a string.
  *                 If tasksContainer is not provided or not a string.
@@ -241,11 +268,26 @@ export function markTaskListAsCompleted(taskId, completedAtTime, tasksContainer)
     buttonIcon.removeClass('fa-check').addClass('fa-undo');
 
     // Update task's status with completed time
-    taskElement.find('.task-info').html(`<i class="fa-solid fa-circle-check"></i>Completed: <span style="color: var(--theme-color);">${completedAtTime}</span>
+    taskElement.find('.task-info').html(`<i class="fa-solid fa-circle-check"></i> Completed: <span style="color: var(--theme-color);">${completedAtTime}</span>
     `);
 }
 
-export function markTaskListAsUnCompleted(taskId, createdAt, tasksContainer) {
+/**
+ * Marks a task in the task list as uncompleted and updates its visual appearance.
+ *
+ * @function
+ * @name markTaskListAsUncompleted
+ *
+ * @param {number} taskId - The ID of the task to mark as uncompleted.
+ * @param {string} createdAt - The time at which the task was created.
+ * @param {string} tasksContainer - The ID of the container element of the tasks.
+ * @returns {void} This function does not return a value.
+ *
+ * @throws {Error} If taskId is not provided or not a number.
+ *                 If createdAt is not provided or not a string.
+ *                 If tasksContainer is not provided or not a string.
+ */
+export function markTaskListAsUncompleted(taskId, createdAt, tasksContainer) {
     if (!taskId || typeof taskId !== 'number') {
         throw new Error('Task ID must be provided and must be a number');
     }
@@ -260,25 +302,30 @@ export function markTaskListAsUnCompleted(taskId, createdAt, tasksContainer) {
 
     const taskElement = getTaskFromList(taskId, tasksContainer);
 
-    // Apply completed task styles
+    // Remove completed task styles
     taskElement.removeClass('done-task');
 
-    // Add strike line to title and description
+    // Remove strike line from title and description
     taskElement.find('.task-title, .task-desc').removeClass('strike');
 
-    // Change button icon to undo
+    // Change button icon to check
     const spanIcon = taskElement.find('.done-span');
     const buttonIcon = taskElement.find('.done-btn');
     spanIcon.removeClass('fa-undo').addClass('fa-check');
     buttonIcon.removeClass('fa-undo').addClass('fa-check');
 
-    // Update task's status with completed time
-    taskElement.find('.task-info').html(`<i class="fa-solid fa-circle-check"></i>Created: <span style="color: var(--theme-color);">${createdAt}</span>`);
+    // Update task's status with created time
+    taskElement.find('.task-info').html(`<i class="fa-solid fa-circle-check"></i> Created: <span style="color: var(--theme-color);">${createdAt}</span>`);
 }
+
 
 // --- Database Interaction Functions for Tasks ---
 /**
  * Adds a new task to the database.
+ *
+ * @function
+ * @name addTask
+ *
  * @param {string} taskTitle - The title or name of the task.
  * @param {string} taskDesc - The description or details of the task.
  * @param {number} userId - The unique identifier for the user creating the task.
@@ -311,6 +358,10 @@ export function addTask(taskTitle, taskDesc, userId) {
 
 /**
  * Removes a task from the database based on taskId.
+ *
+ * @function
+ * @name removeTask
+ *
  * @param {string} taskId - The ID of the task to be removed.
  * @param {string} userId - The ID of the current user.
  * @returns {Promise} A Promise that resolves when the task is removed from the database successfully.
@@ -330,6 +381,10 @@ export function removeTask(taskId, userId) {
 
 /**
  * Gets a task from the database based on taskId.
+ *
+ * @function
+ * @name getTask
+ *
  * @param {string} taskId - The ID of the task to retrieve.
  * @returns {Promise} A Promise that resolves with the task data if found, or rejects if not found.
  *
@@ -345,6 +400,10 @@ export function getTask(taskId) {
 
 /**
  * Gets the list of tasks for the current user from the database.
+ *
+ * @function
+ * @name getTasks
+ *
  * @param {string} userId - The ID of the current user.
  * @returns {Promise} A Promise that resolves with the list of tasks for the current user.
  *
@@ -360,9 +419,14 @@ export function getTasks(userId) {
 
 /**
  * Marks a task as completed in the database.
+ *
+ * @function
+ * @name markTaskAsCompleted
+ *
  * @param {number} taskId - The ID of the task to mark as completed.
  * @param {string} completedAtTime - The time at which the task was completed.
  * @returns {Promise} A Promise that resolves when the task is marked as completed in the database successfully.
+ *
  * @throws {Error} If taskId is not provided or not a number, or if completedAtTime is not provided or not a string.
  */
 export function markTaskAsCompleted(taskId, completedAtTime) {
@@ -374,10 +438,13 @@ export function markTaskAsCompleted(taskId, completedAtTime) {
         throw new Error('Completed at time must be provided and must be a string');
     }
 
-    return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {completed_at: completedAtTime, status: 'completed'});
+    return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
+        completed_at: completedAtTime,
+        status: 'completed'
+    });
 }
 
-export function markTaskAsUnCompleted(taskId) {
+export function markTaskAsUncompleted(taskId) {
     if (!taskId || typeof taskId !== 'number') {
         throw new Error('Task ID must be provided and must be a number');
     }
@@ -387,6 +454,10 @@ export function markTaskAsUnCompleted(taskId) {
 
 /**
  * Retrieves tasks associated with a specific user from the database.
+ *
+ * @function
+ * @name getUserTasks
+ *
  * @param {string} userId - The ID of the user whose tasks are to be retrieved.
  * @returns {Promise} A Promise that resolves with the tasks retrieved from the database.
  *

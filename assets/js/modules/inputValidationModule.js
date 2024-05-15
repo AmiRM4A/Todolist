@@ -1,5 +1,9 @@
 /**
  * Shows or hides the validation error message for a given input field.
+ *
+ * @function
+ * @name toggleInputValidationError
+ *
  * @param {string} inputId - The ID of the input field.
  * @param {boolean} isValid - Whether the input value is valid or not.
  * @returns {void} This function does not return a value.
@@ -19,6 +23,10 @@ export function toggleInputValidationError(inputId, isValid = false) {
 
 /**
  * Handles input validation for a given input field.
+ *
+ * @function
+ * @name handleInputValidation
+ *
  * @param {string} inputId - The ID of the input field to be validated.
  * @param {Function} validationFunction - The function to be used for validating the input value.
  * @param {RegExp} [regexPattern] - Optional regular expression pattern for additional validation.
