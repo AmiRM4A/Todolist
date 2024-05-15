@@ -353,14 +353,13 @@ export function addTask(taskTitle, taskDesc, userId) {
         throw new Error('User ID must be provided and must be a number');
     }
 
-    const taskData = {
+    return makeApiRequest('POST', apiUrl + '/create-task', {
         title: taskTitle,
         description: taskDesc,
         status: 'pending',
-        created_by: userId
-    };
-
-    return makeApiRequest('POST', apiUrl + '/create-task', taskData);
+        created_by: userId,
+        token: getUserToken() ?? null
+    });
 }
 
 /**
@@ -383,7 +382,10 @@ export function removeTask(taskId, userId) {
         throw new Error('User ID must be provided and must be a number');
     }
 
-    return makeApiRequest('DELETE', apiUrl + `/remove-task/${taskId}`, {user_id: userId});
+    return makeApiRequest('DELETE', apiUrl + `/remove-task/${taskId}`, {
+        user_id: userId,
+        token: getUserToken() ?? null
+    });
 }
 
 /**
@@ -402,7 +404,7 @@ export function getTask(taskId) {
         throw new Error('Task ID must be provided and must be a number');
     }
 
-    return makeApiRequest('GET', apiUrl + `/get-task/${taskId}`);
+    return makeApiRequest('GET', apiUrl + `/get-task/${taskId}`, {token: getUserToken() ?? null});
 }
 
 /**
@@ -421,7 +423,7 @@ export function getTasks(userId) {
         throw new Error('User ID must be provided and must be a number');
     }
 
-    return makeApiRequest('GET', apiUrl + `/get-tasks`);
+    return makeApiRequest('GET', apiUrl + `/get-tasks`, {token: getUserToken() ?? null});
 }
 
 /**
@@ -447,7 +449,8 @@ export function markTaskAsCompleted(taskId, completedAtTime) {
 
     return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
         completed_at: completedAtTime,
-        status: 'completed'
+        status: 'completed',
+        token: getUserToken() ?? null
     });
 }
 
@@ -456,7 +459,11 @@ export function markTaskAsUncompleted(taskId) {
         throw new Error('Task ID must be provided and must be a number');
     }
 
-    return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {completed_at: null, status: 'pending'});
+    return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
+        completed_at: null,
+        status: 'pending',
+        token: getUserToken() ?? null
+    });
 }
 
 /**
@@ -493,7 +500,11 @@ export function updateTask(taskId, taskTitle, taskDesc, userId) {
         throw new Error('User ID must be provided and must be a number');
     }
 
-    // return makeApiRequest('PUT', `${apiUrl}/update-task/${taskId}`, { title: taskTitle, description: taskDesc });
+    return makeApiRequest('PUT', `${apiUrl}/update-task/${taskId}`, {
+        title: taskTitle,
+        description: taskDesc,
+        token: getUserToken() ?? null
+    });
 }
 
 /**
@@ -512,5 +523,8 @@ export function getUserTasks(userId) {
         throw new Error('User ID must be provided and must be a number');
     }
 
-    return makeApiRequest('POST', apiUrl + '/get-user-tasks', {user_id: userId});
+    return makeApiRequest('POST', apiUrl + '/get-user-tasks', {
+        user_id: userId,
+        token: getUserToken() ?? null
+    });
 }
