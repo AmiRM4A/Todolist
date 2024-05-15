@@ -19,7 +19,7 @@
 <body>
 <div class="container">
 	<header>
-		<div>
+		<div id="nav-container">
 			<nav>
 				<!-- Navigation menu button -->
 				<div class="menu-btn">
@@ -101,40 +101,14 @@
 			<h2>Edit Task</h2>
 			<form>
 				<!-- Hidden input for task ID -->
-				<input type="hidden" class="task-id" name="task-id"/>
+				<input type="hidden" class="task-id" name="task-id" id="task-id"/>
 				<label for="task-title">Title:</label>
 				<input type="text" id="task-title" name="task-title"/>
 				<label for="task-description">Description:</label>
 				<textarea id="task-description" name="task-description"></textarea>
-				<label for="task-status">Status:</label>
-				<select id="task-status" name="task-status">
-					<option value="not-done">Not Done</option>
-					<option value="done">Done</option>
-				</select>
 				<!-- Save button -->
 				<input type="button" class="btn save-modal" value="Save"/>
 			</form>
-		</div>
-	</div>
-	<!-- Completed tasks modal -->
-	<div class="modal" id="completed-tasks-modal">
-		<div class="modal-content">
-			<span class="close fas fa-times"></span>
-			<table>
-				<thead>
-				<tr>
-					<th class="task-id">ID</th>
-					<th class="task-title">Title</th>
-					<th class="task-desc">Description</th>
-					<th class="task-creation-date">Created At</th>
-					<th class="task-completion-date">Completed At</th>
-					<th>Action</th>
-				</tr>
-				</thead>
-				<tbody>
-				<!-- Completed tasks will be shown here -->
-				</tbody>
-			</table>
 		</div>
 	</div>
 </div>

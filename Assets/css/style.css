@@ -220,6 +220,7 @@ h2 {
 #tasks-section .add-todo-btn {
     border-radius: unset;
     background: var(--theme-color);
+    color: var(--white-font);
     padding: 11px;
     font-size: 17px;
     border-top-right-radius: 15px;
@@ -466,7 +467,7 @@ h2 {
 
 #task-edit-modal .save-modal {
     background-color: var(--theme-color);
-    color: #000000;
+    color: var(--white-font);
 }
 
 /* Styles for the menu */

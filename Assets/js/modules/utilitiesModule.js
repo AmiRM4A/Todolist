@@ -201,3 +201,55 @@ export function getCurrentPageUrl() {
     const domain = domainParts.slice(-2).join('.');
     return `${window.location.protocol}//${domain}`;
 }
+
+/**
+ * Changes the favicon of the website.
+ *
+ * @function
+ * @name changeFavIcon
+ *
+ * @param {string} newIconPath - The path to the new favicon.
+ * @returns {void} This function does not return a value.
+ */
+function changeFavIcon(newIconPath) {
+    $('#favIcon').attr('href', newIconPath);
+}
+
+/**
+ * Changes the website's logo.
+ *
+ * @function
+ * @name changeLogo
+ *
+ * @param {string} newLogoPath - The path to the new logo image.
+ * @returns {void} This function does not return a value.
+ */
+function changeLogo(newLogoPath) {
+    $('#logo').attr('src', newLogoPath);
+}
+
+/**
+ * Select a color theme and update the website's appearance.
+ *
+ * @function
+ * @name selectThemeColor
+ *
+ * @param {string} color - The primary color code of the selected theme.
+ *
+ * @description Selects a color theme and updates the website's appearance, including favicon, logo, and theme color.
+ */
+export function selectThemeColor(color) {
+    const themeColors = {
+        'rgb(187, 134, 252)': 'pink',
+        'rgb(0, 191, 165)': 'teal',
+        'rgb(61, 90, 254)': 'indigo',
+        'rgb(255, 82, 82)': 'red',
+        'rgb(100, 221, 23)': 'green'
+    };
+
+    const colorName = themeColors[color];
+    changeFavIcon(`'assets/images/icon/'fav-${colorName}.png`);
+    changeLogo(`assets/images/logo/logo-${colorName}.png`);
+    $('html').css('--theme-color', color);
+}
+

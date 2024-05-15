@@ -1,5 +1,6 @@
-import {makeApiRequest} from './utilitiesModule.js';
+import {getUserToken, makeApiRequest} from './utilitiesModule.js';
 import config from '../../../config.js';
+import {getSessionStorage} from './sessionStorageModule.js';
 
 const apiUrl = config.apiUrl;
 
@@ -23,9 +24,9 @@ function createTaskElem(taskId, taskTitle, taskDesc, taskCreationDate) {
         <div class="task animate__bounceIn" data-task-id=${taskId} data-task-creation-date="${taskCreationDate}">
           <div>
             <div class="task-actions">
-              <span class="fas fa-edit edit"></span>
-              <span class="fa fa-check done-span done"></span>
-              <span class="fas fa-times delete"></span>
+              <span class="fas fa-edit"></span>
+              <span class="fa fa-check done-span"></span>
+              <span class="fas fa-times"></span>
             </div>
             <div class="task-detail">
               <div class="task-title">${taskTitle}</div>
@@ -137,20 +138,28 @@ export function getTaskFromList(taskId, tasksContainer) {
  * @function
  * @name updateTaskFromList
  *
- * @param {string} taskId - The ID of the task.
- * @param {object} taskData - The updated data of the task.
+ * @param {number} taskId - The ID of the task.
+ * @param {string} taskTitle - The updated title of the task.
+ * @param {string} taskDesc - The updated description of the task.
  * @param {string} tasksContainer - The ID of the container element of the tasks.
- * @returns {void} This function does not return a value.
+ * @returns {void}
  *
- * @throws {Error} If taskData is not an object or if tasksContainer is not a string.
+ * @throws {Error} If taskId is not a number.
+ * @throws {Error} If taskTitle is not a string.
+ * @throws {Error} If taskDesc is not a string.
+ * @throws {Error} If tasksContainer is not a string.
  */
-export function updateTaskFromList(taskId, taskData, tasksContainer) {
+export function updateTaskFromList(taskId, taskTitle, taskDesc, tasksContainer) {
     if (!taskId || typeof taskId !== 'number') {
         throw new Error('Task ID must be provided and must be a number');
     }
 
-    if (!taskData || typeof taskData !== 'object') {
-        throw new Error('Task data must be provided and must be an object');
+    if (!taskTitle || typeof taskTitle !== 'string') {
+        throw new Error('Task title must be provided and must be a string');
+    }
+
+    if (!taskDesc || typeof taskDesc !== 'string') {
+        throw new Error('Task description must be provided and must be a string');
     }
 
     if (!tasksContainer || typeof tasksContainer !== 'string') {
@@ -159,10 +168,8 @@ export function updateTaskFromList(taskId, taskData, tasksContainer) {
 
     const taskElement = getTaskFromList(taskId, tasksContainer);
     if (taskElement) {
-        taskElement.find('.task-title').text(taskData.title);
-        taskElement.find('.task-description').text(taskData.description);
-        taskElement.find('.task-status').text(taskData.status);
-        // Add any other properties you want to update
+        taskElement.find('.task-title').text(taskTitle);
+        taskElement.find('.task-desc').text(taskDesc);
     }
 }
 
@@ -334,12 +341,12 @@ export function markTaskListAsUncompleted(taskId, createdAt, tasksContainer) {
  * @throws {Error} If any of the required parameters (taskId, taskTitle, taskDesc, userId) is missing or of an incorrect type.
  */
 export function addTask(taskTitle, taskDesc, userId) {
-    if (!taskDesc || typeof taskDesc !== 'string') {
-        throw new Error('Task description must be provided and must be a string');
-    }
-
     if (!taskTitle || typeof taskTitle !== 'string') {
         throw new Error('Task title must be provided and must be a string');
+    }
+
+    if (!taskDesc || typeof taskDesc !== 'string') {
+        throw new Error('Task description must be provided and must be a string');
     }
 
     if (!userId || typeof userId !== 'number') {
@@ -450,6 +457,43 @@ export function markTaskAsUncompleted(taskId) {
     }
 
     return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {completed_at: null, status: 'pending'});
+}
+
+/**
+ * Updates a task with the provided title and description.
+ *
+ * @function
+ * @name updateTask
+ *
+ * @param {number} taskId - The ID of the task to update.
+ * @param {string} taskTitle - The updated title of the task.
+ * @param {string} taskDesc - The updated description of the task.
+ * @param {number} userId - The ID of the user updating the task.
+ * @returns {Promise<Object>} A promise that resolves with the response from the API request.
+ *
+ * @throws {Error} If taskId is not a number.
+ * @throws {Error} If taskTitle is not a string.
+ * @throws {Error} If taskDesc is not a string.
+ * @throws {Error} If userId is not a number.
+ */
+export function updateTask(taskId, taskTitle, taskDesc, userId) {
+    if (!taskId || typeof taskId !== 'number') {
+        throw new Error('Task ID must be provided and must be a number');
+    }
+
+    if (!taskTitle || typeof taskTitle !== 'string') {
+        throw new Error('Task title must be provided and must be a string');
+    }
+
+    if (!taskDesc || typeof taskDesc !== 'string') {
+        throw new Error('Task description must be provided and must be a string');
+    }
+
+    if (!userId || typeof userId !== 'number') {
+        throw new Error('User ID must be provided and must be a number');
+    }
+
+    // return makeApiRequest('PUT', `${apiUrl}/update-task/${taskId}`, { title: taskTitle, description: taskDesc });
 }
 
 /**
