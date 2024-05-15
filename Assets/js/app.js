@@ -1,34 +1,46 @@
 import config from '/config.js';
+import {getSessionStorage, removeSessionStorage, setSessionStorage} from './modules/sessionStorageModule.js';
+import {getCurrentDateTime, redirectTo, selectThemeColor} from './modules/utilitiesModule.js';
 import {
-    setToStorage,
-    getFromStorage,
-    updateTaskInStorage,
-    loadStorageTasks,
-    getStorageTaskIndex
-} from './modules/storageModule.js';
-import {updateTaskInDom, removeTask, addTask, getTaskId, selectTask, getTaskData} from './modules/taskModule.js';
-import {undoCompletedTask, markTaskAsCompleted} from './modules/completedTaskModule.js';
-import {
-    getParentElementByClassName,
-    tooltip,
-    makeApiRequest
-} from './modules/utilitiesModule.js';
-import {typeHeaderText} from './modules/typingAnimationModule.js';
-import {selectThemeColor} from './modules/themeModule.js';
-import {toggleColorMenu, toggleMenuContent} from './modules/menuModule.js';
-import {LOCAL_STORAGE_TASKS_KEY} from './modules/constantsModule.js';
-import {validateEmail, validateName, validatePassword, validateUsername} from './modules/formValidationModule.js';
+    addTask,
+    addTaskToList,
+    getTaskInfo,
+    getUserTasks, markTaskListAsCompleted, markTaskAsCompleted,
+    removeTask,
+    removeTaskFromList, markTaskAsUncompleted, markTaskListAsUncompleted, updateTask, updateTaskFromList
+} from './modules/taskModule.js';
 
-const taskInput = $('#task-input');
-const tasksCon = $('.todo');
-const menuContainer = $('#menu-container');
 const menu = $('#menu');
-const menuBtn = $(".menu-btn");
+const menuButton = $(".menu-btn");
 const taskEditModal = $('#task-edit-modal');
-const tasksSection = $('#tasks-section');
 
-/* Initialize tasks array */
-let tasks;
+/* Initialize userData array */
+let userData = [];
+
+/**
+ * Type the header text with a typing animation.
+ *
+ * @function
+ * @name typeHeaderText
+ *
+ * @returns {void} This function does not return a value.
+ */
+function typeHeaderText() {
+    const textToType = 'Get it done!';
+    const h1Elem = $('#tasks-header h1');
+    const caret = $('.blink-caret');
+    let i = 0;
+    const typeNextCharacter = () => {
+        if (i < textToType.length) {
+            h1Elem.text(h1Elem.text() + textToType.charAt(i));
+            i++;
+            setTimeout(typeNextCharacter, 100);
+        } else {
+            caret.hide();
+        }
+    }
+    typeNextCharacter();
+}
 
 /**
  * Initializes data from local storage and sets up event listeners.
@@ -36,92 +48,49 @@ let tasks;
  * @function
  * @name initialize
  *
- * @description Initializes data from local storage and sets up event listeners for the application.
+ * @returns {void} This function does not return a value.
  */
 function initialize() {
     typeHeaderText();
-    const colorRgbCode = getFromStorage('theme-color', true);
 
-    if (colorRgbCode !== null) {
-        selectThemeColor(colorRgbCode);
+    // Check if custom theme color exists in session storage
+    if (getSessionStorage('theme-color')) {
+        selectThemeColor(getSessionStorage('theme-color'));
     }
 
-    const storageTasksArr = getFromStorage(LOCAL_STORAGE_TASKS_KEY, true);
-
-    if (storageTasksArr !== null && typeof storageTasksArr === 'object') {
-        loadStorageTasks(storageTasksArr, tasksCon);
-        tasks = storageTasksArr;
-        return;
+    // Getting & validating user's data from storage
+    userData = getSessionStorage('user');
+    if (!userData || userData.length === 0 || !userData.id) {
+        removeSessionStorage('user');
+        removeSessionStorage('Authorization');
+        redirectTo(config.baseUrl + '/login.html');
     }
 
-    tasks = [];
+    // Call to api and get user's tasks
+    getUserTasks(userData.id)
+        .then(response => {
+            const tasksArr = JSON.parse(response);
+            if (tasksArr !== null && typeof tasksArr === 'object') {
+                // For each on tasks array and adding them to the tasks list (addTaskToList);
+                $.each(tasksArr, (index, taskData) => {
+                    addTaskToList(taskData.id, taskData.title, taskData.description, taskData.created_at, 'todos');
+                    // Mark task as completed in the list if it is completed
+                    if (taskData.status && taskData.status === 'completed' && taskData.completed_at !== '0000-00-00 00:00:00') {
+                        markTaskListAsCompleted(taskData.id, taskData.completed_at, 'todos');
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            // Alert: Something went wrong - the error came from back-end
+        });
 }
-
-/**
- * Fills the input fields in the edit task modal with data from a task element.
- *
- * @function
- * @name fillEditTaskModalInputs
- *
- * @param {Element} taskElem - The task element to retrieve data from.
- *
- * @description Fills the input fields in the edit task modal with data from the selected task element.
- */
-function fillEditTaskModalInputs(taskElem) {
-    const modalId = taskEditModal.find('.task-id');
-    const modalTitle = taskEditModal.find('#task-title');
-    const modalDesc = taskEditModal.find('#task-description');
-    modalId.val(getTaskId(taskElem));
-    modalTitle.val($(taskElem).find('.task-title').text());
-    modalDesc.val($(taskElem).find('.task-desc').text());
-}
-
-/**
- * Handles saving data from the edit task modal.
- *
- * @function
- * @name handleSaveModalBtnClick
- *
- * @description Handles the click event on the save button in the edit task modal and updates the task data.
- */
-function handleSaveModalBtnClick() {
-    // Get new changes of task from tasks edit modal
-    const data = {
-        id: Number(taskEditModal.find('.task-id').val()),
-        name: taskEditModal.find('#task-title').val(),
-        desc: taskEditModal.find('#task-description').val(),
-        status: (taskEditModal.find('#task-status').is(':checked'))
-    }
-
-    // Mark tasks as completed/uncompleted based on status input value
-    const taskElem = selectTask(data.id, tasksCon);
-
-    if (data.status) {
-        markTaskAsCompleted(taskElem, getTaskData(tasks, data.id), tasks);
-    } else {
-        undoCompletedTask(taskElem, tasks);
-    }
-
-    // Apply new changes to storage and page
-    updateTaskInDom(selectTask(data.id, tasksCon), data);
-    updateTaskInStorage(getStorageTaskIndex(data.id, tasks), tasks, data);
-
-    taskEditModal.toggleClass('show-modal');
-}
-
-// Initialize Tippy elements
-tooltip('#password-info', "Must contain 8 letters at least");
-tooltip('#email-info', "Example@gmail.com");
-tooltip('#username-info', "At least 3 letters");
-tooltip('#name-info', "At least 5 letters");
-tooltip('#re-password-info', "Must match with password");
 
 /* --- Event listeners --- */
 $(window).on('load', initialize);
 
 $(window).on('scroll', () => {
     const header = $('header');
-
     if ($(window).scrollTop() > 59) {
         header.addClass('sticky');
     } else if ($(window).scrollTop() < 51) {
@@ -129,66 +98,149 @@ $(window).on('scroll', () => {
     }
 });
 
-tasksSection.on('click', function (event) {
-    event.preventDefault();
-    const target = $(event.target);
-    const taskElem = getParentElementByClassName(target[0], 'task');
+$('#tasks-section').click(function (e) {
+    e.preventDefault();
 
+    const target = $(e.target);
+    const task = target.closest('.task') || null;
+    const taskData = getTaskInfo(task ?? null);
+    const taskId = Number(taskData.taskId) ?? null;
+
+    // Add New Task
     if (target.hasClass('add-todo-btn')) {
-        const taskName = taskInput.val();
-        if (taskName) {
-            addTask(taskName, tasksCon, tasks, false);
+        const taskTitle = $('#task-input').val().trim();
+        const taskDescription = 'Edit task for adding description...';
+
+        if (taskTitle) {
+            addTask(taskTitle, taskDescription, userData.id)
+                .then(response => {
+                    const id = Number(response);
+                    if (id && (typeof id === 'number' && id > 0)) {
+                        addTaskToList(id, taskTitle, taskDescription, getCurrentDateTime(), 'todos');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
-    } else if (target.hasClass('fa-times')) {
-        removeTask(taskElem, tasks);
-    } else if (target.hasClass('fa-edit')) {
-        fillEditTaskModalInputs(taskElem);
-        taskEditModal.toggleClass('show-modal');
-    } else if (target.hasClass('fa-undo')) {
-        undoCompletedTask(taskElem, tasks);
-    } else if (target.hasClass('done-span') || target.hasClass('done-btn')) {
-        // Mark selected task as completed
-        markTaskAsCompleted(taskElem, getTaskData(tasks, getTaskId(taskElem)), tasks);
+    }
+
+    // Mark Existing Task as Completed
+    if (task && taskData && target.hasClass('fa-check')) {
+        const currentDateTime = getCurrentDateTime();
+        if ((currentDateTime && typeof currentDateTime === 'string') && (typeof taskId === 'number' && taskId > 0)) {
+            markTaskAsCompleted(Number(taskId), currentDateTime).then(response => markTaskListAsCompleted(taskId, currentDateTime, 'todos'));
+        }
+    }
+
+    // Mark Existing Task as Uncompleted
+    if (task && taskData && target.hasClass('fa-undo')) {
+        if ((typeof taskId === 'number' && taskId > 0) && taskData.creationDate && typeof taskData.creationDate === 'string') {
+            markTaskAsUncompleted(taskId).then(response => markTaskListAsUncompleted(taskId, taskData.creationDate, 'todos'));
+        }
+    }
+
+    // Delete Existing Task
+    if (task && taskData && target.hasClass('fa-times')) {
+        if ((typeof taskId === 'number' && taskId > 0)) {
+            removeTask(taskId, userData.id).then(response => removeTaskFromList(taskId, 'todos'));
+        }
+    }
+
+    if (task && taskData && target.hasClass('fa-edit')) {
+        if ((typeof taskId === 'number' && taskId > 0) && taskData && taskData.title && taskData.description) {
+            // Display edit task modal
+            taskEditModal.toggleClass('show-modal');
+
+            // Set modal's data based on the task's data (id, title and description)
+            taskEditModal.find('#task-id').val(taskId);
+            taskEditModal.find('#task-title').val(taskData.title);
+            taskEditModal.find('#task-description').val(taskData.description);
+
+        }
     }
 });
 
-taskEditModal.on('click', function (event) {
-    const target = $(event.target);
+$('body div.container').click(function (e) {
+    const target = $(e.target);
 
+    // Close task edit modal (display none)
     if (target.hasClass('close-button')) {
         taskEditModal.toggleClass('show-modal');
-    } else if (target.hasClass('save-modal')) {
-        handleSaveModalBtnClick();
+        taskEditModal.find('#task-id').removeAttr('value');
     }
-});
 
-menuContainer.on('click', function (event) {
-    event.preventDefault();
-    const target = $(event.target);
+    // Update task in DB based on task edit modal's data
+    if (target.hasClass('save-modal')) {
+        const taskId = Number(taskEditModal.find('#task-id').val()) ?? null;
+        const taskTitle = taskEditModal.find('#task-title').val() ?? null;
+        const taskDescription = taskEditModal.find('#task-description').val() ?? null;
 
-    if (target.hasClass('menu-close')) {
-        toggleMenuContent(menu);
-    } else if (target.hasClass('fa-paint-roller') || target.hasClass('color-menu-close')) {
-        toggleColorMenu();
-    } else if (target.hasClass('color-item')) {
-        const colorRgbCode = target.css('background-color');
-        selectThemeColor(colorRgbCode);
-        setToStorage('theme-color', colorRgbCode);
-    }
-});
+        if ((typeof taskId === 'number' && taskId > 0) && taskTitle && taskDescription) {
+            updateTask(taskId, taskTitle, taskDescription, userData.id ?? null)
+                .then(response => {
+                    if (!response) {
+                        throw new Error('Unable to update the task');
+                    }
 
-menuBtn.on('click', (event) => {
-    event.preventDefault();
-    toggleMenuContent(menu);
-});
+                    // Update task in the list (front)
+                    updateTaskFromList(taskId, taskTitle, taskDescription, 'todos');
 
-$(document).on('keyup', (event) => {
-    if (event.key === 'Escape') {
-        // After pressing Esc key, check for open modals to close them
-        if (taskEditModal.hasClass('show-modal')) {
-            taskEditModal.toggleClass('show-modal');
-        } else if (menu.hasClass('show-menu')) {
-            toggleMenuContent(menu);
+                    // Close task edit modal (display none)
+                    taskEditModal.toggleClass('show-modal');
+                    taskEditModal.find('#task-id').removeAttr('value');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
+    }
+});
+
+$(window).on('keyup', (e) => {
+    e.preventDefault();
+    // Check if pressed key is ESC
+    if (e.keyCode !== 27) {
+        return;
+    }
+
+    // Close edit modal if it's open
+    if (taskEditModal.hasClass('show-modal')) {
+        taskEditModal.removeClass('show-modal');
+    }
+
+    // Close menu if it's open
+    if (menu.hasClass('show-menu')) {
+        menu.removeClass('show-menu');
+    }
+});
+
+$('#nav-container').click((e) => {
+    const target = $(e.target);
+    // Show menu (by left & up styles)
+    if (target.hasClass('menu-btn') || target.hasClass('bar')) {
+        menu.addClass('show-menu');
+    }
+
+    // Close menu/theme colors menu
+    if (target.hasClass('fa-times')) {
+        if (target.hasClass('color-menu-close')) {
+            $('#colors-menu').removeClass('show-menu');
+            return;
+        }
+
+        menu.removeClass('show-menu');
+    }
+
+    // Open theme colors menu
+    if (target.hasClass('fa-paint-roller')) {
+        $('#colors-menu').toggleClass('show-menu');
+    }
+
+    // Change theme color
+    if (target.hasClass('color-item')) {
+        const color = target.css('background-color') ?? '#bb86fc';
+        selectThemeColor(color);
+        setSessionStorage('theme-color', color);
     }
 });

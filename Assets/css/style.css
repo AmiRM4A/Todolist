@@ -220,6 +220,7 @@ h2 {
 #tasks-section .add-todo-btn {
     border-radius: unset;
     background: var(--theme-color);
+    color: var(--white-font);
     padding: 11px;
     font-size: 17px;
     border-top-right-radius: 15px;
@@ -394,12 +395,12 @@ h2 {
 }
 
 /* Done tasks */
-.doneTask {
+.done-task {
     opacity: 0.5;
     box-shadow: none !important;
 }
 
-.doneTask .done-btn {
+.done-task .done-btn {
     background-color: #ff7597 !important;
     position: absolute;
     display: block !important;
@@ -466,7 +467,7 @@ h2 {
 
 #task-edit-modal .save-modal {
     background-color: var(--theme-color);
-    color: #000000;
+    color: var(--white-font);
 }
 
 /* Styles for the menu */
@@ -603,7 +604,7 @@ button,
 .fa-undo,
 nav,
 a,
-.doneTask .done-btn {
+.done-task .done-btn {
     transition: all 0.3s ease;
 }
 
@@ -1126,7 +1127,7 @@ input:focus:-moz-placeholder {
         display: inline-block;
     }
 
-    .doneTask .done-span {
+    .done-task .done-span {
         display: none !important;
     }
 

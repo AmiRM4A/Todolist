@@ -1,9 +1,14 @@
 /**
  * Shows or hides the validation error message for a given input field.
+ *
+ * @function
+ * @name toggleInputValidationError
+ *
  * @param {string} inputId - The ID of the input field.
  * @param {boolean} isValid - Whether the input value is valid or not.
+ * @returns {void} This function does not return a value.
  */
-function toggleInputValidationError(inputId, isValid = false) {
+export function toggleInputValidationError(inputId, isValid = false) {
     const inputField = $(`#${inputId}-input #${inputId}`);
     const errorMessage = $(`#${inputId}-input .form-group__message`);
 
@@ -19,22 +24,23 @@ function toggleInputValidationError(inputId, isValid = false) {
 /**
  * Handles input validation for a given input field.
  *
+ * @function
+ * @name handleInputValidation
+ *
  * @param {string} inputId - The ID of the input field to be validated.
  * @param {Function} validationFunction - The function to be used for validating the input value.
- *
+ * @param {RegExp} [regexPattern] - Optional regular expression pattern for additional validation.
  * @returns {void} This function does not return a value.
- *
- * @description
- * This function attaches an event listener to the 'input' event of the specified input field.
- * When the input value changes, the provided validationFunction is called with the new input value.
- *
  */
-function handleInputValidation(inputId, validationFunction) {
+export function handleInputValidation(inputId, validationFunction, regexPattern) {
     $(`#${inputId}-input #${inputId}`).on('input', (event) => {
         const value = event.target.value;
-        const isValid = (value && validationFunction(value));
+        let isValid;
+        if (regexPattern) {
+            isValid = value && validationFunction(value) && regexPattern.test(value);
+        } else {
+            isValid = value && validationFunction(value);
+        }
         toggleInputValidationError(inputId, isValid);
     });
 }
-
-export {handleInputValidation, toggleInputValidationError};
