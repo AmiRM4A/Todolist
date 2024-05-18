@@ -262,12 +262,7 @@ export function selectThemeColor(color) {
  * @name getUserToken
  *
  * @returns {string} The user token retrieved from the session storage, without the "Bearer " prefix.
- *
- * @example
- * // Get user token
- * const token = getUserToken();
- * console.log(token); // Output: "5adc4ff4b38a8ab38c85b1abbae45ef9c61bc1a7c421fccfb4219505d8d9881d"
  */
 export function getUserToken(){
-    return getSessionStorage('Authorization').token.replace("Bearer ", "");
+    return getSessionStorage('Authorization')['token'] ?? null;
 }

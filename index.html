@@ -138,12 +138,17 @@
 	// Importing necessary functions
 	import config from "./config.js";
 	import {makeApiRequest, redirectTo} from './assets/js/modules/utilitiesModule.js';
-	import {setSessionStorage, getSessionStorage, removeSessionStorage} from './assets/js/modules/sessionStorageModule.js';
+	import {
+		setSessionStorage,
+		getSessionStorage,
+		removeSessionStorage
+	} from './assets/js/modules/sessionStorageModule.js';
+	import {getUserToken} from './assets/js/modules/utilitiesModule.js';
 
 	$(document).ready(() => {
 		// Call API service to get user's data (by token)
 		const apiUrl = config.apiUrl + '/me';
-		makeApiRequest('POST', apiUrl, null, {Authorization: getSessionStorage('Authorization', false)})
+		makeApiRequest('POST', apiUrl, null, {Authorization: getUserToken()})
 				.then(response => {
 					// Saving token's data into session storage if data isn't already saved
 					if (getSessionStorage('user') === null) {
