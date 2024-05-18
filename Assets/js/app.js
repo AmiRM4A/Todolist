@@ -1,6 +1,12 @@
 import config from '/config.js';
 import {getSessionStorage, removeSessionStorage, setSessionStorage} from './modules/sessionStorageModule.js';
-import {errorAlert, getCurrentDateTime, redirectTo, selectThemeColor} from './modules/utilitiesModule.js';
+import {
+    errorAlert,
+    getCurrentDateTime, getUserToken,
+    makeApiRequest,
+    redirectTo,
+    selectThemeColor
+} from './modules/utilitiesModule.js';
 import {
     addTask,
     addTaskToList,
@@ -263,6 +269,24 @@ $('#nav-container').click((e) => {
         }
 
         menu.removeClass('show-menu');
+    }
+
+    // Log out the user
+    if (target.hasClass('fa-sign-out')) {
+        makeApiRequest('POST', config.apiUrl + '/log-out', null, {Authorization: getUserToken()})
+            .then(response => {
+                if (response) {
+                    removeSessionStorage('Authorization');
+                    removeSessionStorage('user');
+                    redirectTo(config.baseUrl + '/login.html');
+                } else {
+                    throw new Error('Unable to log you out!');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                errorAlert('Log-out Failed!');
+            });
     }
 
     // Open theme colors menu
