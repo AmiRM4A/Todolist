@@ -11,7 +11,6 @@ import {
 } from './modules/taskModule.js';
 
 const menu = $('#menu');
-const menuButton = $(".menu-btn");
 const taskEditModal = $('#task-edit-modal');
 
 /* Initialize userData array */

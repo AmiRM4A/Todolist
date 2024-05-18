@@ -183,7 +183,7 @@
 <!-- Main application script -->
 <script type="module">
 	// Check if Authorization data already exists
-	if (sessionStorage.getItem('Authorization') !== null) {
+	if (getSessionStorage('Authorization') !== null) {
 		// Redirect to main page
 		redirectTo(config.baseUrl + '/index.html');
 	}
@@ -242,7 +242,7 @@
 			const password = getCleanedInput('register-form', 'password');
 			const re_password = getCleanedInput('register-form', 're-password');
 
-			if (!name ||  !regexMatch(name, nameRegex)) {
+			if (!name || !regexMatch(name, nameRegex)) {
 				toggleInputValidationError('name');
 				return;
 			}
@@ -267,22 +267,19 @@
 				return;
 			}
 
-			const dataObject = {
+			// Call API service to register user
+			makeApiRequest('POST', config['apiUrl'] + '/create-user', {
 				name: name,
 				email: email,
 				user_name: username,
 				password: password,
-			};
-
-			const apiUrl = config['apiUrl'] + '/create-user';
-			// Call API service to register user
-			makeApiRequest('POST', apiUrl, dataObject)
+			})
 					.then(response => {
 						let timerInterval;
 						Swal.fire({
 							title: "Registration Successful!",
 							html: "You will be redirected to the login page in <b></b> seconds.",
-							timer: 2000, // Change the timer to 2 seconds (2000 milliseconds)
+							timer: 3000, // Change the timer to 3 seconds (3000 milliseconds)
 							icon: 'success',
 							didOpen: () => {
 								Swal.showLoading();
@@ -297,7 +294,6 @@
 						})
 						// Redirect to login page
 						redirectTo(config.baseUrl + '/login.html');
-
 					})
 					.catch(error => {
 						console.error(error);

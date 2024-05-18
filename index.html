@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- Meta tags for character set and viewport -->
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<!-- Page title -->
@@ -45,13 +46,18 @@
 			<div id="menu-container">
 				<!-- Links Menu -->
 				<div class="menu-content" id="menu">
+					<!-- Close menu button -->
 					<span class="fas fa-times menu-close"></span>
+					<!-- Sign out button -->
+					<span class="fa fa-sign-out"></span>
+					<!-- GitHub button -->
 					<span
 					><a
 							href="https://github.com/AmiRM4A"
 							class="fa-brands fa-github"
 					></a
 					></span>
+					<!-- Colors menu button -->
 					<span class="fa-solid fa-paint-roller"></span>
 				</div>
 				<!-- Colors Menu -->
@@ -119,6 +125,8 @@
 		<a href="https://github.com/AmiRM4A">Amir</a>
 	</div>
 </footer>
+<!-- Sweet Alert -->
+<script src="assets/js/sweetalert2-11.10.8.min.js"></script>
 <!-- Font Awesome -->
 <!--<script src="assets/js/font-awesome-6.4.0-all.min.js"></script>-->
 <!-- Popper.js library for tooltips and popovers -->
@@ -130,8 +138,9 @@
 <!-- Main application script -->
 <script type="module">
 	// Check if token's data is already set in the session storage
-	if (sessionStorage.getItem('Authorization') === null) {
+	if (getSessionStorage('Authorization') === null) {
 		// Redirect to login page
+		removeSessionStorage('user');
 		redirectTo(config.baseUrl + '/login.html');
 	}
 

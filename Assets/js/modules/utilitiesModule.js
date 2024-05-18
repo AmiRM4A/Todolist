@@ -263,7 +263,7 @@ export function selectThemeColor(color) {
  *
  * @returns {string} The user token retrieved from the session storage, without the "Bearer " prefix.
  */
-export function getUserToken(){
+export function getUserToken() {
     return getSessionStorage('Authorization')['token'] ?? null;
 }
 
