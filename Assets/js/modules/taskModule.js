@@ -261,7 +261,6 @@ export function markTaskListAsCompleted(taskId, completedAtTime, tasksContainer)
 
     const taskElement = getTaskFromList(taskId, tasksContainer);
 
-    console.log(taskElement);
     // Apply completed task styles
     taskElement.addClass('done-task');
 

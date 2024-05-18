@@ -152,7 +152,14 @@
 
 	// Importing necessary functions
 	import config from './config.js';
-	import {makeApiRequest, regexMatch, getCleanedInput, redirectTo, tooltip} from './assets/js/modules/utilitiesModule.js';
+	import {
+		makeApiRequest,
+		regexMatch,
+		getCleanedInput,
+		redirectTo,
+		tooltip,
+		errorAlert
+	} from './assets/js/modules/utilitiesModule.js';
 	import {handleInputValidation, toggleInputValidationError} from './assets/js/modules/inputValidationModule.js';
 	import {setSessionStorage} from './assets/js/modules/sessionStorageModule.js';
 
@@ -185,7 +192,7 @@
 
 			const email = getCleanedInput('login-form', 'email');
 			const password = getCleanedInput('login-form', 'password');
-			const remember_me = $('#remember-me').prop('checked');
+			const remember_me = $('#remember-me').prop('checked') ? 1 : 0;
 
 			if (!email || !regexMatch(email, emailRegex)) {
 				toggleInputValidationError('email');
@@ -197,20 +204,18 @@
 				return;
 			}
 
-			const formData = {
+			// Call API Service to login user
+			makeApiRequest('POST', config['apiUrl'] + '/login', {
 				email: email,
 				password: password,
-			};
-
-			const apiUrl = config['apiUrl'] + '/login';
-			// Call API Service to login user
-			makeApiRequest('POST', apiUrl, formData)
+				remember_me: remember_me
+			})
 					.then(response => {
 						let timerInterval;
 						Swal.fire({
 							title: "Login Successful!",
 							html: "You will be redirected to the main page in <b></b> seconds.",
-							timer: 2000, // Change the timer to 2 seconds (2000 milliseconds)
+							timer: 3000, // Change the timer to 3 seconds (3000 milliseconds)
 							icon: 'success',
 							didOpen: () => {
 								Swal.showLoading();
@@ -226,24 +231,20 @@
 
 						if (!response.data.hasOwnProperty('token')) {
 							throw new Error(response);
+						} else {
+							// Set token into the session storage
+							let tokenData = {
+								token: 'Bearer ' + response['data']['token']
+							};
+
+							setSessionStorage('Authorization', tokenData);
+							// Redirect to main page
+							redirectTo(config.baseUrl + '/index.html');
 						}
-
-						// Set token into the session storage
-						let tokenData = {
-							token: 'Bearer ' + response['data']['token']
-						};
-
-						setSessionStorage('Authorization', tokenData);
-						// Redirect to main page
-						redirectTo(config.baseUrl + '/index.html');
 					})
 					.catch(error => {
-						Swal.fire({
-							title: "Login Failed",
-							text: error['responseJSON'] ?? 'Something went wrong on logging you...',
-							icon: "error",
-							showCloseButton: true,
-						});
+						console.error(error);
+						errorAlert('Login Failed!', 'Invalid email or password');
 					});
 		});
 	});
