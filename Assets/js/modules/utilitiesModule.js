@@ -266,3 +266,18 @@ export function selectThemeColor(color) {
 export function getUserToken(){
     return getSessionStorage('Authorization')['token'] ?? null;
 }
+
+/**
+ * Displays an error alert using the SweetAlert2 library.
+ *
+ * @param {string} $title - The title of the error alert. Defaults to 'Oops...!'.
+ * @param {string} text - The text message of the error alert. Defaults to 'Something went wrong!'.
+ */
+export function errorAlert($title = 'Oops...!', text = 'Something went wrong!') {
+    Swal.fire({
+        title: $title,
+        text: text,
+        icon: 'error',
+        showCloseButton: true
+    });
+}

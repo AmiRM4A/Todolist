@@ -152,7 +152,14 @@
 
 	// Importing necessary functions
 	import config from './config.js';
-	import {makeApiRequest, regexMatch, getCleanedInput, redirectTo, tooltip} from './assets/js/modules/utilitiesModule.js';
+	import {
+		makeApiRequest,
+		regexMatch,
+		getCleanedInput,
+		redirectTo,
+		tooltip,
+		errorAlert
+	} from './assets/js/modules/utilitiesModule.js';
 	import {handleInputValidation, toggleInputValidationError} from './assets/js/modules/inputValidationModule.js';
 	import {setSessionStorage} from './assets/js/modules/sessionStorageModule.js';
 
@@ -226,24 +233,20 @@
 
 						if (!response.data.hasOwnProperty('token')) {
 							throw new Error(response);
+						} else {
+							// Set token into the session storage
+							let tokenData = {
+								token: 'Bearer ' + response['data']['token']
+							};
+
+							setSessionStorage('Authorization', tokenData);
+							// Redirect to main page
+							redirectTo(config.baseUrl + '/index.html');
 						}
-
-						// Set token into the session storage
-						let tokenData = {
-							token: 'Bearer ' + response['data']['token']
-						};
-
-						setSessionStorage('Authorization', tokenData);
-						// Redirect to main page
-						redirectTo(config.baseUrl + '/index.html');
 					})
 					.catch(error => {
-						Swal.fire({
-							title: "Login Failed",
-							text: error['responseJSON'] ?? 'Something went wrong on logging you...',
-							icon: "error",
-							showCloseButton: true,
-						});
+						console.error(error);
+						errorAlert('Login Failed!', 'Invalid email or password');
 					});
 		});
 	});

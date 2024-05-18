@@ -1,6 +1,6 @@
 import config from '/config.js';
 import {getSessionStorage, removeSessionStorage, setSessionStorage} from './modules/sessionStorageModule.js';
-import {getCurrentDateTime, redirectTo, selectThemeColor} from './modules/utilitiesModule.js';
+import {errorAlert, getCurrentDateTime, redirectTo, selectThemeColor} from './modules/utilitiesModule.js';
 import {
     addTask,
     addTaskToList,
@@ -82,7 +82,18 @@ function initialize() {
             }
         })
         .catch(error => {
-            // Alert: Something went wrong - the error came from back-end
+            if (error.status === 401) {
+                removeSessionStorage('Authorization');
+                removeSessionStorage('user');
+                redirectTo(config.baseUrl + '/login.html');
+            } else {
+                Swal.fire({
+                    title: "Oops...!",
+                    text: error['responseJSON']['message'] ?? 'Something went wrong on logging you...',
+                    icon: "error",
+                    showCloseButton: true
+                });
+            }
         });
 }
 
@@ -120,7 +131,8 @@ $('#tasks-section').click(function (e) {
                     }
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.error(error);
+                    errorAlert('Oops...!', 'Failed to add task!');
                 });
         }
     }
@@ -129,21 +141,42 @@ $('#tasks-section').click(function (e) {
     if (task && taskData && target.hasClass('fa-check')) {
         const currentDateTime = getCurrentDateTime();
         if ((currentDateTime && typeof currentDateTime === 'string') && (typeof taskId === 'number' && taskId > 0)) {
-            markTaskAsCompleted(Number(taskId), currentDateTime).then(response => markTaskListAsCompleted(taskId, currentDateTime, 'todos'));
+            markTaskAsCompleted(Number(taskId), currentDateTime)
+                .then(response => {
+                    markTaskListAsCompleted(taskId, currentDateTime, 'todos');
+                })
+                .catch(error => {
+                    console.error(error);
+                    errorAlert('Oops...!', 'Failed to check task!');
+                });
         }
     }
 
     // Mark Existing Task as Uncompleted
     if (task && taskData && target.hasClass('fa-undo')) {
         if ((typeof taskId === 'number' && taskId > 0) && taskData.creationDate && typeof taskData.creationDate === 'string') {
-            markTaskAsUncompleted(taskId).then(response => markTaskListAsUncompleted(taskId, taskData.creationDate, 'todos'));
+            markTaskAsUncompleted(taskId)
+                .then(response => {
+                    markTaskListAsUncompleted(taskId, taskData.creationDate, 'todos');
+                })
+                .catch(error => {
+                    console.error(error);
+                    errorAlert('Oops..!', 'Failed to uncheck task!');
+                });
         }
     }
 
     // Delete Existing Task
     if (task && taskData && target.hasClass('fa-times')) {
         if ((typeof taskId === 'number' && taskId > 0)) {
-            removeTask(taskId, userData.id).then(response => removeTaskFromList(taskId, 'todos'));
+            removeTask(taskId, userData.id)
+                .then(response => {
+                    removeTaskFromList(taskId, 'todos');
+                })
+                .catch(error => {
+                    console.error(error);
+                    errorAlert('Oops...!', 'Failed to remove task!');
+                });
         }
     }
 
@@ -192,6 +225,7 @@ $('body div.container').click(function (e) {
                 })
                 .catch(error => {
                     console.error(error);
+                    errorAlert('Oops..!', 'Failed to update task!');
                 });
         }
     }

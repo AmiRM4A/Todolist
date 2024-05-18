@@ -190,8 +190,16 @@
 
 	// Importing necessary functions
 	import config from "./config.js";
-	import {makeApiRequest, getCleanedInput, regexMatch, redirectTo, tooltip} from './assets/js/modules/utilitiesModule.js';
+	import {
+		makeApiRequest,
+		getCleanedInput,
+		regexMatch,
+		redirectTo,
+		tooltip,
+		errorAlert
+	} from './assets/js/modules/utilitiesModule.js';
 	import {handleInputValidation, toggleInputValidationError} from './assets/js/modules/inputValidationModule.js';
+	import {getSessionStorage} from './assets/js/modules/sessionStorageModule.js';
 
 	$(document).ready(() => {
 		// Eye icon event listener (Icon of showing/hiding password)
@@ -292,12 +300,8 @@
 
 					})
 					.catch(error => {
-						Swal.fire({
-							title: "Registration Failed",
-							text: error['responseJSON'] ?? 'Something went wrong on registration of your account',
-							icon: "error",
-							showCloseButton: true,
-						});
+						console.error(error);
+						errorAlert('Registration Failed!', 'Something went wrong on registration of your account...');
 					});
 		});
 	});
