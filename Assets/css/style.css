@@ -486,6 +486,7 @@ h2 {
 }
 
 .menu-content .fa-times,
+.menu-content .fa-sign-out,
 .menu-content .fa-github,
 .menu-content .fa-paint-roller {
     position: absolute;
@@ -497,6 +498,11 @@ h2 {
 .menu-content .fa-times {
     right: 28%;
     bottom: 7%;
+}
+
+.menu-content .fa-sign-out {
+    right: 19%;
+    bottom: 11%;
 }
 
 .menu-content .fa-github {
