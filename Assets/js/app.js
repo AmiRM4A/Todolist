@@ -92,9 +92,10 @@ function initialize() {
                 removeSessionStorage('user');
                 redirectTo(config.baseUrl + '/login.html');
             } else {
+                console.error(error);
                 Swal.fire({
                     title: "Oops...!",
-                    text: error['responseJSON']['message'] ?? 'Something went wrong on logging you...',
+                    text: error['responseJSON']['message'] || 'Something went wrong...',
                     icon: "error",
                     showCloseButton: true
                 });

@@ -251,7 +251,7 @@ export function markTaskListAsCompleted(taskId, completedAtTime, tasksContainer)
         throw new Error('Task ID must be provided and must be a number');
     }
 
-    if (!completedAtTime || typeof completedAtTime !== 'string') {
+    if (!completedAtTime) {
         throw new Error('Completed at time must be provided and must be a string');
     }
 
