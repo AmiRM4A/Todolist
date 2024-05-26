@@ -264,6 +264,9 @@ modules.xml
 .history
 .ionide
 
+### Node ###
+/node_modules
+
 ### Custom ###
 config.js
 
