@@ -460,6 +460,17 @@ export function markTaskAsCompleted(taskId, completedAtTime) {
 export function markTaskAsUncompleted(taskId) {
     if (!taskId || typeof taskId !== 'number') {
         throw new Error('Task ID must be provided and must be a number');
+/**
+ * Marks a task as uncompleted by updating its status and completion timestamp.
+ *
+ * @function
+ * @name markTaskAsUncompleted
+ *
+ * @param {string} taskId - The unique identifier of the task to be marked as uncompleted.
+ * @returns {Promise} A promise that resolves to the response of the API request.
+ *
+ * @throws {Error} If the `taskId` parameter is not provided.
+ */
     }
 
     return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
