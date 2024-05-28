@@ -51,12 +51,10 @@ body {
     background: #121212;
     font-family: 'Roberto-Regular', sans-serif;
     font-size: 1rem;
-    width: 100%;
+    min-height: 100vh;
     display: flex;
-    height: 100vh;
     flex-direction: column;
     justify-content: space-between;
-    align-content: center;
 }
 
 .container {
@@ -149,32 +147,12 @@ h2 {
     padding: 0;
     font-weight: bold;
     color: #222;
-    font-size: 1.90rem;
+    font-size: 2rem;
 }
 
 .main {
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.box {
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.18);
-    display: flex;
-    align-items: center;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    text-align: center;
-    width: 80%;
-    height: 83vh;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
 }
 
 .clear {
@@ -724,7 +702,11 @@ footer .fa-heart {
     align-items: center;
     text-align: center;
     width: 100%;
-    height: 100%;
+    height: 75vh;
+}
+
+.sign-in {
+    height: 65vh;
 }
 
 .sign-up input:not([type="submit"]),
@@ -1131,19 +1113,20 @@ input:focus:-moz-placeholder {
     color: var(--white-font);
 }
 
-/* Loader */
-.loader {
-    width: 120px;
-    height: 20px;
-    border-radius: 20px;
-    background: linear-gradient(orange 0 0) 0/0% no-repeat lightblue;
-    animation: l2 2s infinite steps(10);
-}
-
-@keyframes l2 {
-    100% {
-        background-size: 110%
-    }
+/* Box */
+.box {
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    text-align: center;
+    width: 80%;
+    margin-bottom: 5px;
+    padding: 20px;
+    justify-content: center;
 }
 
 /* Media Queries */
@@ -1264,6 +1247,13 @@ input:focus:-moz-placeholder {
     }
 }
 
+@media screen and (max-width: 500px) {
+    .sign-in,
+    .sign-up{
+        height: 50vh !important;
+    }
+}
+
 @media screen and (max-width: 624px) {
     .links-container {
         display: block;
@@ -1273,20 +1263,8 @@ input:focus:-moz-placeholder {
         margin-bottom: 0.85em;
     }
 
-    #task-edit-modal .modal-content {
-        width: 88vw;
-        height: 55vh;
-    }
-
-    .box {
-        height: 60vh !important;
-    }
-
-    .sign-in-form, .sign-up-form {
-        width: 90%;
-    }
-
-    .form-title {
-        margin-bottom: 1em;
+    .sign-in,
+    .sign-up{
+        height: 60vh;
     }
 }
