@@ -51,6 +51,12 @@ body {
     background: #121212;
     font-family: 'Roberto-Regular', sans-serif;
     font-size: 1rem;
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
 }
 
 .container {
@@ -143,12 +149,32 @@ h2 {
     padding: 0;
     font-weight: bold;
     color: #222;
-    font-size: 2rem;
+    font-size: 1.90rem;
 }
 
 .main {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.box {
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    text-align: center;
+    width: 80%;
+    height: 83vh;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
 }
 
 .clear {
@@ -694,17 +720,11 @@ footer .fa-heart {
 
 .sign-up,
 .sign-in {
-    background: rgba(255, 255, 255, 0.18);
     display: flex;
     align-items: center;
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
     text-align: center;
-    width: 80%;
-    height: 83vh;
-    margin-bottom: 5px;
+    width: 100%;
+    height: 100%;
 }
 
 .sign-up input:not([type="submit"]),
@@ -1111,6 +1131,21 @@ input:focus:-moz-placeholder {
     color: var(--white-font);
 }
 
+/* Loader */
+.loader {
+    width: 120px;
+    height: 20px;
+    border-radius: 20px;
+    background: linear-gradient(orange 0 0) 0/0% no-repeat lightblue;
+    animation: l2 2s infinite steps(10);
+}
+
+@keyframes l2 {
+    100% {
+        background-size: 110%
+    }
+}
+
 /* Media Queries */
 
 /* Media query for screens up to 768px (mobile screens) */
@@ -1224,10 +1259,6 @@ input:focus:-moz-placeholder {
         margin-bottom: 10px;
     }
 
-    #logo {
-        display: none;
-    }
-
     .sign-in-form, .sign-up-form {
         width: 70%;
     }
@@ -1240,5 +1271,22 @@ input:focus:-moz-placeholder {
 
     .links-container a {
         margin-bottom: 0.85em;
+    }
+
+    #task-edit-modal .modal-content {
+        width: 88vw;
+        height: 55vh;
+    }
+
+    .box {
+        height: 60vh !important;
+    }
+
+    .sign-in-form, .sign-up-form {
+        width: 90%;
+    }
+
+    .form-title {
+        margin-bottom: 1em;
     }
 }
