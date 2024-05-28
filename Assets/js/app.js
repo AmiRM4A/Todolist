@@ -2,7 +2,7 @@ import config from '/config.js';
 import {getSessionStorage, removeSessionStorage, setSessionStorage} from './modules/sessionStorageModule.js';
 import {
     errorAlert,
-    getCurrentDateTime, getUserToken,
+    getUserToken,
     makeApiRequest,
     redirectTo,
     selectThemeColor
@@ -129,20 +129,22 @@ $('#tasks-section').click(function (e) {
 
     const target = $(e.target);
     const task = target.closest('.task') || null;
-    const taskData = getTaskInfo(task ?? null);
-    const taskId = Number(taskData.taskId) ?? null;
+    const taskData = getTaskInfo(task || null);
+    const taskId = taskData.taskId || null;
 
     // Add New Task
     if (target.hasClass('add-todo-btn')) {
-        const taskTitle = $('#task-input').val().trim();
-        const taskDescription = 'Edit task for adding description...';
+        const addTaskInput = $('#task-input');
+        const taskTitle = addTaskInput.val().trim();
+        const taskDescription = 'Edit task to add description...';
 
         if (taskTitle) {
             addTask(taskTitle, taskDescription, userData.id)
                 .then(response => {
-                    const id = Number(response);
-                    if (id && (typeof id === 'number' && id > 0)) {
-                        addTaskToList(id, taskTitle, taskDescription, getCurrentDateTime(), 'todos');
+                    const id = response.data.id;
+                    const createdAt = response.data.created_at;
+                    if (id && id > 0) {
+                        addTaskToList(id, taskTitle, taskDescription, createdAt, 'todos');
                     }
                 })
                 .catch(error => {
@@ -155,11 +157,10 @@ $('#tasks-section').click(function (e) {
 
     // Mark Existing Task as Completed
     if (task && taskData && target.hasClass('fa-check')) {
-        const currentDateTime = getCurrentDateTime();
-        if ((currentDateTime && typeof currentDateTime === 'string') && (typeof taskId === 'number' && taskId > 0)) {
-            markTaskAsCompleted(Number(taskId), currentDateTime)
+        if (taskId > 0) {
+            markTaskAsCompleted(taskId)
                 .then(response => {
-                    markTaskListAsCompleted(taskId, currentDateTime, 'todos');
+                    markTaskListAsCompleted(taskId, response.data.completed_at ,'todos');
                 })
                 .catch(error => {
                     console.error(error);
@@ -170,10 +171,10 @@ $('#tasks-section').click(function (e) {
 
     // Mark Existing Task as Uncompleted
     if (task && taskData && target.hasClass('fa-undo')) {
-        if ((typeof taskId === 'number' && taskId > 0) && taskData.creationDate && typeof taskData.creationDate === 'string') {
+        if (taskId > 0 && taskData.creationDate && typeof taskData.creationDate === 'string') {
             markTaskAsUncompleted(taskId)
                 .then(response => {
-                    markTaskListAsUncompleted(taskId, taskData.creationDate, 'todos');
+                    markTaskListAsUncompleted(taskId, response.data.created_at, 'todos');
                 })
                 .catch(error => {
                     console.error(error);
@@ -184,7 +185,7 @@ $('#tasks-section').click(function (e) {
 
     // Delete Existing Task
     if (task && taskData && target.hasClass('fa-times')) {
-        if ((typeof taskId === 'number' && taskId > 0)) {
+        if (taskId > 0) {
             removeTask(taskId, userData.id)
                 .then(response => {
                     removeTaskFromList(taskId, 'todos');
@@ -197,7 +198,7 @@ $('#tasks-section').click(function (e) {
     }
 
     if (task && taskData && target.hasClass('fa-edit')) {
-        if ((typeof taskId === 'number' && taskId > 0) && taskData && taskData.title && taskData.description) {
+        if (taskId > 0 && taskData && taskData.title && taskData.description) {
             // Display edit task modal
             taskEditModal.toggleClass('show-modal');
 
@@ -221,12 +222,12 @@ $('body div.container').click(function (e) {
 
     // Update task in DB based on task edit modal's data
     if (target.hasClass('save-modal')) {
-        const taskId = Number(taskEditModal.find('#task-id').val()) ?? null;
-        const taskTitle = taskEditModal.find('#task-title').val() ?? null;
-        const taskDescription = taskEditModal.find('#task-description').val() ?? null;
+        const taskId = taskEditModal.find('#task-id').val() || null;
+        const taskTitle = taskEditModal.find('#task-title').val() || null;
+        const taskDescription = taskEditModal.find('#task-description').val() || 'Edit task to add description...';
 
-        if ((typeof taskId === 'number' && taskId > 0) && taskTitle && taskDescription) {
-            updateTask(taskId, taskTitle, taskDescription, userData.id ?? null)
+        if (taskId > 0 && taskTitle) {
+            updateTask(taskId, taskTitle, taskDescription, userData.id || null)
                 .then(response => {
                     if (!response) {
                         throw new Error('Unable to update the task');
