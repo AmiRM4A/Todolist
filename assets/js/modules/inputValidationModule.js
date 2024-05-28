@@ -33,7 +33,7 @@ export function toggleInputValidationError(inputId, isValid = false) {
  * @returns {void} This function does not return a value.
  */
 export function handleInputValidation(inputId, validationFunction, regexPattern) {
-    $(`#${inputId}-input #${inputId}`).on('input', (event) => {
+    $(`#${inputId}-input #${inputId}`).on('blur', (event) => {
         const value = event.target.value;
         let isValid;
         if (regexPattern) {

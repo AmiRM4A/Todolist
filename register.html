@@ -26,7 +26,7 @@
 		<nav>
 			<div>
 				<!-- Logo -->
-				<a href="#">
+				<a href="#" class="animate__animated animate__bounceInLeft">
 					<img
 							id="logo"
 							src="assets/images/logo/logo-pink.png"
@@ -39,132 +39,134 @@
 </header>
 <div class="main">
 	<!-- Sign up section -->
-	<section class="sign-up">
-		<div class="container">
-			<div class="sign-up-content">
-				<!-- Sign up form -->
-				<div class="sign-up-form">
-					<h2 class="form-title">Sign up</h2>
-					<form method="POST" class="register-form" id="register-form" novalidate>
-						<!-- Name input -->
-						<div class="form-group" id="name-input">
-							<label for="name"></label>
-							<input
-									class="form-group__input"
-									type="text"
-									name="name"
-									id="name"
-									placeholder="Your Name"
-									minlength="3"
-									autocomplete="off"
-									spellcheck="false"
-									required
-							/>
-							<span class="form-group__message"> Invalid name </span>
-							<i class="fa-solid fa-circle-info" id="name-info"></i>
-						</div>
+	<div class="box animate__animated animate__fadeIn">
+		<section class="sign-up">
+			<div class="container">
+				<div class="sign-up-content">
+					<!-- Sign up form -->
+					<div class="sign-up-form animate__animated animate__slideInUp">
+						<h2 class="form-title">Sign up</h2>
+						<form method="POST" class="register-form animate__slideInRight" id="register-form" novalidate>
+							<!-- Name input -->
+							<div class="form-group" id="name-input">
+								<label for="name"></label>
+								<input
+										class="form-group__input"
+										type="text"
+										name="name"
+										id="name"
+										placeholder="Your Name"
+										minlength="3"
+										autocomplete="off"
+										spellcheck="false"
+										required
+								/>
+								<span class="form-group__message"> Invalid name </span>
+								<i class="fa-solid fa-circle-info" id="name-info"></i>
+							</div>
 
-						<!-- Email input -->
-						<div class="form-group" id="email-input">
-							<label for="email"></label>
-							<input
-									class="form-group__input"
-									type="email"
-									name="email"
-									id="email"
-									placeholder="Your Email"
-									autocomplete="off"
-									spellcheck="false"
-									required
-							/>
-							<span class="form-group__message"> Invalid email address </span>
-							<i class="fa-solid fa-circle-info" id="email-info"></i>
-						</div>
+							<!-- Email input -->
+							<div class="form-group" id="email-input">
+								<label for="email"></label>
+								<input
+										class="form-group__input"
+										type="email"
+										name="email"
+										id="email"
+										placeholder="Your Email"
+										autocomplete="off"
+										spellcheck="false"
+										required
+								/>
+								<span class="form-group__message"> Invalid email address </span>
+								<i class="fa-solid fa-circle-info" id="email-info"></i>
+							</div>
 
-						<!-- Username input -->
-						<div class="form-group" id="username-input">
-							<label for="username"></label>
-							<input
-									class="form-group__input"
-									type="text"
-									name="username"
-									id="username"
-									placeholder="Your Username"
-									minlength="5"
-									autocomplete="off"
-									spellcheck="false"
-									required
-							/>
-							<span class="form-group__message"> Invalid username </span>
-							<i class="fa-solid fa-circle-info" id="username-info"></i>
-						</div>
+							<!-- Username input -->
+							<div class="form-group" id="username-input">
+								<label for="username"></label>
+								<input
+										class="form-group__input"
+										type="text"
+										name="username"
+										id="username"
+										placeholder="Your Username"
+										minlength="5"
+										autocomplete="off"
+										spellcheck="false"
+										required
+								/>
+								<span class="form-group__message"> Invalid username </span>
+								<i class="fa-solid fa-circle-info" id="username-info"></i>
+							</div>
 
-						<!-- Password input -->
-						<div class="form-group" id="password-input">
-							<label for="password"></label>
-							<input
-									class="form-group__input"
-									type="password"
-									name="password"
-									id="password"
-									placeholder="Your Password"
-									minlength="8"
-									autocomplete="off"
-									required
-							/>
-							<i class="fa-solid fa-eye eye-icon"></i>
-							<span class="form-group__message"> Invalid password </span>
-							<i class="fa-solid fa-circle-info" id="password-info"></i>
-						</div>
+							<!-- Password input -->
+							<div class="form-group" id="password-input">
+								<label for="password"></label>
+								<input
+										class="form-group__input"
+										type="password"
+										name="password"
+										id="password"
+										placeholder="Your Password"
+										minlength="8"
+										autocomplete="off"
+										required
+								/>
+								<i class="fa-solid fa-eye eye-icon"></i>
+								<span class="form-group__message"> Invalid password </span>
+								<i class="fa-solid fa-circle-info" id="password-info"></i>
+							</div>
 
-						<!-- Repeat password input -->
-						<div class="form-group" id="re-password-input">
-							<label for="re-password"></label>
-							<input
-									class="form-group__input"
-									type="password"
-									name="re_pass"
-									id="re-password"
-									placeholder="Repeat your password"
-									minlength="8"
-									autocomplete="off"
-									required
-							/>
-							<i class="fa-solid fa-eye eye-icon"></i>
-							<span class="form-group__message"> Passwords doesn't match! </span>
-							<i class="fa-solid fa-circle-info" id="re-password-info"></i>
-						</div>
+							<!-- Repeat password input -->
+							<div class="form-group" id="re-password-input">
+								<label for="re-password"></label>
+								<input
+										class="form-group__input"
+										type="password"
+										name="re_pass"
+										id="re-password"
+										placeholder="Repeat your password"
+										minlength="8"
+										autocomplete="off"
+										required
+								/>
+								<i class="fa-solid fa-eye eye-icon"></i>
+								<span class="form-group__message"> Passwords doesn't match! </span>
+								<i class="fa-solid fa-circle-info" id="re-password-info"></i>
+							</div>
 
-						<!-- Register button -->
-						<div class="form-group" id="register-submit-input">
-							<input
-									type="submit"
-									name="sign-up"
-									id="sign-up"
-									class="form-submit"
-									value="Register"
+							<!-- Register button -->
+							<div class="form-group" id="register-submit-input">
+								<input
+										type="submit"
+										name="sign-up"
+										id="sign-up"
+										class="form-submit"
+										value="Register"
+								/>
+							</div>
+						</form>
+						<!-- Link for existing members -->
+						<a href="login.html" class="sign-up-image-link"> Already a member? </a>
+					</div>
+					<!-- Image for sign up -->
+					<div class="sign-up-image animate__animated animate__slideInUp">
+						<figure>
+							<img
+									src="assets/images/sign-up-image.svg"
+									alt="sign up image"
 							/>
-						</div>
-					</form>
-					<!-- Link for existing members -->
-					<a href="login.html" class="sign-up-image-link"> Already a member? </a>
-				</div>
-				<!-- Image for sign up -->
-				<div class="sign-up-image">
-					<figure>
-						<img
-								src="assets/images/sign-up-image.svg"
-								alt="sign up image"
-						/>
-					</figure>
+						</figure>
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</div>
 </div>
+<!-- Footer with creator's information -->
 <footer>
-	<div>
-		<!-- Footer with creator's information -->
+	<div class="animate__animated animate__fadeIn">
 		Created with <i class="fa-solid fa-heart"></i> by
 		<!-- Link to the creator's GitHub profile -->
 		<a href="https://github.com/AmiRM4A">Amir</a>
