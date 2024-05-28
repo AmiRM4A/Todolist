@@ -90,7 +90,7 @@ function initialize() {
                                 $.each(tasksArr, (index, taskData) => {
                                     addTaskToList(taskData.id, taskData.title, taskData.description, taskData.created_at, 'todos');
                                     // Mark task as completed in the list if it is completed
-                                    if (taskData.status && taskData.status === 'completed' && taskData.completed_at !== '0000-00-00 00:00:00') {
+                                    if (taskData.status && taskData.status === 'completed') {
                                         markTaskListAsCompleted(taskData.id, taskData.completed_at, 'todos');
                                     }
                                 });
