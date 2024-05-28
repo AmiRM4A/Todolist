@@ -137,49 +137,7 @@
 <!-- jQuery library -->
 <script src="assets/js/jquery-3.7.1.min.js"></script>
 <!-- Main application script -->
-<script type="module">
-	// Check if token's data is already set in the session storage
-	if (getSessionStorage('Authorization') === null) {
-		// Redirect to login page
-		removeSessionStorage('user');
-		redirectTo(config.baseUrl + '/login.html');
-	}
-
-	// Importing necessary functions
-	import config from "./config.js";
-	import {makeApiRequest, redirectTo, errorAlert} from './assets/js/modules/utilitiesModule.js';
-	import {
-		setSessionStorage,
-		getSessionStorage,
-		removeSessionStorage
-	} from './assets/js/modules/sessionStorageModule.js';
-	import {getUserToken} from './assets/js/modules/utilitiesModule.js';
-
-	$(document).ready(() => {
-		// Call API service to get user's data (by token)
-		const apiUrl = config.apiUrl + '/me';
-		makeApiRequest('POST', apiUrl, null, {Authorization: getUserToken()})
-				.then(response => {
-					// Saving token's data into session storage if data isn't already saved
-					if (getSessionStorage('user')) {
-						removeSessionStorage('user');
-					}
-
-					setSessionStorage('user', response.data);
-				})
-				.catch(error => {
-					// Redirecting to login page if token is invalid
-					if (error.status === 401) {
-						removeSessionStorage('Authorization');
-						removeSessionStorage('user');
-						redirectTo(config.baseUrl + '/login.html');
-					} else {
-						console.error(error);
-						errorAlert();
-					}
-				});
-	});
-</script>
-<script src="./assets/js/main.js"></script>
+<!--<script src="./assets/js/main.js"></script>-->
+<script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>
