@@ -23,7 +23,7 @@
 		<div id="nav-container">
 			<nav>
 				<!-- Navigation menu button -->
-				<div class="menu-btn">
+				<div class="menu-btn animate__animated  animate__bounceInLeft">
 					<div class="bar"></div>
 					<div class="bar"></div>
 					<div class="bar"></div>
@@ -31,7 +31,7 @@
 				<div>
 					<span id="siteName">TaskTales</span>
 				</div>
-				<div>
+				<div class="animate__animated  animate__bounceInRight">
 					<!-- Logo -->
 					<a href="#">
 						<img
@@ -74,7 +74,7 @@
 		</div>
 	</header>
 	<!-- Tasks Management -->
-	<section id="tasks-section">
+	<section id="tasks-section" class="animate__animated animate__bounceInDown">
 		<div id="tasks-header">
 			<div>
 				<h1></h1>
@@ -102,14 +102,14 @@
 	</section>
 	<!-- Task Edit Modal -->
 	<div class="modal" id="task-edit-modal">
-		<div class="modal-content">
+		<div class="modal-content animate__animated animate__slideInUp">
 			<span class="close-button fas fa-times"></span>
 			<h2>Edit Task</h2>
 			<form>
 				<!-- Hidden input for task ID -->
 				<input type="hidden" class="task-id" name="task-id" id="task-id"/>
 				<label for="task-title">Title:</label>
-				<input type="text" id="task-title" name="task-title"/>
+				<input type="text" id="task-title" name="task-title" autocomplete="off"/>
 				<label for="task-description">Description:</label>
 				<textarea id="task-description" name="task-description"></textarea>
 				<!-- Save button -->
@@ -118,8 +118,9 @@
 		</div>
 	</div>
 </div>
+<!-- Footer with creator's information -->
 <footer>
-	<div>
+	<div class="animate__animated animate__fadeIn">
 		Created with <i class="fa-solid fa-heart"></i> by
 		<!-- Link to the creator's GitHub profile -->
 		<a href="https://github.com/AmiRM4A">Amir</a>
