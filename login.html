@@ -26,7 +26,7 @@
 		<nav>
 			<div>
 				<!-- Logo -->
-				<a href="#">
+				<a href="#" class="animate__animated animate__lightSpeedInLeft">
 					<img
 							id="logo"
 							src="assets/images/logo/logo-pink.png"
@@ -38,95 +38,99 @@
 	</div>
 </header>
 
-<div class="main">
-	<!-- Sign-in section -->
-	<section class="sign-in">
-		<div class="container">
-			<div class="sign-in-content">
-				<!-- Image for sign-in -->
-				<div class="sign-in-image">
-					<figure>
-						<img
-								src="assets/images/sign-in-image.svg"
-								alt="Sign up image"
-						/>
-					</figure>
-				</div>
-				<!-- Sign-in form -->
-				<div class="sign-in-form">
-					<h2 class="form-title">Sign in</h2>
-					<form method="POST" class="login-form" id="login-form" novalidate>
-						<!-- Email input -->
-						<div class="form-group" id="email-input">
-							<label for="email"></label>
-							<input
-									class="form-group__input"
-									type="text"
-									name="email"
-									id="email"
-									placeholder="Your Email"
-									autocomplete="off"
-									spellcheck="false"
-									required
-							/>
-							<span class="form-group__message"> Invalid Email </span>
-							<i class="fa-solid fa-circle-info" id="email-info"></i>
-						</div>
-
-						<!-- Password input -->
-						<div class="form-group" id="password-input">
-							<label for="password"></label>
-							<input
-									class="form-group__input"
-									type="password"
-									name="password"
-									id="password"
-									placeholder="Your Password"
-									required
-							/>
-							<i class="fa-solid fa-eye eye-icon"></i>
-							<span class="form-group__message"> Invalid password </span>
-							<i class="fa-solid fa-circle-info" id="password-info"></i>
-						</div>
-
-						<!-- Remember me checkbox -->
-						<div class="form-group" id="remember-me-box">
-							<label class="control control--checkbox" for="remember-me"
-							>Remember Me
-								<input
-										type="checkbox"
-										name="remember-me"
-										id="remember-me"
+<div class="wrapper">
+	<div class="main">
+		<!-- Sign-in section -->
+		<div class="box animate__animated animate__fadeIn">
+			<section class="sign-in">
+				<div class="container">
+					<div class="sign-in-content">
+						<!-- Image for sign-in -->
+						<div class="sign-in-image animate__animated animate__slideInUp">
+							<figure>
+								<img
+										src="assets/images/sign-in-image.svg"
+										alt="Sign up image"
 								/>
-								<span class="control__indicator"></span>
-							</label>
+							</figure>
 						</div>
+						<!-- Sign-in form -->
+						<div class="sign-in-form animate__animated animate__slideInUp">
+							<h2 class="form-title">Sign in</h2>
+							<form method="POST" class="login-form" id="login-form" novalidate>
+								<!-- Email input -->
+								<div class="form-group" id="email-input">
+									<label for="email"></label>
+									<input
+											class="form-group__input"
+											type="text"
+											name="email"
+											id="email"
+											placeholder="Your Email"
+											autocomplete="off"
+											spellcheck="false"
+											required
+									/>
+									<span class="form-group__message"> Invalid Email </span>
+									<i class="fa-solid fa-circle-info" id="email-info"></i>
+								</div>
 
-						<!-- Sign-in button -->
-						<div class="form-group form-button" id="login-submit-input">
-							<input
-									type="submit"
-									name="sign-in"
-									id="sign-in"
-									class="form-submit"
-									value="Log in"
-							/>
-						</div>
+								<!-- Password input -->
+								<div class="form-group" id="password-input">
+									<label for="password"></label>
+									<input
+											class="form-group__input"
+											type="password"
+											name="password"
+											id="password"
+											placeholder="Your Password"
+											required
+									/>
+									<i class="fa-solid fa-eye eye-icon"></i>
+									<span class="form-group__message"> Invalid password </span>
+									<i class="fa-solid fa-circle-info" id="password-info"></i>
+								</div>
 
-						<!-- Links for sign-up and forget password -->
-						<div class="links-container">
-							<a href="register.html" class="sign-up-image-link">Need a new account?</a>
-							<a href="#" class="forget-password-link">Forget Password?</a>
+								<!-- Remember me checkbox -->
+								<div class="form-group" id="remember-me-box">
+									<label class="control control--checkbox" for="remember-me"
+									>Remember Me
+										<input
+												type="checkbox"
+												name="remember-me"
+												id="remember-me"
+										/>
+										<span class="control__indicator"></span>
+									</label>
+								</div>
+
+								<!-- Sign-in button -->
+								<div class="form-group form-button" id="login-submit-input">
+									<input
+											type="submit"
+											name="sign-in"
+											id="sign-in"
+											class="form-submit"
+											value="Log in"
+									/>
+								</div>
+
+								<!-- Links for sign-up and forget password -->
+								<div class="links-container">
+									<a href="register.html" class="sign-up-image-link">Need a new account?</a>
+									<a href="#" class="forget-password-link">Forget Password?</a>
+								</div>
+							</form>
 						</div>
-					</form>
+					</div>
 				</div>
-			</div>
+			</section>
 		</div>
-	</section>
+	</div>
 </div>
+<!-- Footer with creator's information -->
 <footer>
-	<div>
-		<!-- Footer with creator's information -->
+	<div class="animate__animated animate__fadeIn">
 		Created with <i class="fa-solid fa-heart"></i> by
 		<!-- Link to the creator's GitHub profile -->
 		<a href="https://github.com/AmiRM4A">Amir</a>
