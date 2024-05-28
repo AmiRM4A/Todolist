@@ -149,6 +149,7 @@ $('#tasks-section').click(function (e) {
                     console.error(error);
                     errorAlert('Oops...!', 'Failed to add task!');
                 });
+            addTaskInput.val('');
         }
     }
 
