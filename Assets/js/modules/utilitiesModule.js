@@ -250,7 +250,7 @@ export function selectThemeColor(color) {
     };
 
     const colorName = themeColors[color];
-    changeFavIcon(`'assets/images/icon/'fav-${colorName}.png`);
+    changeFavIcon(`assets/images/icon/fav-${colorName}.png`);
     changeLogo(`assets/images/logo/logo-${colorName}.png`);
     $('html').css('--theme-color', color);
 }
