@@ -1,6 +1,5 @@
 import {getUserToken, makeApiRequest} from './utilitiesModule.js';
 import config from '../../../config.js';
-import {getSessionStorage} from './sessionStorageModule.js';
 
 const apiUrl = config.apiUrl;
 
@@ -58,8 +57,8 @@ function createTaskElem(taskId, taskTitle, taskDesc, taskCreationDate) {
  * @throws {Error} If taskId, taskTitle, taskDesc, taskCreationDate, or tasksContainer is not provided or is not a string.
  */
 export function addTaskToList(taskId, taskTitle, taskDesc, taskCreationDate, tasksContainer) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!taskTitle || typeof taskTitle !== 'string') {
@@ -94,8 +93,8 @@ export function addTaskToList(taskId, taskTitle, taskDesc, taskCreationDate, tas
  * @throws {Error} If taskId or tasksContainer is not a string.
  */
 export function removeTaskFromList(taskId, tasksContainer) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!tasksContainer || typeof tasksContainer !== 'string') {
@@ -121,8 +120,8 @@ export function removeTaskFromList(taskId, tasksContainer) {
  * @throws {Error} If taskId or tasksContainer is not a string.
  */
 export function getTaskFromList(taskId, tasksContainer) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!tasksContainer || typeof tasksContainer !== 'string') {
@@ -150,8 +149,8 @@ export function getTaskFromList(taskId, tasksContainer) {
  * @throws {Error} If tasksContainer is not a string.
  */
 export function updateTaskFromList(taskId, taskTitle, taskDesc, tasksContainer) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!taskTitle || typeof taskTitle !== 'string') {
@@ -215,8 +214,8 @@ export function getTaskInfo(taskElement) {
  * @throws {Error} If taskId or tasksContainer is not a string, or if the task is not found.
  */
 export function getTaskInfoFromList(taskId, tasksContainer) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!tasksContainer || typeof tasksContainer !== 'string') {
@@ -247,8 +246,8 @@ export function getTaskInfoFromList(taskId, tasksContainer) {
  *                 If tasksContainer is not provided or not a string.
  */
 export function markTaskListAsCompleted(taskId, completedAtTime, tasksContainer) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!completedAtTime) {
@@ -294,8 +293,8 @@ export function markTaskListAsCompleted(taskId, completedAtTime, tasksContainer)
  *                 If tasksContainer is not provided or not a string.
  */
 export function markTaskListAsUncompleted(taskId, createdAt, tasksContainer) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!createdAt || typeof createdAt !== 'string') {
@@ -348,8 +347,8 @@ export function addTask(taskTitle, taskDesc, userId) {
         throw new Error('Task description must be provided and must be a string');
     }
 
-    if (!userId || typeof userId !== 'number') {
-        throw new Error('User ID must be provided and must be a number');
+    if (!userId) {
+        throw new Error('User ID must be provided');
     }
 
     return makeApiRequest('POST', apiUrl + '/create-task', {
@@ -373,12 +372,12 @@ export function addTask(taskTitle, taskDesc, userId) {
  * @throws {Error} If taskId is not provided or not a string.
  */
 export function removeTask(taskId, userId) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
-    if (!userId || typeof userId !== 'number') {
-        throw new Error('User ID must be provided and must be a number');
+    if (!userId) {
+        throw new Error('User ID must be provided');
     }
 
     return makeApiRequest('DELETE', apiUrl + `/remove-task/${taskId}`, null, {
@@ -398,8 +397,8 @@ export function removeTask(taskId, userId) {
  * @throws {Error} If taskId is not provided or not a string.
  */
 export function getTask(taskId) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     return makeApiRequest('GET', apiUrl + `/get-task/${taskId}`, null, {
@@ -419,8 +418,8 @@ export function getTask(taskId) {
  * @throws {Error} If userId is not provided or not a string.
  */
 export function getTasks(userId) {
-    if (!userId || typeof userId !== 'number') {
-        throw new Error('User ID must be provided and must be a number');
+    if (!userId) {
+        throw new Error('User ID must be provided');
     }
 
     return makeApiRequest('GET', apiUrl + `/get-tasks`, null, {
@@ -435,18 +434,13 @@ export function getTasks(userId) {
  * @name markTaskAsCompleted
  *
  * @param {number} taskId - The ID of the task to mark as completed.
- * @param {string} completedAtTime - The time at which the task was completed.
  * @returns {Promise} A Promise that resolves when the task is marked as completed in the database successfully.
  *
  * @throws {Error} If taskId is not provided or not a number, or if completedAtTime is not provided or not a string.
  */
-export function markTaskAsCompleted(taskId, completedAtTime) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
-    }
-
-    if (!completedAtTime || typeof completedAtTime !== 'string') {
-        throw new Error('Completed at time must be provided and must be a string');
+export function markTaskAsCompleted(taskId) {
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
@@ -457,9 +451,6 @@ export function markTaskAsCompleted(taskId, completedAtTime) {
     });
 }
 
-export function markTaskAsUncompleted(taskId) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
 /**
  * Marks a task as uncompleted by updating its status and completion timestamp.
  *
@@ -471,6 +462,9 @@ export function markTaskAsUncompleted(taskId) {
  *
  * @throws {Error} If the `taskId` parameter is not provided.
  */
+ export function markTaskAsUncompleted(taskId) {
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
@@ -499,8 +493,8 @@ export function markTaskAsUncompleted(taskId) {
  * @throws {Error} If userId is not a number.
  */
 export function updateTask(taskId, taskTitle, taskDesc, userId) {
-    if (!taskId || typeof taskId !== 'number') {
-        throw new Error('Task ID must be provided and must be a number');
+    if (!taskId) {
+        throw new Error('Task ID must be provided');
     }
 
     if (!taskTitle || typeof taskTitle !== 'string') {
@@ -511,8 +505,8 @@ export function updateTask(taskId, taskTitle, taskDesc, userId) {
         throw new Error('Task description must be provided and must be a string');
     }
 
-    if (!userId || typeof userId !== 'number') {
-        throw new Error('User ID must be provided and must be a number');
+    if (!userId) {
+        throw new Error('User ID must be provided');
     }
 
     return makeApiRequest('PUT', `${apiUrl}/update-task/${taskId}`, {
@@ -533,8 +527,8 @@ export function updateTask(taskId, taskTitle, taskDesc, userId) {
  * @throws {Error} If userId is not provided.
  */
 export function getUserTasks(userId) {
-    if (!userId || typeof userId !== 'number') {
-        throw new Error('User ID must be provided and must be a number');
+    if (!userId) {
+        throw new Error('User ID must be provided');
     }
 
     return makeApiRequest('GET', apiUrl + '/get-tasks', null, {
