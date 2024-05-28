@@ -443,8 +443,7 @@ export function markTaskAsCompleted(taskId) {
         throw new Error('Task ID must be provided');
     }
 
-    return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
-        completed_at: completedAtTime,
+    return makeApiRequest('PUT', apiUrl + `/complete-task/${taskId}`, {
         status: 'completed'
     }, {
         Authorization: getUserToken()
@@ -467,8 +466,7 @@ export function markTaskAsCompleted(taskId) {
         throw new Error('Task ID must be provided');
     }
 
-    return makeApiRequest('PUT', apiUrl + `/update-task/${taskId}`, {
-        completed_at: null,
+    return makeApiRequest('PUT', apiUrl + `/uncomplete-task/${taskId}`, {
         status: 'pending'
     }, {
         Authorization: getUserToken()
