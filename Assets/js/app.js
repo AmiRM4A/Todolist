@@ -56,6 +56,13 @@ function typeHeaderText() {
  * @returns {void} This function does not return a value.
  */
 function initialize() {
+    // Check if token's data is already set in the session storage
+    if (getSessionStorage('Authorization') === null) {
+        // Redirect to login page
+        removeSessionStorage('user');
+        redirectTo(config.baseUrl + '/login.html');
+    }
+
     typeHeaderText();
 
     // Check if custom theme color exists in session storage
@@ -63,44 +70,46 @@ function initialize() {
         selectThemeColor(getSessionStorage('theme-color'));
     }
 
-    // Getting & validating user's data from storage
-    userData = getSessionStorage('user');
-    if (!userData || userData.length === 0 || !userData.id) {
-        removeSessionStorage('user');
-        removeSessionStorage('Authorization');
-        redirectTo(config.baseUrl + '/login.html');
-    }
-
-    // Call to api and get user's tasks
-    getUserTasks(userData.id)
-        .then(response => {
-            const tasksArr = JSON.parse(response);
-            if (tasksArr !== null && typeof tasksArr === 'object') {
-                // For each on tasks array and adding them to the tasks list (addTaskToList);
-                $.each(tasksArr, (index, taskData) => {
-                    addTaskToList(taskData.id, taskData.title, taskData.description, taskData.created_at, 'todos');
-                    // Mark task as completed in the list if it is completed
-                    if (taskData.status && taskData.status === 'completed' && taskData.completed_at !== '0000-00-00 00:00:00') {
-                        markTaskListAsCompleted(taskData.id, taskData.completed_at, 'todos');
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            if (error.status === 401) {
-                removeSessionStorage('Authorization');
-                removeSessionStorage('user');
-                redirectTo(config.baseUrl + '/login.html');
-            } else {
+    $(document).ready(() => {
+        const apiUrl = config.apiUrl + '/me';
+        makeApiRequest('POST', apiUrl, null, {Authorization: getUserToken()})
+            .then(response => {
+                userData = response.data;
+                if (!userData || !userData.id || userData.length === 0) {
+                    removeSessionStorage('user');
+                    removeSessionStorage('Authorization');
+                    redirectTo(config.baseUrl + '/login.html');
+                } else {
+                    setSessionStorage('user', userData);
+                    // Call to api and get user's tasks
+                    getUserTasks(userData.id)
+                        .then(response => {
+                            const tasksArr = response.data;
+                            if (tasksArr !== null && typeof tasksArr === 'object') {
+                                // For each on tasks array and adding them to the tasks list (addTaskToList);
+                                $.each(tasksArr, (index, taskData) => {
+                                    addTaskToList(taskData.id, taskData.title, taskData.description, taskData.created_at, 'todos');
+                                    // Mark task as completed in the list if it is completed
+                                    if (taskData.status && taskData.status === 'completed' && taskData.completed_at !== '0000-00-00 00:00:00') {
+                                        markTaskListAsCompleted(taskData.id, taskData.completed_at, 'todos');
+                                    }
+                                });
+                            }
+                        });
+                }
+            })
+            .catch(error => {
                 console.error(error);
-                Swal.fire({
-                    title: "Oops...!",
-                    text: error['responseJSON']['message'] || 'Something went wrong...',
-                    icon: "error",
-                    showCloseButton: true
-                });
-            }
-        });
+                // Redirecting to login page if token is invalid
+                if (error.status === 401) {
+                    removeSessionStorage('Authorization');
+                    removeSessionStorage('user');
+                    redirectTo(config.baseUrl + '/login.html');
+                } else {
+                    errorAlert();
+                }
+            });
+    });
 }
 
 /* --- Event listeners --- */
