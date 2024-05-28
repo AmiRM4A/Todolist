@@ -389,14 +389,15 @@ h2 {
     background-color: #121212;
     color: var(--white-font);
     width: 60vw;
-    height: 60vh;
+    height: 55vh;
     margin: 100px auto 0;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 30px;
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    max-height: 450px;
     flex-direction: column;
 }
 
@@ -1177,6 +1178,11 @@ input:focus:-moz-placeholder {
 
     .form-title {
         text-align: center;
+    }
+
+    .modal-content{
+        width: 85vw;
+        height: 45vh;
     }
 }
 
